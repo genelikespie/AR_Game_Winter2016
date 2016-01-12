@@ -1,0 +1,40 @@
+/// Game Title: 
+/// Team Members: Jason Zhang, Gene Shaffer, Jeferie Shu
+
+/// Context
+
+Location: The game is meant to be played on a large desk
+
+Time: The game is played in sections (waves), each one being 5-10 minutes.
+
+Virtuality: 
+
+/// Content
+
+Facts:
+  + Player uses a compass to determine relative location
+  + Player controls a tank
+  + Player must defend a tower
+  + Tank has customizable weapons
+  + Tank can be damaged
+  + Tower has customizable weapons
+  + Tower can be damaged
+  + Enemies spawn from the sky
+  + Enemies attack the tower and the tank
+
+Concepts:
+  + Surface (Table)
+  + Tank (Player controlled weapon)
+  + Tower (headquarters to defend and used to craft)
+  + Enemies (Various)
+    + Attacks Tower only
+    + Attacks player only
+    + Attacks both tower and player
+  + Crafting 
+  
+Process:
+  Main Menu -> Game Menu - > Place Tower -> Craft -> Place Tank -> Start Waves -> Gain EXP + Money? -> Game Menu 
+  
+
+
+
