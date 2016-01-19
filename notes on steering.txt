@@ -1,0 +1,6 @@
+http://www.red3d.com/cwr/steer/gdc99/
+
+when steering, constrain the angle of seek steering to be
+no greater than 40 degrees from the vector orthoganal to
+the current velocity. This should prevent the vehicle from simply
+doing a 180 degree turn in the other direction.
