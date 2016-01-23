@@ -11,12 +11,6 @@ Shader "Custom/VideoBackground" {
             ZWrite Off
             Cull Off
             Lighting Off
-			
-			Stencil {
-                Ref 1
-                Comp Always
-                Pass Replace
-            }
             
             SetTexture [_MainTex] {
                 combine texture 

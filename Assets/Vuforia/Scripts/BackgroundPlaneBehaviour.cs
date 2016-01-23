@@ -2,9 +2,8 @@
 Copyright (c) 2014 Qualcomm Connected Experiences, Inc. All Rights Reserved.
  
 Confidential and Proprietary – Qualcomm Connected Experiences, Inc.
-
-Vuforia is a trademark of PTC Inc., registered in the United States and other 
-countries. 
+Vuforia is a trademark of QUALCOMM Incorporated, registered in the United States
+and other countries. Trademarks of QUALCOMM Incorporated are used with permission.
 ==============================================================================*/
 
 using System;
