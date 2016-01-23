@@ -8,9 +8,13 @@ public enum EnumDefaultTarget
 }
 public class SpaceShipAI : MonoBehaviour {
     public EnumDefaultTarget defaultTarget;
+    //
     public Transform targetTransform;
     bool savePosition;
     bool overrideTarget;
+
+    // Wandering target
+    public Transform wanderTargetTransform;
 
     Vector3 acceleration;
     Vector3 velocity;
@@ -24,7 +28,9 @@ public class SpaceShipAI : MonoBehaviour {
     List<Vector3> EscapeDirection = new List<Vector3>();
 
     // Timer before the ai reacquires target
-    Timer ResetTargetTimer;
+    Timer ResetWanderTargetTimer;
+    // Timer for abilities
+    Timer AbilityTimer;
 	void Start () {
         currSpeed = baseSpeed;
         targetSpeed = currSpeed;
@@ -46,6 +52,7 @@ public class SpaceShipAI : MonoBehaviour {
         }
     }
 
+    // The behavior to move straight at the intended target
     void MoveTowardsTarget()
     {
         Debug.DrawLine(transform.position, targetTransform.position);
@@ -80,6 +87,11 @@ public class SpaceShipAI : MonoBehaviour {
         else
             return distance = distance.normalized * turnSpeed;
          * */
+    }
+
+    void Wander()
+    {
+
     }
 
 	void Update () {
