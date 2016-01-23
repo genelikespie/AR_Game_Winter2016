@@ -6,6 +6,7 @@ public class moveTank : MonoBehaviour {
     public GameObject Test;
     Transform Spawner;
     GameObject Tank;
+    Transform CrosshairLocation;
     Camera mainCamera;
     Transform startTankLocation;
     Transform endTankLocation;
@@ -15,11 +16,15 @@ public class moveTank : MonoBehaviour {
     float smoothTime;
     Vector3 targetPosition;
     Vector3 spawnerPosition;
+    Vector3 levelPosition;
 
     // Use this for initialization
     void Start()
     {
         mainCamera = Camera.main;
+        if (GameObject.Find("cross") == null)
+            Debug.LogError("No Crosshair");
+        CrosshairLocation = GameObject.Find("cross").transform;
         Tank = this.gameObject;
         smoothTime = 5F;
         velocity = 100F;
@@ -48,8 +53,9 @@ public class moveTank : MonoBehaviour {
          if (Physics.Raycast(ray, out Hit))
         {
             Debug.DrawRay(ray.origin, ray.direction * 10000, Color.yellow);
-            // Debug.DrawLine(ray., Hit.transform.position, Color.red);
-            Tank.transform.position = Vector3.Slerp(moveA, Hit.point, velocity * Time.deltaTime / 100);
+            levelPosition = new Vector3(Hit.point.x, 0, Hit.point.z);
+            Tank.transform.position = Vector3.Slerp(moveA, levelPosition, velocity * Time.deltaTime / 100);
+            CrosshairLocation.position = Hit.point;
             Debug.Log(Hit.transform.gameObject);
             Debug.Log(Hit.point);
             Debug.Log(moveA);
