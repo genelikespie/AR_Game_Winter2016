@@ -10,13 +10,14 @@ public class moveTank : MonoBehaviour {
     Camera mainCamera;
     Transform startTankLocation;
     Transform endTankLocation;
-    float xScreen;
-    float yScreen;
     float velocity;
     float smoothTime;
-    Vector3 targetPosition;
-    Vector3 spawnerPosition;
+
+    //moving the crosshair to tank
     Vector3 levelPosition;
+    Ray ray;
+    float xScreen;
+    float yScreen;
 
     // Use this for initialization
     void Start()
@@ -29,36 +30,29 @@ public class moveTank : MonoBehaviour {
         smoothTime = 5F;
         velocity = 100F;
         xScreen = Screen.width / 2;
-        yScreen = Screen.width / 2;
+        yScreen = Screen.height / 2;
         startTankLocation = Tank.transform;
         Vector3 targetPosition = new Vector3(xScreen, yScreen, 0);
+        if (GameObject.Find("spawnTankPad") == null)
+            Debug.LogError("No spawnTankPad");
         Spawner = GameObject.Find("spawnTankPad").transform;
-        spawnerPosition = Spawner.position;
     }
 
     //Frame Rate check for tank
     void FixedUpdate()
     {
-        /*
-        //  targetPosition = mainCamera.ScreenToWorldPoint(new Vector3(100, 100, mainCamera.nearClipPlane));
-        Vector3 fixedPosition = new Vector3(mainCamera.transform.position.x, spawnerPosition.y , mainCamera.transform.position.z);
-        targetPosition = fixedPosition + mainCamera.transform.rotation * Vector3.forward;
-        */
-
+         ray = mainCamera.ScreenPointToRay(new Vector3(xScreen, yScreen, 0));
 
         Vector3 moveA = startTankLocation.position;
         RaycastHit Hit;
-        // if (Physics.Raycast(new Ray(mainCamera.transform.position, mainCamera.transform.rotation * Vector3.forward), out Hit))
-        Ray ray = mainCamera.ScreenPointToRay(new Vector3(xScreen, yScreen, 0));
+        
          if (Physics.Raycast(ray, out Hit))
         {
             Debug.DrawRay(ray.origin, ray.direction * 10000, Color.yellow);
             levelPosition = new Vector3(Hit.point.x, 0, Hit.point.z);
             Tank.transform.position = Vector3.Slerp(moveA, levelPosition, velocity * Time.deltaTime / 100);
             CrosshairLocation.position = Hit.point;
-            Debug.Log(Hit.transform.gameObject);
-            Debug.Log(Hit.point);
-            Debug.Log(moveA);
+            print(Hit.transform.gameObject);
         }
 
 
