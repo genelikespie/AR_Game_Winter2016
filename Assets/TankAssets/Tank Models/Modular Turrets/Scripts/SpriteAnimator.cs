@@ -65,7 +65,7 @@ public class SpriteAnimator : MonoBehaviour
   /// The animation complete flag, to indicate when the animation has finished
   /// </summary>
   private bool animationComplete = false;
-  
+  public bool play = false;
   // Use this for initialization
   void Start ()
   {
@@ -83,7 +83,7 @@ public class SpriteAnimator : MonoBehaviour
   void Update ()
   {
     
-    if (animationComplete)
+    if (animationComplete || !play)
       return;
     time += Time.deltaTime;
     int index = (int)(time * fps) % totalCells;

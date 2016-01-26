@@ -3,13 +3,25 @@ using System.Collections;
 
 public class MissileAI : SeekingAI {
 
+    public GameObject ExplosionAnimation;
+    public float DistanceToExplode = 4f;
+
+    void Start()
+    {
+        base.Start();
+        ExplosionAnimation = GameObject.Find("Big Explosion");
+        if (!ExplosionAnimation)
+            Debug.LogError("Cannot find explosion animation");
+    }
+
     void FixedUpdate()
     {
         base.FixedUpdate();
         if (targetTransform)
         {
             Vector3 distanceToTarget = targetTransform.position - transform.position;
-            if (distanceToTarget.magnitude < 2f)
+            //Debug.Log(distanceToTarget.y);
+            if (distanceToTarget.y < DistanceToExplode)
             {
                 Explode();
             }
@@ -19,7 +31,17 @@ public class MissileAI : SeekingAI {
     void Explode()
     {
         Debug.Log(this.name + " Blew up!");
-        Destroy(this);
+        // Play animation
+        if (ExplosionAnimation)
+        {
+            GameObject explosion = Instantiate(ExplosionAnimation, transform.position, transform.rotation) as GameObject;
+            explosion.GetComponentInChildren<SpriteAnimator>().play = true;
+            //explosion.GetComponentInChildren<Animator>().Play();
+        }
+        else
+            Debug.LogError("There's no explosion prefab referenced!");
+        // Kill object
+        Destroy(this.gameObject);
     }
 
 }
