@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public enum EnumDefaultTarget
 {
-    player, hq
+    player, hq, testship
 }
 public class SpaceShipAI : MonoBehaviour {
     public EnumDefaultTarget defaultTarget;
@@ -69,7 +69,7 @@ public class SpaceShipAI : MonoBehaviour {
         if (includeYAxis)
             rigidbody.velocity = velocity;
         else
-            rigidbody.velocity = new Vector3 (velocity.x,rigidbody.velocity.y, velocity.z);
+            rigidbody.velocity = new Vector3 (velocity.x, 0.0f, velocity.z);
 
         Quaternion desiredRotation = Quaternion.LookRotation(rigidbody.velocity);
         transform.rotation = desiredRotation;
