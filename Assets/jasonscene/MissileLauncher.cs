@@ -5,6 +5,11 @@ using System.Collections;
 public class MissileLauncher : MonoBehaviour {
     public EnumDefaultTarget DefaultTarget;
 
+    public bool OverrideMissileSettings;
+    public float BaseSpeed;
+    public float TurnSpeed;
+    public bool IncludeYAxis;
+
     SphereCollider DetectionCollider;
     GameObject MissileGameObject;
 	// Use this for initialization
@@ -12,7 +17,7 @@ public class MissileLauncher : MonoBehaviour {
         DetectionCollider = GetComponent<SphereCollider>();
         if (!DetectionCollider)
             Debug.LogError("Cannot find sphere collider!");
-        MissileGameObject = GameObject.Find("MissileGameObject");
+        MissileGameObject = Resources.Load("Prefabs/MissileGameObject") as GameObject;
         if (!MissileGameObject)
             Debug.LogError("Cannot find missile game object");
 	}
@@ -40,7 +45,8 @@ public class MissileLauncher : MonoBehaviour {
     void LaunchMissile(Transform st) {
         MissileAI missile = (Instantiate(MissileGameObject,transform.position,transform.rotation) 
             as GameObject).GetComponent<MissileAI>();
-        missile.Initialize(st, 40.0f, 40.0f, true);
+        if (OverrideMissileSettings)
+            missile.Initialize(st, BaseSpeed, TurnSpeed, IncludeYAxis);
         Debug.Log("Launched missile at: " + st.name);
     }
 }
