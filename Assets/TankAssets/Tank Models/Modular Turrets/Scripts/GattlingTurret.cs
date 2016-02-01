@@ -16,7 +16,7 @@ public class GattlingTurret : GunTurret
       r.enabled = false;
     }
   }
-  
+  /*
   override protected void OnTriggerExit (Collider t)
   {
     base.OnTriggerExit (t);
@@ -25,7 +25,7 @@ public class GattlingTurret : GunTurret
         r.enabled = false;
     }
   }
-  
+  */
   override protected void Update ()
   {
     base.Update ();

@@ -6,9 +6,9 @@ public class GunTurret : MonoBehaviour
 
   public GameObject muzzleFire;
   public GameObject projectile;
-  public float reloadTime = 1f;
+  public float reloadTime = .25f;
   public float turnSpeed = 5f;
-  public float firePauseTime = 0.05f;
+  public float firePauseTime = 0.01f;
   public float errorAmount = 0.001f;
   public Transform target;
   public Transform[] muzzlePositions;
@@ -16,6 +16,7 @@ public class GunTurret : MonoBehaviour
   public Transform game_pan;
   public Transform aim_tilt;
   public Transform aim_pan;
+  public bool fireOn = false;
 
 
   protected float nextFireTime;
@@ -71,7 +72,7 @@ public class GunTurret : MonoBehaviour
 
       }
 
-      if (Time.time >= nextFireTime) {
+      if (Time.time >= nextFireTime  && Input.GetMouseButtonDown(0)) {
         FireProjectile ();
       }
 
@@ -80,7 +81,7 @@ public class GunTurret : MonoBehaviour
       game_tilt.localRotation = Quaternion.Lerp (game_tilt.localRotation, aim_tilt_start, Time.deltaTime * turnSpeed);
     }
   }
-
+    /*
   void OnTriggerStay (Collider col)
   {
     if (target == null) {
@@ -102,6 +103,7 @@ public class GunTurret : MonoBehaviour
       target = null;
     }
   }
+  */
 
   protected virtual void FireProjectile ()
   {
