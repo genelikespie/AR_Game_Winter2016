@@ -17,6 +17,7 @@ public class GunTurret : MonoBehaviour
   public Transform aim_tilt;
   public Transform aim_pan;
   public bool fireOn = false;
+  SpriteAnimator muzzleFireAnimation;
 
 
   protected float nextFireTime;
@@ -33,7 +34,13 @@ public class GunTurret : MonoBehaviour
     aim_tilt_start = aim_tilt.localRotation;
 
   }
- 
+  protected virtual void Start()
+  {
+      muzzleFireAnimation = (Instantiate(muzzleFire, transform.position, transform.rotation) as GameObject).GetComponentInChildren<SpriteAnimator>();
+      if (!muzzleFireAnimation)
+          Debug.LogError("No muzzle animation!");
+
+  }
 	
   // Update is called once per frame
   protected virtual void Update ()
@@ -112,8 +119,8 @@ public class GunTurret : MonoBehaviour
     nextMoveTime = Time.time + firePauseTime;
 
     foreach (Transform m in muzzlePositions) {
+      muzzleFireAnimation.play = true;
       Instantiate (projectile, m.position, m.rotation);
-      Instantiate (muzzleFire, m.position, m.rotation);
     }
   }
 }

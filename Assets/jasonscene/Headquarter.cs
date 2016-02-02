@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 public class Headquarter : MonoBehaviour {
 
+    public float HitPoints;
+    public float Armor;
     private static Headquarter instance;
     private static Object instance_lock = new Object();
     private string name;

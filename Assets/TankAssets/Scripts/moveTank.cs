@@ -39,9 +39,9 @@ public class moveTank : MonoBehaviour {
     void Start()
     {
         mainCamera = Camera.main;
-        if (GameObject.Find("cross") == null)
+        if (GameObject.Find("BlueCross") == null)
             Debug.LogError("No Crosshair");
-        CrosshairLocation = GameObject.Find("cross").transform;
+        CrosshairLocation = GameObject.Find("BlueCross").transform;
         Tank = this.gameObject;
         smoothTime = 5F;
         velocity = 100F;
@@ -141,7 +141,7 @@ public class moveTank : MonoBehaviour {
         difference = turning - this.transform.position;
         if (difference.magnitude > 142)
         {
-            print(difference.magnitude);
+            //print(difference.magnitude);
             difference.y = 0;
             neededRotation = Quaternion.LookRotation(difference);
             this.transform.rotation = Quaternion.Slerp(this.transform.rotation, neededRotation, Time.deltaTime * m_TurnSpeed);

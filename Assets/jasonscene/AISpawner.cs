@@ -41,7 +41,8 @@ public class AISpawner : MonoBehaviour {
         spawnLocation.z = spawnLocation.z + (Random.value * boundSize.z - boundExtent.z);
         //Debug.Log(spawnLocation + " center: " + spawnBounds.center);
         Assert.IsNotNull(AIShip);
-        Instantiate(AIShip, spawnLocation, spawnRotation);
+        SpaceShipAI SpaceShip = (Instantiate(AIShip, spawnLocation, spawnRotation) as GameObject).GetComponent<SpaceShipAI>();
+
         currSpawns++;
     }
 }
