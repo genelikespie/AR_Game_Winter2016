@@ -5,7 +5,6 @@ using System.Collections;
 public class MissileLauncher : MonoBehaviour {
     public EnumDefaultTarget DefaultTarget;
 
-    public bool OverrideMissileSettings;
     public float BaseSpeed;
     public float TurnSpeed;
     public bool IncludeYAxis;
@@ -45,8 +44,7 @@ public class MissileLauncher : MonoBehaviour {
     void LaunchMissile(Transform st) {
         MissileAI missile = (Instantiate(MissileGameObject,transform.position,transform.rotation) 
             as GameObject).GetComponent<MissileAI>();
-        if (OverrideMissileSettings)
-            missile.Initialize(st, BaseSpeed, TurnSpeed, IncludeYAxis);
+        missile.Initialize(st, BaseSpeed, TurnSpeed, IncludeYAxis);
         Debug.Log("Launched missile at: " + st.name);
     }
 }

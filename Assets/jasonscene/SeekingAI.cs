@@ -4,18 +4,18 @@ using System.Collections.Generic;
 
 public class SeekingAI : MonoBehaviour {
     // Main Target
-    public Transform targetTransform;
-    bool savePosition;
-    bool overrideTarget;
+    public Transform TargetTransform;
+    bool SavePosition;
+    bool OverrideTarget;
 
     // Wandering target
     public Transform wanderTargetTransform;
 
-    public float baseSpeed = 10;
-    public float turnSpeed = 2.5f;
-    public bool includeYAxis = false;
-    float currSpeed;
-    float targetSpeed;
+    public float BaseSpeed = 10;
+    public float TurnSpeed = 2.5f;
+    public bool IncludeYAxis = false;
+    float CurrSpeed;
+    float TargetSpeed;
     Vector3 acceleration;
     Vector3 velocity;
 
@@ -28,24 +28,24 @@ public class SeekingAI : MonoBehaviour {
     Timer AbilityTimer;
     protected void Start()
     {
-        currSpeed = baseSpeed;
-        targetSpeed = currSpeed;
+        CurrSpeed = BaseSpeed;
+        TargetSpeed = CurrSpeed;
         rigidbody = GetComponent<Rigidbody>();
-        rigidbody.velocity = transform.forward * baseSpeed;
+        rigidbody.velocity = transform.forward * BaseSpeed;
         velocity = rigidbody.velocity;
     }
 
     public void Initialize(Transform targettransform, float basespeed, float turnspeed, bool includeY)
     {
-        targetTransform = targettransform;
-        baseSpeed = basespeed;
-        turnSpeed = turnspeed;
-        includeYAxis = includeY;
+        TargetTransform = targettransform;
+        BaseSpeed = basespeed;
+        TurnSpeed = turnspeed;
+        IncludeYAxis = includeY;
     }
 
     protected void FixedUpdate()
     {
-        if (targetTransform)
+        if (TargetTransform)
         {
             MoveTowardsTarget();
         }
@@ -54,13 +54,13 @@ public class SeekingAI : MonoBehaviour {
     // The behavior to move straight at the intended target
     void MoveTowardsTarget()
     {
-        Debug.DrawLine(transform.position, targetTransform.position);
-        Vector3 seekVelocity = GetSeekVector(targetTransform.position);
+        Debug.DrawLine(transform.position, TargetTransform.position);
+        Vector3 seekVelocity = GetSeekVector(TargetTransform.position);
         velocity = rigidbody.velocity;
         velocity += seekVelocity * Time.deltaTime;
-        velocity = velocity.normalized * baseSpeed;
+        velocity = velocity.normalized * BaseSpeed;
 
-        if (includeYAxis)
+        if (IncludeYAxis)
             rigidbody.velocity = velocity;
         else
             rigidbody.velocity = new Vector3(velocity.x, rigidbody.velocity.y, velocity.z);
@@ -72,8 +72,8 @@ public class SeekingAI : MonoBehaviour {
     // Returns a vector from forward velocity to desired velocity
     Vector3 GetSeekVector(Vector3 target)
     {
-        Vector3 distance = targetTransform.position - transform.position;
-        distance = distance.normalized * turnSpeed;
+        Vector3 distance = TargetTransform.position - transform.position;
+        distance = distance.normalized * TurnSpeed;
         return distance - rigidbody.velocity;
     }
 

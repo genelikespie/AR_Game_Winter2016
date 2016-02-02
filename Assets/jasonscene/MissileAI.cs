@@ -17,9 +17,9 @@ public class MissileAI : SeekingAI {
     void FixedUpdate()
     {
         base.FixedUpdate();
-        if (targetTransform)
+        if (TargetTransform)
         {
-            Vector3 distanceToTarget = targetTransform.position - transform.position;
+            Vector3 distanceToTarget = TargetTransform.position - transform.position;
             //Debug.Log(distanceToTarget.y);
             if (distanceToTarget.y < DistanceToExplode)
             {
