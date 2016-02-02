@@ -67,24 +67,15 @@ public class moveTank : MonoBehaviour {
             
             Debug.DrawRay(ray.origin, ray.direction * 10000, Color.yellow);
             levelPosition = new Vector3(Hit.point.x, 0, Hit.point.z);
-            /*
-            goalVelocity = DistanceTarget(levelPosition);
-            velocityTank = m_Rigidbody.velocity;
-            velocityTank += goalVelocity * Time.deltaTime;
-            velocityTank = velocityTank.normalized * m_Speed;
-            if (includeYAxis)
-                rigidbody.velocity = velocity;
-            else
-            m_Rigidbody.velocity = new Vector3(velocityTank.x, m_Rigidbody.velocity.y, velocityTank.z);
 
-            Quaternion desiredRotation = Quaternion.LookRotation(levelPosition);
-            transform.rotation = desiredRotation;*/
             Move(levelPosition);
             Turn(levelPosition);
            // Tank.transform.position = Vector3.Slerp(moveA, levelPosition, velocity * Time.deltaTime / 100);
             CrosshairLocation.position = Hit.point;
         }
-
+      
+        //Vector3 chPos = mainCamera.ScreenToViewportPoint(new Vector3(xScreen / 2, yScreen / 2, 0));
+        //CrosshairLocation.position = new Vector3(chPos.x, .01f, chPos.y);
 
 
     }

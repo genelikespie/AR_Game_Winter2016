@@ -26,6 +26,10 @@ public class SpaceShip : MonoBehaviour {
             myCrossHair.transform.SetParent(this.transform);
         else
             Debug.LogError("No crosshair found!");
+        myCrossHair.transform.position = new Vector3(transform.position.x, 1, transform.position.z);
+
+
+
 	}
 	
 	// Update is called once per frame

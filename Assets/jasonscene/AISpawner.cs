@@ -5,6 +5,7 @@ using System.Collections;
 public class AISpawner : MonoBehaviour {
 
     public GameObject AIShip;
+    public AISpawnerLocation [] AISpawnerLocations;
     Bounds spawnBounds;
     Vector3 boundSize;
     Vector3 boundExtent;
@@ -13,36 +14,41 @@ public class AISpawner : MonoBehaviour {
     float currTime = 0f;
 
     public int maxSpawns = 15;
-    public int currSpawns = 0;
+    public bool doneSpawning;
+    public int currSpawns = 0; // number of ai currently active
+    public int numSpawned = 0; // number spawned
 
 	// Use this for initialization
 	void Start () {
         spawnBounds = GetComponent<Collider>().bounds;
         boundSize = spawnBounds.size;
         boundExtent = spawnBounds.extents;
+        doneSpawning = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
         currTime += Time.deltaTime;
-        if (currTime > timeBetweenSpawns && currSpawns < maxSpawns) {
+        if (currTime > timeBetweenSpawns && numSpawned < maxSpawns) {
             currTime = 0;
-            Spawn();
+            int i = (int) (Random.value * 3);
+            if (!AISpawnerLocations[i])
+                Debug.LogError("no ai spawner location!  " + i);
+            SpaceShip spawnedSpaceShip = AISpawnerLocations[i].Spawn(AIShip).GetComponent<SpaceShip>();
+            currSpawns++;
+            numSpawned++;
+            if (numSpawned == maxSpawns)
+                doneSpawning = true;
+            //Spawn();
         }
         
 	}
 
-    void Spawn()
+    public bool AIShipDestroyed()
     {
-        Vector3 spawnLocation = spawnBounds.center;
-        Quaternion spawnRotation = Quaternion.LookRotation(spawnLocation.normalized);
-        spawnLocation.x = spawnLocation.x + (Random.value * boundSize.x - boundExtent.x);
-        spawnLocation.y = spawnLocation.y + (Random.value * boundSize.y - boundExtent.y);
-        spawnLocation.z = spawnLocation.z + (Random.value * boundSize.z - boundExtent.z);
-        //Debug.Log(spawnLocation + " center: " + spawnBounds.center);
-        Assert.IsNotNull(AIShip);
-        SpaceShipAI SpaceShip = (Instantiate(AIShip, spawnLocation, spawnRotation) as GameObject).GetComponent<SpaceShipAI>();
-
-        currSpawns++;
+        currSpawns--;
+        if (doneSpawning && currSpawns <= 0)
+            Debug.Log("Player wins!!!!!");
+        return true;
     }
 }
