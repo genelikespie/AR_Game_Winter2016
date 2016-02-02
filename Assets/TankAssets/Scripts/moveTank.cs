@@ -103,7 +103,8 @@ public class moveTank : MonoBehaviour {
     {
 
         difference = distance - this.transform.position;
-        if (difference.magnitude > 138)
+        Debug.Log(difference.magnitude);
+        if (difference.magnitude > 75)
         {
             // Create a vector in the direction the tank is facing with a magnitude based on the input, speed and the time between frames.
             Vector3 movement = transform.forward * m_Speed * Time.deltaTime;
@@ -139,7 +140,7 @@ public class moveTank : MonoBehaviour {
 
         
         difference = turning - this.transform.position;
-        if (difference.magnitude > 142)
+        if (difference.magnitude > 75)
         {
             //print(difference.magnitude);
             difference.y = 0;
