@@ -60,12 +60,7 @@ public class SpaceShipAI : MonoBehaviour {
         velocity = rigidbody.velocity;
         velocity += seekVelocity * Time.deltaTime;
         velocity = velocity.normalized * baseSpeed;
-        /*
-        if (velocity.magnitude > baseSpeed)
-        {
-            velocity = velocity.normalized * baseSpeed;
-        }
-         */
+
         if (includeYAxis)
             rigidbody.velocity = velocity;
         else
@@ -81,12 +76,6 @@ public class SpaceShipAI : MonoBehaviour {
         Vector3 distance = targetTransform.position - transform.position;
         distance = distance.normalized * turnSpeed;
         return distance - rigidbody.velocity;
-        /*
-        if (distance.magnitude < 25)
-            return distance = distance.normalized * -1 * turnSpeed;
-        else
-            return distance = distance.normalized * turnSpeed;
-         * */
     }
 
     void Wander()

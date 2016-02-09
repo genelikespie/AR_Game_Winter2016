@@ -96,6 +96,7 @@ public class moveTank : MonoBehaviour {
     {
 
         difference = distance - this.transform.position;
+
         if (difference.magnitude > 75)
         {
             // Create a vector in the direction the tank is facing with a magnitude based on the input, speed and the time between frames.
