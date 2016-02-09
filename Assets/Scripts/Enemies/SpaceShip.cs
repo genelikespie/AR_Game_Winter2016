@@ -2,38 +2,30 @@
 using System.Collections;
 
 public class SpaceShip : MonoBehaviour {
-    public float hitPoints;
+    public float maxHitPoints;
     public float baseDamage;
     public GameObject explosionAnimation;
-    public GameObject crossHair;
 
-    SeekingAI seekingAI;
+    private float hitPoints;
     Collider collider;
 
 	// Use this for initialization
-	void Start () {
-        seekingAI = GetComponent<SeekingAI>();
-        //if (!seekingAI)
-          //  Debug.LogError("No AI Found!");
+	protected void Start () {
         collider = GetComponent<Collider>();
         if (!collider)
             Debug.LogError("No collider found!");
 
-        crossHair = GameObject.Find("RedCross");
-        GameObject myCrossHair = Instantiate(crossHair, new Vector3(transform.position.x, 1, transform.position.z), transform.rotation) as GameObject;
-        myCrossHair.transform.Rotate(new Vector3(90, 0, 0));
-        if (myCrossHair)
-            myCrossHair.transform.SetParent(this.transform);
-        else
-            Debug.LogError("No crosshair found!");
-        myCrossHair.transform.localPosition = new Vector3(0, myCrossHair.transform.localPosition.y, 0);
+        hitPoints = maxHitPoints;
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	protected void Update () {
 	}
 
-    public void Hit(float damage)
+    /**
+     * Method to apply damage to our SpaceShip
+     */
+    public virtual void Hit(float damage)
     {
         hitPoints -= damage;
         if (hitPoints <= 0)
@@ -42,7 +34,8 @@ public class SpaceShip : MonoBehaviour {
         }
     }
 
-    void Explode()
+
+    protected virtual void Explode()
     {
         Debug.Log(this.name + " Blew up!");
         // Play animation
@@ -50,7 +43,6 @@ public class SpaceShip : MonoBehaviour {
         {
             GameObject explosion = Instantiate(explosionAnimation, transform.position, transform.rotation) as GameObject;
             explosion.GetComponentInChildren<SpriteAnimator>().play = true;
-            //explosion.GetComponentInChildren<Animator>().Play();
         }
         else
             Debug.LogError("There's no explosion prefab referenced!");
