@@ -29,9 +29,13 @@ public class moveTank : MonoBehaviour {
     Vector3 difference;
     Vector3 moveA;
     Quaternion neededRotation;
+    Transform CrosshairTransform;
+    bool moveGranted = false;
 
     void Awake()
     {
+        Debug.Log("MOVECROSSHAIR NOT FOUND");
+        CrosshairTransform = moveCrosshair.Instance().transform;
         m_Rigidbody = GetComponent<Rigidbody>();
     }
 
@@ -54,47 +58,44 @@ public class moveTank : MonoBehaviour {
         Spawner = GameObject.Find("spawnTankPad").transform;
     }
 
+
+    void Update()
+    {
+        /*
+        ray = mainCamera.ScreenPointToRay(new Vector3(xScreen, yScreen, 0));
+        moveA = startTankLocation.position;
+        RaycastHit Hit;
+
+        if (Physics.Raycast(ray, out Hit))
+        {
+
+            Debug.DrawRay(ray.origin, ray.direction * 10000, Color.yellow);
+            levelPosition = new Vector3(Hit.point.x, 0, Hit.point.z);
+            CrosshairLocation.position = Hit.point;
+            moveGranted = true;
+        }
+        else
+            moveGranted = false;
+            */
+        moveA = startTankLocation.position;
+    }
+
+
     //Frame Rate check for tank
     void FixedUpdate()
     {
-         ray = mainCamera.ScreenPointToRay(new Vector3(xScreen, yScreen, 0));
-
-        moveA = startTankLocation.position;
-        RaycastHit Hit;
-        
-         if (Physics.Raycast(ray, out Hit))
+        levelPosition = CrosshairTransform.GetComponent<moveCrosshair>().levelPosition;
         {
-            
-            Debug.DrawRay(ray.origin, ray.direction * 10000, Color.yellow);
-            levelPosition = new Vector3(Hit.point.x, 0, Hit.point.z);
-
             Move(levelPosition);
             Turn(levelPosition);
-           // Tank.transform.position = Vector3.Slerp(moveA, levelPosition, velocity * Time.deltaTime / 100);
-            CrosshairLocation.position = Hit.point;
         }
-      
-        //Vector3 chPos = mainCamera.ScreenToViewportPoint(new Vector3(xScreen / 2, yScreen / 2, 0));
-        //CrosshairLocation.position = new Vector3(chPos.x, .01f, chPos.y);
-
 
     }
-
-    /*
-    // Returns a vector from forward velocity to desired velocity
-    Vector3 DistanceTarget(Vector3 target)
-    {
-        Vector3 distance = target - transform.position;
-        distance = distance.normalized * m_TurnSpeed;
-        return distance - m_Rigidbody.velocity;
-    }*/
-
 
     private void Move(Vector3 distance)
     {
 
         difference = distance - this.transform.position;
-        Debug.Log(difference.magnitude);
         if (difference.magnitude > 75)
         {
             // Create a vector in the direction the tank is facing with a magnitude based on the input, speed and the time between frames.
@@ -108,26 +109,6 @@ public class moveTank : MonoBehaviour {
 
     private void Turn(Vector3 turning)
     {
-        /*
-        // Determine the number of degrees to be turned based on the input, speed and time between frames.
-        float turn =  m_TurnSpeed * Time.deltaTime;
-
-        // Make this into a rotation in the y axis.
-     //   Quaternion turnRotation = Quaternion.Euler(0f, turn, 0f);
-
-       // Quaternion desiredRotation = Quaternion.LookRotation(turning);
-      //  transform.rotation = desiredRotation;
-
-        // Apply this rotation to the rigidbody's rotation.
-        m_Rigidbody.MoveRotation(m_Rigidbody.rotation * desiredRotation);
-       
-
-  
-        Vector3 targetPostition = new Vector3(levelPosition.x,
-                                       this.transform.position.y,
-                                       levelPosition.z);
-        this.transform.LookAt(targetPostition);
-        */
 
         
         difference = turning - this.transform.position;

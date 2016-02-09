@@ -24,17 +24,22 @@ public class spawnTank : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-        StartCoroutine(hold(2f));
+        StartCoroutine(hold(1f));
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update () {
     }
 
     void spawnerTank()
     {
-        Vector3 vectorTankPad = locationtankSpawnPad.position;
-        Instantiate(Tank,vectorTankPad,Tank.transform.rotation);
-        Debug.Log("TANK CREATED");
+
+        if (Headquarter.Instance().transform == null)
+            StartCoroutine(hold(3f));
+        else
+        {
+            Vector3 vectorTankPad = locationtankSpawnPad.position;
+            Instantiate(Tank, vectorTankPad, Tank.transform.rotation);
+        }
     }
 }

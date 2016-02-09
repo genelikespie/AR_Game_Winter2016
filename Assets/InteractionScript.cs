@@ -5,7 +5,7 @@ using System.Collections;
 public class InteractionScript : MonoBehaviour {
 
     public Button pauseButton;
-    bool paused;
+    public bool paused;
 
 	// Use this for initialization
 	void Start () {

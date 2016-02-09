@@ -17,13 +17,15 @@ namespace Vuforia
         #region PRIVATE_MEMBER_VARIABLES
  
         private TrackableBehaviour mTrackableBehaviour;
-    
+
         #endregion // PRIVATE_MEMBER_VARIABLES
 
 
 
         #region UNTIY_MONOBEHAVIOUR_METHODS
-    
+
+        
+
         void Start()
         {
             mTrackableBehaviour = GetComponent<TrackableBehaviour>();
@@ -89,6 +91,7 @@ namespace Vuforia
 
         private void OnTrackingLost()
         {
+            
             Renderer[] rendererComponents = GetComponentsInChildren<Renderer>(true);
             Collider[] colliderComponents = GetComponentsInChildren<Collider>(true);
 
@@ -105,6 +108,7 @@ namespace Vuforia
             }
 
             Debug.Log("Trackable " + mTrackableBehaviour.TrackableName + " lost");
+            GameManagerScript.Instance().gameObject.SendMessage("PauseTrackableLost",SendMessageOptions.DontRequireReceiver);
         }
 
         #endregion // PRIVATE_METHODS
