@@ -28,18 +28,18 @@ public class InteractionScript : MonoBehaviour {
             Time.timeScale = 1;
             paused = false;
             pauseButton.GetComponent<Text>().text = "Pause";
-            pauseCylinder.transform.position = new Vector3(416, 1217, -107);
-            BTMCylinder.transform.position = new Vector3(416, 1217, -107);
+            pauseCylinder.transform.position = new Vector3(584, 1317, -131);
+            BTMCylinder.transform.position = new Vector3(-1, 1317, -131);
         }
     }
 	
 	// Update is called once per frame
 	void Update () {
-        //Debug.Log(pauseCylinder.transform.position.x + " " + pauseCylinder.transform.position.y + " " + pauseCylinder.transform.position.z);
+        //Debug.Log(BTMCylinder.transform.position.x + " " + BTMCylinder.transform.position.y + " " + BTMCylinder.transform.position.z);
         if (paused == true && pauseCylinder.transform.position.y > 200)
         {
-            pauseCylinder.transform.Translate(Vector3.up * 30);
-            BTMCylinder.transform.Translate(Vector3.up * 30);
+            pauseCylinder.transform.Translate(Vector3.back * 30);
+            BTMCylinder.transform.Translate(Vector3.back * 30);
         }
 	}
 }
