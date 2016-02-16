@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SSBasicBomberAI : SeekingAI {
+public class SSBasicBomberAI : SeekingWanderAI {
     public EnumDefaultTarget defaultTarget;
 
     Transform myTransform;
@@ -10,7 +10,7 @@ public class SSBasicBomberAI : SeekingAI {
         base.Start();
         isWandering = false;
         myTransform = transform;
-        if (defaultTarget == EnumDefaultTarget.hq)
+        if (defaultTarget == EnumDefaultTarget.headquarter)
             mainTargetTransform = Headquarter.Instance().transform;
         else if (defaultTarget == EnumDefaultTarget.player)
             Debug.LogError("not implemented default target as player yet");

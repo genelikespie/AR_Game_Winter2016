@@ -27,6 +27,7 @@ public class SpaceShip : MonoBehaviour {
      */
     public virtual void Hit(float damage)
     {
+        Debug.Log("Space ship " + this.name + " was hit for: " + damage + " dmg");
         hitPoints -= damage;
         if (hitPoints <= 0)
         {
