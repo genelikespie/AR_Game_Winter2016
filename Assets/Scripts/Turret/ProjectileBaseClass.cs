@@ -54,27 +54,4 @@ using System.Collections;
 
     }
 
-        public class MissileProjectile : ProjectileBaseClass
-        {
-            public override void Fire(Vector3 direction, Quaternion rotation)
-            {
-                // How the missile fires itself
-            }
-        }
 
-        public class BulletProjectile : ProjectileBaseClass
-        {
-            public override void Fire(Vector3 direction, Quaternion rotation)
-            {
-                Debug.Log("WOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
-                //    base.Fire(direction,rotation);     
-            }
-        }
-
-        public class GattlingProjectile : ProjectileBaseClass
-        {
-            public override void Fire(Vector3 direction, Quaternion rotation)
-            {
-                // How the bullet fires itself        
-            }
-        }

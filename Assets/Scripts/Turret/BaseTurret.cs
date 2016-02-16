@@ -40,12 +40,12 @@ public class BaseTurret : MonoBehaviour {
         if (currentProjectileIndex >= arraySize)
             currentProjectileIndex = 0;
     }
-    /*
+    
     public virtual void Fire()
     {
         print("Hello");
         // Generic fire function (can also be abstract to require derived classes to implement this)              
-    }*/
+    }
 
 }
 

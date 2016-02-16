@@ -3,8 +3,14 @@ using System.Collections;
 
 public class moveTank : MonoBehaviour {
 
-    public GameObject Test;
-    Transform Spawner;
+
+    //shooting functionality
+    public BaseTurret BT1;
+    public BaseTurret BT2;
+    public BaseTurret BT3;
+
+
+    public Transform Spawner;
     GameObject Tank;
     Transform CrosshairLocation;
     Camera mainCamera;
@@ -12,6 +18,7 @@ public class moveTank : MonoBehaviour {
     Transform endTankLocation;
     float velocity;
     float smoothTime;
+    
 
     //moving the crosshair to tank
     Vector3 levelPosition;
@@ -23,6 +30,7 @@ public class moveTank : MonoBehaviour {
     //tank variables
     public float m_Speed;
     public float m_TurnSpeed;
+    public int moveDistance;
     private Rigidbody m_Rigidbody;              // Reference used to move the tank.
     Vector3 goalVelocity;
     Vector3 velocityTank;
@@ -97,7 +105,7 @@ public class moveTank : MonoBehaviour {
 
         difference = distance - this.transform.position;
 
-        if (difference.magnitude > 100)
+        if (difference.magnitude > moveDistance)
         {
             // Create a vector in the direction the tank is facing with a magnitude based on the input, speed and the time between frames.
             Vector3 movement = transform.forward * m_Speed * Time.deltaTime;
@@ -113,7 +121,7 @@ public class moveTank : MonoBehaviour {
 
         
         difference = turning - this.transform.position;
-        if (difference.magnitude > 100)
+        if (difference.magnitude > moveDistance)
         {
             //print(difference.magnitude);
             difference.y = 0;
