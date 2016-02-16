@@ -3,7 +3,7 @@ using System.Collections;
 
 public class GunnerTurret : BaseTurret
 {
-
+    public bool FireYes = true;
   public GameObject muzzleFire;
   public GameObject projectile;
   public float reloadTime = .25f;
@@ -83,7 +83,7 @@ public class GunnerTurret : BaseTurret
 
       }
 
-      if (Time.time >= nextFireTime  && Input.GetMouseButtonDown(0)) {
+      if (Time.time >= nextFireTime  && Input.GetMouseButtonDown(0) && FireYes == true) {
                 FireBullet(dummyV, dummyQ);
       }
 
