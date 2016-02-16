@@ -2,12 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class SeekingAI : MonoBehaviour {
-    // Main Target
-    public Transform mainTargetTransform;
-    bool SavePosition;
-    bool OverrideTarget;
 
+public enum EnumDefaultTarget
+{
+    player, headquarter, testship
+}
+public class SeekingWanderAI : SeekingAI {
     // Wandering target
     public Transform wanderTargetTransform;
     GameObject wanderNode;
@@ -24,30 +24,9 @@ public class SeekingAI : MonoBehaviour {
     GameObject rightTurnNode;
     float turnRadius;
 
-    public float BaseSpeed = 10;
-    public float TurnSpeed = 2.5f;
-    public bool isWandering = false;
-    public bool IncludeYAxis = false;
-    float CurrSpeed;
-    float TargetSpeed;
-    Vector3 acceleration;
-    Vector3 velocity;
-
-    Rigidbody rigidbody;
-    List<Vector3> EscapeDirection = new List<Vector3>();
-
-    // Timer before the ai reacquires target
-    Timer ResetWanderTargetTimer;
-    // Timer for abilities
-    Timer AbilityTimer;
     protected void Start()
     {
-        CurrSpeed = BaseSpeed;
-        TargetSpeed = CurrSpeed;
-        rigidbody = GetComponent<Rigidbody>();
-        rigidbody.velocity = transform.forward * BaseSpeed;
-        velocity = rigidbody.velocity;
-        GetComponent<GameObject>();
+        base.Start();
 
         // Set the wander node
         wanderNode = HelperMethods.FindChildWithName(gameObject, "WanderNode");
@@ -70,14 +49,6 @@ public class SeekingAI : MonoBehaviour {
         if (maxRangeToWander < 2 * turnRadius)
             Debug.LogWarning("Range to wander is smaller than turn turnDiameter! Object may not be able to reach target! " + turnRadius * 2);
 
-    }
-
-    public void Initialize(Transform targettransform, float basespeed, float turnspeed, bool includeY)
-    {
-        mainTargetTransform = targettransform;
-        BaseSpeed = basespeed;
-        TurnSpeed = turnspeed;
-        IncludeYAxis = includeY;
     }
 
     protected void FixedUpdate()
@@ -104,31 +75,6 @@ public class SeekingAI : MonoBehaviour {
             }
             MoveTowardsTarget(mainTargetTransform);
         }
-    }
-
-    // The behavior to move straight at the intended target
-    void MoveTowardsTarget(Transform targetTransform)
-    {
-        Vector3 seekVelocity = GetSeekVector(targetTransform.position);
-        velocity = rigidbody.velocity;
-        velocity += 1.5f * seekVelocity * Time.deltaTime;
-        velocity = velocity.normalized * BaseSpeed;
-
-        if (IncludeYAxis)
-            rigidbody.velocity = velocity;
-        else
-            rigidbody.velocity = new Vector3(velocity.x, 0, velocity.z);
-
-        Quaternion desiredRotation = Quaternion.LookRotation(rigidbody.velocity);
-        transform.rotation = desiredRotation;
-    }
-
-    // Returns a vector from forward velocity to desired velocity
-    Vector3 GetSeekVector(Vector3 target)
-    {
-        Vector3 distance = target - transform.position;
-        distance = distance.normalized * TurnSpeed;
-        return distance - rigidbody.velocity;
     }
 
     void Wander()
@@ -172,7 +118,7 @@ public class SeekingAI : MonoBehaviour {
         float xPos = maxRangeToWander * Mathf.Cos(randomPositionAlongCircle);
         float zPos = maxRangeToWander * Mathf.Sin(randomPositionAlongCircle);
         wanderTargetTransform.position = new Vector3(transform.position.x + xPos, transform.position.y, transform.position.z + zPos);
-        Debug.Log("Set wander position to: " + wanderTargetTransform.position);
+        //Debug.Log("Set wander position to: " + wanderTargetTransform.position);
     }
 }
 

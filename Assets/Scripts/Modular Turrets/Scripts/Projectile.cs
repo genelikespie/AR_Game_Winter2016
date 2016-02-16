@@ -35,8 +35,8 @@ public class Projectile : MonoBehaviour
   {
       Debug.Log("Hit " + c.name + " !!!");
     if (c.gameObject.tag == "Enemy") {
-      Destroy (gameObject);
-      c.gameObject.SendMessage ("Hit", damage, SendMessageOptions.DontRequireReceiver);
+        c.gameObject.SendMessage ("Hit", damage, SendMessageOptions.DontRequireReceiver);
+        Destroy(gameObject);
     }
     
   }

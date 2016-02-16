@@ -2,10 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public enum EnumDefaultTarget
-{
-    player, hq, testship
-}
+
+// This class is DEPRECATED
 public class SpaceShipAI : MonoBehaviour {
     public EnumDefaultTarget defaultTarget;
     //
@@ -38,7 +36,7 @@ public class SpaceShipAI : MonoBehaviour {
         rigidbody.velocity = transform.forward * baseSpeed;
         velocity = rigidbody.velocity;
 
-        if (defaultTarget == EnumDefaultTarget.hq)
+        if (defaultTarget == EnumDefaultTarget.headquarter)
             targetTransform = Headquarter.Instance().transform;
         else if (defaultTarget == EnumDefaultTarget.player)
             Debug.LogError("not implemented default target as player yet");

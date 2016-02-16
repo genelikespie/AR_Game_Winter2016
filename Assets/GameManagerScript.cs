@@ -47,6 +47,10 @@ public class GameManagerScript : MonoBehaviour {
             Debug.LogError("no interaction script in pause button");
         PauseButton.GetComponent<InteractionScript>().paused = false;
         PauseButton.gameObject.SendMessage("pauseGame", SendMessageOptions.DontRequireReceiver);
-        
+    }
+
+    public void PlayerLost()
+    {
+        Debug.Log("PLAYER LOST");
     }
 }

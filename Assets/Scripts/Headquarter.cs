@@ -6,6 +6,9 @@ public class Headquarter : MonoBehaviour {
 
     public float HitPoints;
     public float Armor;
+
+    private GameManagerScript gameManager;
+
     private static Headquarter instance;
     private static Object instance_lock = new Object();
     private string name;
@@ -27,12 +30,31 @@ public class Headquarter : MonoBehaviour {
             return null;
         }
     }
-	// Use this for initialization
-	void Start () {
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    void Awake()
+    {
+        gameManager = GameManagerScript.Instance();
+    }
+
+    public void Hit(float damage)
+    {
+        // apply damage to armor
+        if (Armor > 0)
+        {
+            float remainder = Armor - damage;
+            Armor -= damage;
+            // if armor is depleted, apply remaining damage to HP
+            if (Armor <= 0) {
+                Armor = 0;
+                HitPoints += remainder;
+            }
+        }
+        else
+            HitPoints -= damage;
+
+        // if HP is gone, player loses
+        if (HitPoints <= 0)
+        {
+            gameManager.PlayerLost();
+        }
+    }
 }
