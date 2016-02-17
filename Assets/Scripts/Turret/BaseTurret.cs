@@ -3,9 +3,17 @@ using System.Collections;
 
 public class BaseTurret : MonoBehaviour {
 
+    //Creating projectile objects
     public GameObject myProjectile;
     public int arraySize = 100;
     public GameObject[] projectileArray;
+
+
+    //Tank Features
+    public float reloadTime = .25f;
+    public bool FireYes = true;
+    public Vector3 dummyV;
+    public Quaternion dummyQ;
 
 
     int currentProjectileIndex = 0; // number to keep track of the next projectile to fire in our array
@@ -29,7 +37,7 @@ public class BaseTurret : MonoBehaviour {
 	}
 
     
-    protected void FireBullet(Vector3 direction, Quaternion rotation)
+    public void FireBullet(Vector3 direction, Quaternion rotation)
     {
 
         if (currentProjectileIndex <= arraySize)

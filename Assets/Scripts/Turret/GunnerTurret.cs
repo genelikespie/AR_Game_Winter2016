@@ -3,10 +3,8 @@ using System.Collections;
 
 public class GunnerTurret : BaseTurret
 {
-    public bool FireYes = true;
   public GameObject muzzleFire;
   public GameObject projectile;
-  public float reloadTime = .25f;
   public float turnSpeed = 5f;
   public float firePauseTime = 0.01f;
   public float errorAmount = 0.001f;
@@ -18,8 +16,7 @@ public class GunnerTurret : BaseTurret
   public Transform aim_pan;
   public bool fireOn = false;
   SpriteAnimator muzzleFireAnimation;
-    private Vector3 dummyV;
-    private Quaternion dummyQ;
+
 
   protected float nextFireTime;
   protected float nextMoveTime;
@@ -118,15 +115,19 @@ public class GunnerTurret : BaseTurret
 
   new void FireBullet(Vector3 direction, Quaternion rotation)
     {
+        if (Time.time >= nextFireTime)
+        {
 
-    nextFireTime = Time.time + reloadTime;
-    nextMoveTime = Time.time + firePauseTime;
+            nextFireTime = Time.time + reloadTime;
+            nextMoveTime = Time.time + firePauseTime;
 
-    foreach (Transform m in muzzlePositions) {
-      muzzleFireAnimation.play = true;
-            // Instantiate (projectile, m.position, m.rotation);
-            base.FireBullet(m.position, m.rotation);
-    }
+            foreach (Transform m in muzzlePositions)
+            {
+                muzzleFireAnimation.play = true;
+                // Instantiate (projectile, m.position, m.rotation);
+                base.FireBullet(m.position, m.rotation);
+            }
+        }
 
     }
 

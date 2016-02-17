@@ -5,9 +5,15 @@ public class moveTank : MonoBehaviour {
 
 
     //shooting functionality
-    public BaseTurret BT1;
-    public BaseTurret BT2;
-    public BaseTurret BT3;
+    public GameObject BT1;
+    public GameObject BT2;
+    public GameObject BT3;
+    private GameObject activeTank;
+    private Vector3 dummyV;
+    private Quaternion dummyQ;
+    public enum TurretChoice { Tur1, Tur2, Tur3};
+    public TurretChoice defaultTurret;
+    public int activeTankNumber;
 
 
     public Transform Spawner;
@@ -45,11 +51,30 @@ public class moveTank : MonoBehaviour {
         Debug.Log("MOVECROSSHAIR NOT FOUND");
         CrosshairTransform = moveCrosshair.Instance().transform;
         m_Rigidbody = GetComponent<Rigidbody>();
+
+        if (BT1 == null)
+            Debug.Log("First Turret Missing");
+        if (BT2 == null)
+            Debug.Log("Second Turret Missing");
+        if (BT3 == null)
+            Debug.Log("Third Turret Missing");
+
     }
 
     // Use this for initialization
     void Start()
     {
+        if (BT1 != null)
+            if (defaultTurret == TurretChoice.Tur1)
+                activeTank = BT1;
+        else if (BT2 != null)
+            if (defaultTurret == TurretChoice.Tur2)
+                activeTank = BT2;
+       else if (BT3 != null)
+            if (defaultTurret == TurretChoice.Tur3)
+                activeTank = BT3;
+
+
         mainCamera = Camera.main;
         if (GameObject.Find("BlueCross") == null)
             Debug.LogError("No Crosshair");
@@ -96,6 +121,11 @@ public class moveTank : MonoBehaviour {
         {
             Move(levelPosition);
             Turn(levelPosition);
+        }
+
+        if (Input.GetMouseButtonDown(0) && activeTank.GetComponent<BaseTurret>().FireYes == true)
+        {
+            activeTank.GetComponent<BaseTurret>().FireBullet(dummyV,dummyQ);
         }
 
     }
