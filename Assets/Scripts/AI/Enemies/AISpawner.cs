@@ -41,7 +41,6 @@ public class AISpawner : MonoBehaviour {
                 doneSpawning = true;
             //Spawn();
         }
-        
 	}
 
     public bool AIShipDestroyed()

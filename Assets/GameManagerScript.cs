@@ -28,9 +28,9 @@ public class GameManagerScript : MonoBehaviour {
 
     // Use this for initialization
     void Awake () {
-        PauseButton = GameObject.Find("PauseMenu");
+        PauseButton = GameObject.Find("PauseButton");
         if (PauseButton == null)
-            Debug.LogError("NO PAUSEY");
+            Debug.LogError("cannot find pause button");
 	}
 	
 	// Update is called once per frame
