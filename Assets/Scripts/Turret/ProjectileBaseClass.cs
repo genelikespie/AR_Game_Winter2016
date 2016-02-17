@@ -7,39 +7,33 @@ using System.Collections;
         public float speed = 50;
         public float range = 50;
         public float damage = 1;
-        private float currentDistance = 0;
+        protected float currentDistance = 0;
+        protected bool amIFired = false;
+        protected GameObject BulletHolder;
+        protected Vector3 Stop = new Vector3(0, 0, 0);
 
         public virtual void Fire(Vector3 direction, Quaternion rotation)
         {
-            // Generic fire function (can also be abstract to require derived classes to implement this)   
-            this.transform.position = direction;
-            this.transform.rotation = rotation;
-            Debug.Log("WE ARE AT THE FIRE YOOOOOOOOOOOO!!!");
+
+        if (this.GetComponent<Collider>().enabled == false)
+            this.GetComponent<Collider>().enabled = true;
+
+        this.transform.position = direction;
+        this.transform.rotation = rotation;
+
 
         }
 
-        // Use this for initialization
-        void Start()
-        {
+        void Awake()
+    {
+        if (this.GetComponent<Collider>() == null)
+            Debug.LogError("Projectile needs Sphere Collider");
 
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-            transform.Translate(Vector3.forward * Time.deltaTime * speed);
-            currentDistance += Time.deltaTime * speed;
-
-            if (currentDistance >= range)
-            {
-                if (transform.parent)
-                {
-                    //   Destroy(transform.parent.gameObject);
-                }
-                //  Destroy(gameObject);
-
-            }
-        }
+        if (GameObject.Find("BulletHolder") == null)
+            Debug.Log("NEED BULLETHOLDER");
+        else
+            BulletHolder = GameObject.Find("BulletHolder");
+    }
 
         void OnTriggerEnter(Collider c)
         {
