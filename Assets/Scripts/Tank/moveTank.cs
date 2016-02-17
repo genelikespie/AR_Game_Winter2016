@@ -13,38 +13,22 @@ public class moveTank : MonoBehaviour {
     private Quaternion dummyQ;
     public enum TurretChoice { Tur1, Tur2, Tur3};
     public TurretChoice defaultTurret;
-    public int activeTankNumber;
 
-
-    public Transform Spawner;
-    GameObject Tank;
-    Transform CrosshairLocation;
-    Camera mainCamera;
-    Transform startTankLocation;
-    Transform endTankLocation;
-    float velocity;
-    float smoothTime;
-    
+    Transform startTankLocation;    
 
     //moving the crosshair to tank
     Vector3 levelPosition;
-    Ray ray;
-    float xScreen;
-    float yScreen;
-
 
     //tank variables
     public float m_Speed;
     public float m_TurnSpeed;
     public int moveDistance;
     private Rigidbody m_Rigidbody;              // Reference used to move the tank.
-    Vector3 goalVelocity;
-    Vector3 velocityTank;
     Vector3 difference;
-    Vector3 moveA;
     Quaternion neededRotation;
     Transform CrosshairTransform;
     bool moveGranted = false;
+
 
     void Awake()
     {
@@ -74,55 +58,22 @@ public class moveTank : MonoBehaviour {
             if (defaultTurret == TurretChoice.Tur3)
                 activeTank = BT3;
 
-
-        mainCamera = Camera.main;
         if (GameObject.Find("BlueCross") == null)
             Debug.LogError("No Crosshair");
-        CrosshairLocation = GameObject.Find("BlueCross").transform;
-        Tank = this.gameObject;
-        smoothTime = 5F;
-        velocity = 100F;
-        xScreen = Screen.width / 2;
-        yScreen = Screen.height / 2;
-        startTankLocation = Tank.transform;
-        Vector3 targetPosition = new Vector3(xScreen, yScreen, 0);
-        if (GameObject.Find("spawnTankPad") == null)
-            Debug.LogError("No spawnTankPad");
-        Spawner = GameObject.Find("spawnTankPad").transform;
+        startTankLocation = this.transform;
     }
-
-
-    void Update()
-    {
-        /*
-        ray = mainCamera.ScreenPointToRay(new Vector3(xScreen, yScreen, 0));
-        moveA = startTankLocation.position;
-        RaycastHit Hit;
-
-        if (Physics.Raycast(ray, out Hit))
-        {
-
-            Debug.DrawRay(ray.origin, ray.direction * 10000, Color.yellow);
-            levelPosition = new Vector3(Hit.point.x, 0, Hit.point.z);
-            CrosshairLocation.position = Hit.point;
-            moveGranted = true;
-        }
-        else
-            moveGranted = false;
-            */
-        moveA = startTankLocation.position;
-    }
-
 
     //Frame Rate check for tank
     void FixedUpdate()
     {
+        //move tank to crosshair
         levelPosition = CrosshairTransform.GetComponent<moveCrosshair>().levelPosition;
         {
             Move(levelPosition);
             Turn(levelPosition);
         }
 
+        //Fire the turret
         if (Input.GetMouseButtonDown(0) && activeTank.GetComponent<BaseTurret>().FireYes == true)
         {
             activeTank.GetComponent<BaseTurret>().FireBullet(dummyV,dummyQ);
@@ -148,8 +99,6 @@ public class moveTank : MonoBehaviour {
 
     private void Turn(Vector3 turning)
     {
-
-        
         difference = turning - this.transform.position;
         if (difference.magnitude > moveDistance)
         {

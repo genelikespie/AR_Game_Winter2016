@@ -48,22 +48,6 @@ public class GunnerTurret : BaseTurret
   {
     if (target) {
       if (Time.time >= nextMoveTime) {
-        //todo: Add aim ahead functionality, this will increase accuracy.
-        
-//        Vector3 shooterPos = transform.position;
-//        Vector3 targetPos = target.position;
-//
-//        Vector3 shooterVel = Vector3.zero;
-//        Vector3 targetVel = target.rigidbody.velocity;
-
-//        Vector3 intercept;
-//        if (aimAhead) {
-//          print ("aim ahead");
-//          intercept = target;
-//          //intercept = Aim_Ahead.firstOrderIntercept (shooterPos, shooterVel, targetPos, targetVel, 30.0f);
-//        } else {
-//          intercept = target;
-//        }
 
         aim_pan.LookAt (target);        
         Vector3 newRot = aim_pan.eulerAngles;
@@ -89,29 +73,6 @@ public class GunnerTurret : BaseTurret
       game_tilt.localRotation = Quaternion.Lerp (game_tilt.localRotation, aim_tilt_start, Time.deltaTime * turnSpeed);
     }
   }
-    /*
-  void OnTriggerStay (Collider col)
-  {
-    if (target == null) {
-      if (col.gameObject.tag == "Enemy") {
-        nextFireTime = Time.time + (reloadTime * 0.5f);
-        target = col.gameObject.transform;
-      }
-    }
-  }
-
-  void OnEnemyTargetDestroyed (GameObject sender)
-  {
-    target = null;
-  }
-
-  protected virtual void OnTriggerExit (Collider t)
-  {
-    if (t.gameObject.transform == target) {
-      target = null;
-    }
-  }
-  */
 
   new void FireBullet(Vector3 direction, Quaternion rotation)
     {

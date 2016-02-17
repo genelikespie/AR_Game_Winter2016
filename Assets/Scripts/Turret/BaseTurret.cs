@@ -42,8 +42,6 @@ public class BaseTurret : MonoBehaviour {
 
         if (currentProjectileIndex <= arraySize)
                 projectileArray[currentProjectileIndex].GetComponent<ProjectileBaseClass>().Fire(direction,rotation);
-        Debug.Log(projectileArray[currentProjectileIndex].GetComponent<ProjectileBaseClass>());
-        Debug.Log(projectileArray[currentProjectileIndex]);
         currentProjectileIndex++;
         if (currentProjectileIndex >= arraySize)
             currentProjectileIndex = 0;
