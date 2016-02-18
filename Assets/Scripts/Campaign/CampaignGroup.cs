@@ -14,8 +14,9 @@ public class CampaignGroup : MonoBehaviour {
 
     private CampaignStage currentStage;
 
-    bool start = true;
-
+    private bool start = true;
+    private int numOfStages;
+    private int currentStageIndex;
     void Awake()
     {
         childStages = new List<CampaignStage>();
@@ -25,13 +26,22 @@ public class CampaignGroup : MonoBehaviour {
             childStages.Add(s);
             s.Initialize(this);
         }
+        numOfStages = childStages.Count;
+        currentStageIndex = 0;
 
-        // Check that stages are in correct order
-        for (int i = 0; i < childStages.Count; i++)
-        {
-            Debug.Log(childStages[i].name);
-        }
     }
+
+    public void StartCampaign()
+    {
+        currentStageIndex = 0;
+        childStages[currentStageIndex].BeginCurrStage();
+    }
+
+    public void NotifyStageCompleted(CampaignStage stage)
+    {
+
+    }
+
 
 	// Use this for initialization
 	void Start () {
@@ -40,10 +50,5 @@ public class CampaignGroup : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	    if(start)
-        {
-            start = false;
-            childStages[0].BeginCurrStage();
-        }
 	}
 }

@@ -65,6 +65,7 @@ public class AISpawner : MonoBehaviour {
             if (!AISpawnerLocations[spawnerLocationIndex])
                 Debug.LogError("no ai spawner location!  " + spawnerLocationIndex);
             spawnedSpaceShips[i] = AISpawnerLocations[spawnerLocationIndex].Spawn(AIShip);
+            spawnedSpaceShips[i].GetComponent<SpaceShip>().SetAlive();
         }
         return spawnedSpaceShips;
     }
@@ -85,7 +86,7 @@ public class AISpawner : MonoBehaviour {
                 if (!ship.GetComponent<SpaceShip>())
                     Debug.LogError("Space ship component not found!");
                 ship.GetComponent<SpaceShip>().SetAlive();
-                ship.gameObject.SetActive(true);
+                //ship.gameObject.SetActive(true);
             }
         }
     }

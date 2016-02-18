@@ -9,9 +9,13 @@ public class SpaceShip : MonoBehaviour {
     public float maxHitPoints;
     public float baseDamage;
     public GameObject explosionAnimation;
+    //public bool onDeathNotify = true;
+
 
     protected float hitPoints;
-    protected SpaceShipState shipState; 
+    protected SpaceShipState shipState;
+    protected StageWave parentWave;
+
     Collider collider;
 
 	// Use this for initialization
@@ -44,7 +48,23 @@ public class SpaceShip : MonoBehaviour {
     public void SetAlive()
     {
         shipState = SpaceShipState.Alive;
+        gameObject.SetActive(true);
     }
+
+    /// <summary>
+    /// Set this object as inactive for future use
+    /// </summary>
+    public void SetInactive()
+    {
+        shipState = SpaceShipState.Inactive;
+        gameObject.SetActive(false);
+    }
+    // Notify the parent wave when this spaceship dies
+    public void SetOnDeathNotify(StageWave parent)
+    {
+        parentWave = parent;
+    }
+
     protected virtual void Explode()
     {
         Debug.Log(this.name + " Blew up!");
@@ -58,6 +78,9 @@ public class SpaceShip : MonoBehaviour {
             Debug.LogError("There's no explosion prefab referenced!");
         // Kill object
         shipState = SpaceShipState.Dead;
+        if (parentWave)
+            parentWave.NotifySpaceShipDied(this);
+        SetInactive();
         //Destroy(this.gameObject);
     }
 }
