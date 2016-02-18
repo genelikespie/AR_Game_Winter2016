@@ -35,11 +35,18 @@ public class CampaignGroup : MonoBehaviour {
     {
         currentStageIndex = 0;
         childStages[currentStageIndex].BeginCurrStage();
+        Debug.Log("BEGINNING CAMPAIGN " + name);
     }
 
     public void NotifyStageCompleted(CampaignStage stage)
     {
-
+        currentStageIndex++;
+        if (currentStageIndex >= numOfStages)
+        {
+            Debug.Log("PLAYER BEAT CAMPAIGN " + name);
+            Application.LoadLevel(2);
+            return;
+        }
     }
 
 

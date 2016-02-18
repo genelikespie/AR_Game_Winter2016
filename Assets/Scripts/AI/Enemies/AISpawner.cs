@@ -74,18 +74,22 @@ public class AISpawner : MonoBehaviour {
     {
         if (AIShips.Length < 0)
             Debug.LogError("AIShips to spawn is too small!");
+
+        Debug.Log("AI Spawn TypesOfEnemies: " + AIShips.GetLength(0) + "  length[0] " + AIShips[0].Length);
         // Number of dimensions of the array
-        for (int dim = 0; dim < AIShips.Rank; dim++)
+        for (int dim = 0; dim < AIShips.GetLength(0); dim++)
         {
-            for (int length = 0; length < AIShips.GetLength(dim); length++)
+            for (int length = 0; length < AIShips[dim].Length; length++)
             {
-                int spawnerLocationIndex = (int)(Random.value * 3);
+                int spawnerLocationIndex = ((int)(Random.value * 100)) % 4;
                 if (!AISpawnerLocations[spawnerLocationIndex])
                     Debug.LogError("no ai spawner location!  " + spawnerLocationIndex);
                 Transform ship = AISpawnerLocations[spawnerLocationIndex].Relocate(AIShips[dim][length]);
                 if (!ship.GetComponent<SpaceShip>())
                     Debug.LogError("Space ship component not found!");
                 ship.GetComponent<SpaceShip>().SetAlive();
+
+                //Debug.Log("AI Spawner relocated ship: " + ship.name);
                 //ship.gameObject.SetActive(true);
             }
         }

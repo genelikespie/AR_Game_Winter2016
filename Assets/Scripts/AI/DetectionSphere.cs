@@ -17,7 +17,7 @@ public class DetectionSphere : MonoBehaviour {
     }
 
     void OnTriggerEnter (Collider c) {
-        Debug.Log("detected: " + c.name + " init: " + initialized + " tag: " + c.tag);
+        //Debug.Log("detected: " + c.name + " init: " + initialized + " tag: " + c.tag);
         if (initialized && c.tag == colliderTag && parent)
         {
             parent.SendMessage("ReceiveDetectionSphereEvent", c.gameObject, SendMessageOptions.RequireReceiver);

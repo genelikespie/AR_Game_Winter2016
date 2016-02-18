@@ -33,9 +33,18 @@ public class GameManagerScript : MonoBehaviour {
         }
     }
 
+    // Use this for initialization
+    void Awake()
+    {
+        pauseButton = GameObject.Find("PauseButton").GetComponent<Button>();
+        if (!pauseButton)
+        {
+            Debug.LogError("Cannot find pause button!");
+        }
+    }
+	
     void Start()
     {
-        pauseButton = pauseButton.GetComponent<Button>();
         paused = true;
     }
 
@@ -57,13 +66,7 @@ public class GameManagerScript : MonoBehaviour {
         }
     }
 
-    // Use this for initialization
-    void Awake () {
-        PauseButton = GameObject.Find("Pause");
-        if (PauseButton == null)
-            Debug.LogError("cannot find pause button");
-	}
-	
+
 	// Update is called once per frame
 	void Update () {
         if (paused == true && pauseCylinder.transform.position.y > 3)
@@ -76,12 +79,7 @@ public class GameManagerScript : MonoBehaviour {
     public void PauseTrackableLost()
     {
         //pause game
-        if (!PauseButton)
-            Debug.LogError("cant find pause button");
-        if (!PauseButton.GetComponent<InteractionScript>())
-            Debug.LogError("no interaction script in pause button");
-        PauseButton.GetComponent<InteractionScript>().paused = false;
-        PauseButton.gameObject.SendMessage("pauseGame", SendMessageOptions.DontRequireReceiver);
+        pauseGame();
     }
 
     public void PlayerLost()

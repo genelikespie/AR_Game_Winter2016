@@ -50,6 +50,7 @@ public class StageWave : MonoBehaviour {
                 enemyTransforms[i][j].GetComponent<SpaceShip>().SetInactive();
             }
         }
+        Debug.Log("ENEMYTRANSFORMS TypesOfEnemies:" + enemyTransforms.GetLength(0) + " length of [0]:" + enemyTransforms[0].Length);
 
     }
     public void Initialize (CampaignStage parent) {
@@ -64,6 +65,7 @@ public class StageWave : MonoBehaviour {
         {
             Debug.Log("PLAYER BEAT WAVE " + name);
             parentStage.NotifyWaveCompleted(this);
+            return;
         }
     }
 	// Update is called once per frame
@@ -77,5 +79,7 @@ public class StageWave : MonoBehaviour {
             Debug.LogError("No AISpawner referenced: StageWave " + name);
         aiSpawner.RelocateSpawn(enemyTransforms);
         enemiesLeft = totalEnemies;
+
+        Debug.Log("BEGINNING WAVE " + name + " Enemies: " + totalEnemies);
     }
 }

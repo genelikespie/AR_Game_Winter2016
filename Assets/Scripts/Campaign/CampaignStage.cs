@@ -47,7 +47,10 @@ public class CampaignStage : MonoBehaviour {
         if (!parentGroup)
             Debug.LogError("No Parent Group!");
         currentWaveIndex = 0;
-        BeginChildWaves(childWaves[currentWaveIndex]);
+        childWaves[currentWaveIndex].BeginCurrWave();
+        //BeginChildWaves(childWaves[currentWaveIndex]);
+
+        Debug.Log("BEGINNING STAGE " + name);
     }
     /// <summary>
     ///  Called by the parent CampaignGroup to Start the Stage
@@ -59,13 +62,15 @@ public class CampaignStage : MonoBehaviour {
         {
             parentGroup.NotifyStageCompleted(this);
             Debug.Log("PLAYER BEAT STAGE " + name);
+            return;
         }
-        BeginChildWaves(childWaves[currentWaveIndex]);
+        childWaves[currentWaveIndex].BeginCurrWave();
+        //BeginChildWaves(childWaves[currentWaveIndex]);
     }
 
     IEnumerator BeginChildWaves(StageWave runWave)
     {
-        yield return new WaitForSeconds(runWave.delayBeforeCurrStage);
+        //yield return new WaitForSeconds(runWave.delayBeforeCurrStage);
         runWave.BeginCurrWave();
         yield return new WaitForSeconds(runWave.delayBeforeNextStage);
     }
