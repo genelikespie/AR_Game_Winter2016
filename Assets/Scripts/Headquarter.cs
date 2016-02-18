@@ -57,4 +57,14 @@ public class Headquarter : MonoBehaviour {
             gameManager.PlayerLost();
         }
     }
+
+    void OnEnable()
+    {
+        Bounds b = this.GetComponent<Collider>().bounds;
+        //Debug.Log("WAAAAAAAAAAAAGH" + b);
+        gameManager.hCollider = this.GetComponent<Collider>();
+        gameManager.boundSize = b.size;
+        gameManager.boundExtent = b.extents;
+        gameManager.center = b.center;
+    }
 }

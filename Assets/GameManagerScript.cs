@@ -10,9 +10,18 @@ public class GameManagerScript : MonoBehaviour {
 
     public Button pauseButton;
     private bool paused;
+    private bool scrollOver;
 
     public GameObject pauseCylinder;
     public GameObject BTMCylinder;
+
+    public GameObject headquarters;
+    public GameObject crosshair;
+    public Collider hCollider;
+    public Vector3 boundSize;
+    public Vector3 boundExtent;
+
+    public Vector3 center;
 
     public static GameManagerScript Instance()
     {
@@ -46,17 +55,18 @@ public class GameManagerScript : MonoBehaviour {
     void Start()
     {
         paused = true;
+        headquarters.SetActive(true);
+        scrollOver = false;
+       /* hCollider = headquarters.GetComponent<BoxCollider>();
+        //Debug.Log("sdf ds" + headquarters.GetComponent<BoxCollider>().bounds.extents);
+        boundSize = hCollider.bounds.size;
+        boundExtent = hCollider.bounds.extents;
+        Debug.Log(hCollider.bounds.max + " " + hCollider.bounds.min);*/
     }
 
     public void pauseGame()
     {
-        if (paused == false)
-        {
-            Time.timeScale = 0;
-            paused = true;
-            pauseButton.GetComponent<Text>().text = "Unpause";
-        }
-        else
+        if (paused == true)
         {
             Time.timeScale = 1;
             paused = false;
@@ -64,15 +74,31 @@ public class GameManagerScript : MonoBehaviour {
             pauseCylinder.transform.position = new Vector3(13, 117, -1);
             BTMCylinder.transform.position = new Vector3(-11, 117, -1);
         }
+        else
+        {
+            Time.timeScale = 0;
+            paused = true;
+            pauseButton.GetComponent<Text>().text = "Unpause";
+        }
     }
 
 
 	// Update is called once per frame
 	void Update () {
+        //Debug.Log(pauseCylinder.transform.position.y);
         if (paused == true && pauseCylinder.transform.position.y > 3)
         {
             pauseCylinder.transform.Translate(Vector3.back * 5);
             BTMCylinder.transform.Translate(Vector3.back * 5);
+        }
+        Debug.Log(crosshair.transform.position.x + " " + (center.x + boundExtent.x) + " " + (center.x - boundExtent.x));
+        //Debug.Log(center.x + " " + boundExtent.x + " " + boundSize.x);
+        if ((crosshair.transform.position.x < (center.x + boundExtent.x)) && 
+            (crosshair.transform.position.x > (center.x - boundExtent.x)) &&
+            (crosshair.transform.position.z > (center.z - boundExtent.z)) &&
+            (crosshair.transform.position.z > (center.z - boundExtent.z)))
+        {
+            paused = true;
         }
     }
 
