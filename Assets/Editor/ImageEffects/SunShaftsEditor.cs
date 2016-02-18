@@ -92,7 +92,7 @@ namespace UnityStandardAssets.ImageEffects
 
             EditorGUILayout.Separator ();
 
-            sunShaftBlurRadius.floatValue = EditorGUILayout.Slider ("Blur size", sunShaftBlurRadius.floatValue, 1.0f, 10.0f);
+            sunShaftBlurRadius.floatValue = EditorGUILayout.Slider ("Blur length", sunShaftBlurRadius.floatValue, 1.0f, 10.0f);
             radialBlurIterations.intValue = EditorGUILayout.IntSlider ("Blur iterations", radialBlurIterations.intValue, 1, 3);
 
             EditorGUILayout.Separator ();

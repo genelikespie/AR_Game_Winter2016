@@ -66,11 +66,11 @@ namespace UnityStandardAssets.ImageEffects
                 EditorGUILayout.PropertyField (middleGrey, new GUIContent ("Middle grey", "Middle grey defines the average luminance thus brightening or darkening the entire image."));
                 EditorGUILayout.PropertyField (white, new GUIContent ("White", "Smallest luminance value that will be mapped to white"));
                 EditorGUILayout.PropertyField (adaptionSpeed, new GUIContent ("Adaption Speed", "Speed modifier for the automatic adaption"));
-                EditorGUILayout.PropertyField (adaptiveTextureSize, new GUIContent ("Texture size", "Defines the amount of downsamples needed."));
+                EditorGUILayout.PropertyField (adaptiveTextureSize, new GUIContent ("Texture length", "Defines the amount of downsamples needed."));
             } else if (type.enumValueIndex == (int) Tonemapping.TonemapperType.AdaptiveReinhardAutoWhite) {
                 EditorGUILayout.PropertyField (middleGrey, new GUIContent ("Middle grey", "Middle grey defines the average luminance thus brightening or darkening the entire image."));
                 EditorGUILayout.PropertyField (adaptionSpeed, new GUIContent ("Adaption Speed", "Speed modifier for the automatic adaption"));
-                EditorGUILayout.PropertyField (adaptiveTextureSize, new GUIContent ("Texture size", "Defines the amount of downsamples needed."));
+                EditorGUILayout.PropertyField (adaptiveTextureSize, new GUIContent ("Texture length", "Defines the amount of downsamples needed."));
             }
 
             GUILayout.Label("All following effects will use LDR color buffers", EditorStyles.miniBoldLabel);

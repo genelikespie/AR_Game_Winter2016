@@ -34,4 +34,19 @@ public class AISpawnerLocation : MonoBehaviour {
         return (Instantiate(AIShip, spawnLocation, spawnRotation) as GameObject);
 
     }
+
+    public Transform Relocate(Transform AIShipTransform)
+    {
+        Assert.IsNotNull(AIShipTransform);
+        Vector3 spawnLocation = spawnBounds.center;
+        Quaternion spawnRotation = Quaternion.LookRotation(spawnLocation.normalized);
+        spawnLocation.x = spawnLocation.x + (Random.value * boundSize.x - boundExtent.x);
+        spawnLocation.y = spawnLocation.y + (Random.value * boundSize.y - boundExtent.y);
+        spawnLocation.z = spawnLocation.z + (Random.value * boundSize.z - boundExtent.z);
+        //Debug.Log(spawnLocation + " center: " + spawnBounds.center);
+        AIShipTransform.position = spawnLocation;
+        AIShipTransform.rotation = spawnRotation;
+        return AIShipTransform;
+
+    }
 }

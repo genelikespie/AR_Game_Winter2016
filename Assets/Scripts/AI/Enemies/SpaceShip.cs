@@ -1,30 +1,36 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+public enum SpaceShipState
+{
+    Alive, Inactive, Dead
+}
 public class SpaceShip : MonoBehaviour {
     public float maxHitPoints;
     public float baseDamage;
     public GameObject explosionAnimation;
 
-    private float hitPoints;
+    protected float hitPoints;
+    protected SpaceShipState shipState; 
     Collider collider;
 
 	// Use this for initialization
-	protected void Start () {
+	protected void Awake () {
         collider = GetComponent<Collider>();
         if (!collider)
             Debug.LogError("No collider found!");
 
         hitPoints = maxHitPoints;
+        shipState = SpaceShipState.Inactive;
 	}
-	
+
+    protected void Start()
+    {
+    }
 	// Update is called once per frame
 	protected void Update () {
 	}
 
-    /**
-     * Method to apply damage to our SpaceShip
-     */
     public virtual void Hit(float damage)
     {
         Debug.Log("Space ship " + this.name + " was hit for: " + damage + " dmg");
@@ -35,7 +41,10 @@ public class SpaceShip : MonoBehaviour {
         }
     }
 
-
+    public void SetAlive()
+    {
+        shipState = SpaceShipState.Alive;
+    }
     protected virtual void Explode()
     {
         Debug.Log(this.name + " Blew up!");
@@ -48,6 +57,7 @@ public class SpaceShip : MonoBehaviour {
         else
             Debug.LogError("There's no explosion prefab referenced!");
         // Kill object
-        Destroy(this.gameObject);
+        shipState = SpaceShipState.Dead;
+        //Destroy(this.gameObject);
     }
 }

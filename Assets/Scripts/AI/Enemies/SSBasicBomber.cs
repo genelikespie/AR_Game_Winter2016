@@ -14,6 +14,7 @@ public class SSBasicBomber : SpaceShip {
 
     new void Awake()
     {
+        base.Awake();
         crossHairObject = transform.Find("RedCross").gameObject;
         if (!crossHairObject)
             Debug.LogError("Cannot find RedCross!");
@@ -28,7 +29,6 @@ public class SSBasicBomber : SpaceShip {
     new void Start()
     {
         base.Start();
-
         if (crossHairObject)
         {
             myCrossHair = crossHairObject;
