@@ -44,7 +44,7 @@ public class moveCrosshair : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
+        //Debug.Log(mainCamera.transform.position.y);
         ray = mainCamera.ScreenPointToRay(new Vector3(xScreen, yScreen, 0));
         RaycastHit Hit;
 

@@ -13,7 +13,7 @@ public class InteractionScript : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         pauseButton = pauseButton.GetComponent<Button>();
-        paused = false;
+        paused = true;
     }
 
     public void pauseGame()
@@ -28,18 +28,19 @@ public class InteractionScript : MonoBehaviour {
             Time.timeScale = 1;
             paused = false;
             pauseButton.GetComponent<Text>().text = "Pause";
-            pauseCylinder.transform.position = new Vector3(584, 1317, -131);
-            BTMCylinder.transform.position = new Vector3(-1, 1317, -131);
+            pauseCylinder.transform.position = new Vector3(13, 117, -1);
+            BTMCylinder.transform.position = new Vector3(-11, 117, -1);
         }
     }
 	
 	// Update is called once per frame
 	void Update () {
-        //Debug.Log(BTMCylinder.transform.position.x + " " + BTMCylinder.transform.position.y + " " + BTMCylinder.transform.position.z);
-        if (paused == true && pauseCylinder.transform.position.y > 200)
+        Debug.Log(BTMCylinder.transform.position.x + " " + BTMCylinder.transform.position.y + " " + BTMCylinder.transform.position.z +
+            " " + pauseCylinder.transform.position.x + " " + pauseCylinder.transform.position.y + " " + pauseCylinder.transform.position.z);
+        if (paused == true && pauseCylinder.transform.position.y > 3)
         {
-            pauseCylinder.transform.Translate(Vector3.back * 30);
-            BTMCylinder.transform.Translate(Vector3.back * 30);
+            pauseCylinder.transform.Translate(Vector3.back * 5);
+            BTMCylinder.transform.Translate(Vector3.back * 5);
         }
 	}
 }
