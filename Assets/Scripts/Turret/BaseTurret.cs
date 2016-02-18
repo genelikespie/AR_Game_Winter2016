@@ -4,9 +4,9 @@ using System.Collections;
 public class BaseTurret : MonoBehaviour {
 
     //Creating projectile objects
-    public GameObject myProjectile;
+    public Transform myProjectile;
     public int arraySize = 100;
-    public GameObject[] projectileArray;
+    public Transform[] projectileArray;
 
 
     //Tank Features
@@ -14,6 +14,8 @@ public class BaseTurret : MonoBehaviour {
     public bool FireYes = true;
     public Vector3 dummyV;
     public Quaternion dummyQ;
+    private GameObject BulletH;
+
 
 
     int currentProjectileIndex = 0; // number to keep track of the next projectile to fire in our array
@@ -22,11 +24,21 @@ public class BaseTurret : MonoBehaviour {
     // Use this for initialization
     protected void Start () {
 
-        projectileArray = new GameObject[arraySize];
+
+        //TO DO~~!!!!!!!
+        /* instantiate bulletholder */
+        if (GameObject.Find("BulletHolder") == null)
+            Debug.LogError("NEED BULLETHOLDER FOR BASETURRET");
+        else
+            BulletH = GameObject.Find("BulletHolder");
+
+
+        projectileArray = new Transform[arraySize];
         for (int i = 0; i < arraySize; i++)
         {
-            projectileArray[i] = Instantiate(myProjectile) as GameObject;
+            projectileArray[i] = (Instantiate(myProjectile, BulletH.transform.position, BulletH.transform.rotation) as GameObject).transform;
             projectileArray[i].name = myProjectile.name;
+            projectileArray[i].gameObject.SetActive(false);
         }
 
     }
@@ -41,7 +53,10 @@ public class BaseTurret : MonoBehaviour {
     {
 
         if (currentProjectileIndex <= arraySize)
-                projectileArray[currentProjectileIndex].GetComponent<ProjectileBaseClass>().Fire(direction,rotation);
+        {
+            projectileArray[currentProjectileIndex].gameObject.SetActive(true);
+            projectileArray[currentProjectileIndex].gameObject.GetComponent<ProjectileBaseClass>().Fire(direction, rotation);
+        }
         currentProjectileIndex++;
         if (currentProjectileIndex >= arraySize)
             currentProjectileIndex = 0;

@@ -3,8 +3,8 @@ using System.Collections;
 
 public class BulletProjectile : ProjectileBaseClass{
 
-    protected Rigidbody Bullet_body;
-    private Vector3 BulletSpeed;
+    private Vector3 BulletSpeed = new Vector3(0, 10, 0);
+    private float holderSpeed;
 
 
     public override void Fire(Vector3 direction, Quaternion rotation)
@@ -12,21 +12,18 @@ public class BulletProjectile : ProjectileBaseClass{
         currentDistance = 0;
             base.Fire(direction,rotation);
                     BulletProjectileUp();
-                           amIFired = true;
+          amIFired = true;
     }
 
 
     new void Start()
     {
-        if (this.gameObject.GetComponent<Rigidbody>() == null)
-            Debug.LogError("Projectile Bullet needs rigidbody");
-        Bullet_body = this.transform.GetComponent<Rigidbody>();
-
-        BulletSpeed = new Vector3(0, speed, 0);
+        holderSpeed = speed;
     }
 
     new void Update()
     {
+        BulletSpeed = new Vector3(0, holderSpeed, 0);
         currentDistance += Time.deltaTime * speed;
         if (currentDistance >= range && amIFired == true)
         {
@@ -37,6 +34,7 @@ public class BulletProjectile : ProjectileBaseClass{
                 this.GetComponent<Collider>().enabled = false;
             BulletProjectileStop();
             transform.position = BulletHolder.transform.position;
+            this.gameObject.SetActive(false);
             amIFired = false;
 
         }
@@ -45,12 +43,12 @@ public class BulletProjectile : ProjectileBaseClass{
 
     void BulletProjectileUp()
     {
-        Bullet_body.velocity = BulletSpeed;
+        this.transform.GetComponent<Rigidbody>().velocity = BulletSpeed;
     }
 
     void BulletProjectileStop()
     {
-        Bullet_body.velocity = Stop;
+        this.transform.GetComponent<Rigidbody>().velocity = Stop;
     }
 
 

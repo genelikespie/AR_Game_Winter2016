@@ -72,13 +72,18 @@ public class moveTank : MonoBehaviour {
             Move(levelPosition);
             Turn(levelPosition);
         }
-
+        
         //Fire the turret
         if (Input.GetMouseButtonDown(0) && activeTank.GetComponent<BaseTurret>().FireYes == true)
         {
-            activeTank.GetComponent<BaseTurret>().FireBullet(dummyV,dummyQ);
+          /*  if (defaultTurret == TurretChoice.Tur1)
+            activeTank.GetComponent<GunnerTurret>().FireBullet(dummyV,dummyQ);*/
+            //  if (defaultTurret == TurretChoice.Tur2)
+            //      activeTank.GetComponent<MissleTurret>().FireBullet(dummyV, dummyQ);
+            //  if (defaultTurret == TurretChoice.Tur3)
+            //      activeTank.GetComponent<GattlingTurret>().FireBullet(dummyV, dummyQ);
         }
-
+        
     }
 
     private void Move(Vector3 distance)

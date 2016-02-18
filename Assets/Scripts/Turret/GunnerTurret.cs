@@ -63,7 +63,7 @@ public class GunnerTurret : BaseTurret
         game_tilt.localRotation = Quaternion.Lerp (game_tilt.localRotation, aim_tilt.localRotation, Time.deltaTime * turnSpeed);
 
       }
-
+      
       if (Time.time >= nextFireTime  && Input.GetMouseButtonDown(0) && FireYes == true) {
                 FireBullet(dummyV, dummyQ);
       }

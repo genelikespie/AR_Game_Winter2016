@@ -15,6 +15,7 @@ using System.Collections;
         public virtual void Fire(Vector3 direction, Quaternion rotation)
         {
 
+
         if (this.GetComponent<Collider>().enabled == false)
             this.GetComponent<Collider>().enabled = true;
 
