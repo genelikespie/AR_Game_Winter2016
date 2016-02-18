@@ -17,6 +17,7 @@ public class SeekingWanderAI : SeekingAI {
     public float maxRangeToWander;
     //public float minRangeToWander;
 
+    public bool DEBUG_LINE_RENDERER = false;
 
     // Turn nodes (center of ellipse for turn radius)
     // -x for left, +x for right
@@ -84,8 +85,11 @@ public class SeekingWanderAI : SeekingAI {
 
     void Update()
     {
-        leftTurnNode.GetComponent<Ellipse>().DrawCircle(turnRadius - rangeBeforeWander, leftTurnNode.transform.position.x, leftTurnNode.transform.position.z, leftTurnNode.transform.position.y);
-        rightTurnNode.GetComponent<Ellipse>().DrawCircle(turnRadius - rangeBeforeWander, rightTurnNode.transform.position.x, rightTurnNode.transform.position.z, rightTurnNode.transform.position.y);
+        if (DEBUG_LINE_RENDERER)
+        {
+            leftTurnNode.GetComponent<Ellipse>().DrawCircle(turnRadius - rangeBeforeWander, leftTurnNode.transform.position.x, leftTurnNode.transform.position.z, leftTurnNode.transform.position.y);
+            rightTurnNode.GetComponent<Ellipse>().DrawCircle(turnRadius - rangeBeforeWander, rightTurnNode.transform.position.x, rightTurnNode.transform.position.z, rightTurnNode.transform.position.y);
+        }
     }
 
     ///// NOTOETOEOEEOEE:::::   X is left and right Z is front and back
