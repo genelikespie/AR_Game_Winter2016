@@ -49,7 +49,7 @@ public class BaseTurret : MonoBehaviour {
 	}
 
     
-    public void FireBullet(Vector3 direction, Quaternion rotation)
+    public virtual void FireBullet(Vector3 direction, Quaternion rotation)
     {
 
         if (currentProjectileIndex <= arraySize)

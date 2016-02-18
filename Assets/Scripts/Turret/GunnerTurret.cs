@@ -64,9 +64,6 @@ public class GunnerTurret : BaseTurret
 
       }
       
-      if (Time.time >= nextFireTime  && Input.GetMouseButtonDown(0) && FireYes == true) {
-                FireBullet(dummyV, dummyQ);
-      }
 
     } else {
       game_pan.rotation = Quaternion.Lerp (game_pan.rotation, aim_pan_start, Time.deltaTime * turnSpeed);
@@ -74,7 +71,7 @@ public class GunnerTurret : BaseTurret
     }
   }
 
-  new void FireBullet(Vector3 direction, Quaternion rotation)
+  public override void FireBullet(Vector3 direction, Quaternion rotation)
     {
         if (Time.time >= nextFireTime)
         {

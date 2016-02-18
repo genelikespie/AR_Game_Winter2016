@@ -76,12 +76,8 @@ public class moveTank : MonoBehaviour {
         //Fire the turret
         if (Input.GetMouseButtonDown(0) && activeTank.GetComponent<BaseTurret>().FireYes == true)
         {
-          /*  if (defaultTurret == TurretChoice.Tur1)
-            activeTank.GetComponent<GunnerTurret>().FireBullet(dummyV,dummyQ);*/
-            //  if (defaultTurret == TurretChoice.Tur2)
-            //      activeTank.GetComponent<MissleTurret>().FireBullet(dummyV, dummyQ);
-            //  if (defaultTurret == TurretChoice.Tur3)
-            //      activeTank.GetComponent<GattlingTurret>().FireBullet(dummyV, dummyQ);
+
+            activeTank.GetComponent<BaseTurret>().FireBullet(dummyV,dummyQ);
         }
         
     }
