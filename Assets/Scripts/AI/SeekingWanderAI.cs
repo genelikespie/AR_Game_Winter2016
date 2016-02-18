@@ -16,6 +16,8 @@ public class SeekingWanderAI : SeekingAI {
     // Range that bomber wanders
     public float maxRangeToWander;
     //public float minRangeToWander;
+    public bool isWandering = false;
+
 
     public bool DEBUG_LINE_RENDERER = false;
 

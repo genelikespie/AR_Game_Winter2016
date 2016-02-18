@@ -3,12 +3,11 @@ using System.Collections;
 
 public class SSBasicBomberAI : SeekingWanderAI {
     public EnumDefaultTarget defaultTarget;
-
+    public float maxDisToWanderNode = 1f;
     Transform myTransform;
-    void Start()
+    new void Start()
     {
         base.Start();
-        isWandering = false;
         myTransform = transform;
         if (defaultTarget == EnumDefaultTarget.headquarter)
             mainTargetTransform = Headquarter.Instance().transform;
@@ -17,10 +16,11 @@ public class SSBasicBomberAI : SeekingWanderAI {
 
         // set bomber to wander on spawn
         SetWanderTransform();
+        //print("wanter asdffffffffffffffffffffffffffffffffaraesf");
         isWandering = true;
     }
 
-    void FixedUpdate()
+    new void FixedUpdate()
     {
         if (!mainTargetTransform)
             Debug.LogError("cannot find main target transform!");
@@ -33,7 +33,7 @@ public class SSBasicBomberAI : SeekingWanderAI {
             SetWanderTransform();
             isWandering = true;
         }
-        else if (isWandering && (myTransform.position - wanderTargetTransform.position).magnitude < 40f)
+        else if (isWandering && (myTransform.position - wanderTargetTransform.position).magnitude < maxDisToWanderNode)
         {
             isWandering = false;
         }

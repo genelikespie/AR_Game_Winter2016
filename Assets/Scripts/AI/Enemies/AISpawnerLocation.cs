@@ -9,17 +9,19 @@ public class AISpawnerLocation : MonoBehaviour {
     Vector3 boundExtent;
 
     // Use this for initialization
-    void Start()
+    void OnEnable()
     {
         spawnBounds = GetComponent<Collider>().bounds;
         boundSize = spawnBounds.size;
         boundExtent = spawnBounds.extents;
+        if (!GetComponent<Collider>())
+            Debug.LogError("NOPE)");
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        Debug.Log(boundSize);
     }
 
     public GameObject Spawn(GameObject AIShip)

@@ -10,7 +10,6 @@ public class SeekingAI : MonoBehaviour {
 
     public float BaseSpeed = 10;
     public float TurnSpeed = 2.5f;
-    public bool isWandering = false;
     public bool IncludeYAxis = false;
     protected float CurrSpeed;
     protected float TargetSpeed;
