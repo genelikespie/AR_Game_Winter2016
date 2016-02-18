@@ -45,7 +45,7 @@ public class GameManagerScript : MonoBehaviour {
     // Use this for initialization
     void Awake()
     {
-        pauseButton = GameObject.Find("PauseButton").GetComponent<Button>();
+        pauseButton = GameObject.Find("Pause").GetComponent<Button>();
         if (!pauseButton)
         {
             Debug.LogError("Cannot find pause button!");
@@ -54,7 +54,8 @@ public class GameManagerScript : MonoBehaviour {
 	
     void Start()
     {
-        paused = true;
+        //paused = false;
+        pauseGame();
         headquarters.SetActive(true);
         scrollOver = false;
        /* hCollider = headquarters.GetComponent<BoxCollider>();
@@ -64,9 +65,17 @@ public class GameManagerScript : MonoBehaviour {
         Debug.Log(hCollider.bounds.max + " " + hCollider.bounds.min);*/
     }
 
-    public void pauseGame()
+    public void togglePause()
     {
         if (paused == true)
+        {
+            unPauseGame();
+        }
+        else
+        {
+            pauseGame();
+        }
+        /*if (paused == true)
         {
             Time.timeScale = 1;
             paused = false;
@@ -79,9 +88,24 @@ public class GameManagerScript : MonoBehaviour {
             Time.timeScale = 0;
             paused = true;
             pauseButton.GetComponent<Text>().text = "Unpause";
-        }
+        }*/
     }
 
+    public void unPauseGame()
+    {
+        Time.timeScale = 1;
+        paused = false;
+        pauseButton.GetComponent<Text>().text = "Pause";
+        pauseCylinder.transform.position = new Vector3(13, 117, -1);
+        BTMCylinder.transform.position = new Vector3(-11, 117, -1);
+    }
+
+    public void pauseGame()
+    {
+        Time.timeScale = 0;
+        paused = true;
+        pauseButton.GetComponent<Text>().text = "Unpause";
+    }
 
 	// Update is called once per frame
 	void Update () {
@@ -98,7 +122,7 @@ public class GameManagerScript : MonoBehaviour {
             (crosshair.transform.position.z > (center.z - boundExtent.z)) &&
             (crosshair.transform.position.z > (center.z - boundExtent.z)))
         {
-            paused = true;
+            pauseGame();
         }
     }
 
