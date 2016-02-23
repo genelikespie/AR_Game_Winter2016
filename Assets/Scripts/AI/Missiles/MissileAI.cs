@@ -7,14 +7,14 @@ public class MissileAI : SeekingAI {
     public float explosionRadius = 4f;
     public float maxTimeToLive = 30f;
     public float damage = 0f;
-    private Collider sphereCollider;
+    private Collider missileCollider;
 
     void Awake()
     {
         if (!ExplosionAnimation)
             Debug.LogError("Cannot find explosion animation");
-        sphereCollider = GetComponent<SphereCollider>();
-        if (!sphereCollider)
+        missileCollider = GetComponent<Collider>();
+        if (!missileCollider)
             Debug.LogError("Cannot find collider!");
     }
 

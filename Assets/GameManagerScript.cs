@@ -1,28 +1,29 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Assertions;
 using System.Collections;
 
 public class GameManagerScript : MonoBehaviour {
 
-    GameObject PauseButton;
-    private static GameManagerScript instance;
-    private static Object instance_lock = new Object();
+    //GameObject PauseButton;
 
-    public Button pauseButton;
-    private bool paused;
+
+    //public Button pauseButton;
+    public bool paused;
     private bool scrollOver;
-
+    /*
     public GameObject pauseCylinder;
     public GameObject BTMCylinder;
 
-    private GameObject headquarters;
-    public GameObject crosshair;
-    public Collider hCollider;
-    public Vector3 boundSize;
-    public Vector3 boundExtent;
+     * */
+    // Use these deltaTime variables for when the game is paused
+    private float timeOfLastFrame;
+    public float timeDeltaTime;
 
-    public Vector3 center;
+    private MenuManager menuManager;
 
+    private static GameManagerScript instance;
+    private static Object instance_lock = new Object();
     public static GameManagerScript Instance()
     {
         if (instance != null)
@@ -45,23 +46,22 @@ public class GameManagerScript : MonoBehaviour {
     // Use this for initialization
     void Awake()
     {
+        /*
         pauseButton = GameObject.Find("Pause").GetComponent<Button>();
         if (!pauseButton)
         {
             Debug.LogError("Cannot find pause button!");
         }
-        headquarters = (Headquarter.Instance()).gameObject;
-        if (!headquarters)
-        {
-            Debug.LogError("Cannot find HQ!");
-        }
+         * */
+        menuManager = MenuManager.Instance();
+        Assert.IsTrue(menuManager);
     }
 	
     void Start()
     {
         //paused = false;
         pauseGame();
-        headquarters.SetActive(true);
+        //headquarters.SetActive(true);
         scrollOver = false;
        /* hCollider = headquarters.GetComponent<BoxCollider>();
         //Debug.Log("sdf ds" + headquarters.GetComponent<BoxCollider>().bounds.extents);
@@ -100,35 +100,36 @@ public class GameManagerScript : MonoBehaviour {
     {
         Time.timeScale = 1;
         paused = false;
-        pauseButton.GetComponent<Text>().text = "Pause";
-        pauseCylinder.transform.position = new Vector3(13, 117, -1);
-        BTMCylinder.transform.position = new Vector3(-11, 117, -1);
+        menuManager.LiftPlatforms();
+        //pauseButton.GetComponent<Text>().text = "Pause";
+        //pauseCylinder.transform.position = new Vector3(13, 117, -1);
+        //BTMCylinder.transform.position = new Vector3(-11, 117, -1);
     }
 
     public void pauseGame()
     {
         Time.timeScale = 0;
         paused = true;
-        pauseButton.GetComponent<Text>().text = "Unpause";
+        menuManager.DropPlatforms();
+        //pauseButton.GetComponent<Text>().text = "Unpause";
     }
 
 	// Update is called once per frame
 	void Update () {
+        timeDeltaTime = Time.realtimeSinceStartup - timeOfLastFrame;
+        timeOfLastFrame = Time.realtimeSinceStartup;
+        /*
         //Debug.Log(pauseCylinder.transform.position.y);
+        
         if (paused == true && pauseCylinder.transform.position.y > 3)
         {
             pauseCylinder.transform.Translate(Vector3.back * 5);
             BTMCylinder.transform.Translate(Vector3.back * 5);
         }
+         * */
         //Debug.Log(crosshair.transform.position.x + " " + (center.x + boundExtent.x) + " " + (center.x - boundExtent.x));
         //Debug.Log(center.x + " " + boundExtent.x + " " + boundSize.x);
-        if ((crosshair.transform.position.x < (center.x + boundExtent.x)) && 
-            (crosshair.transform.position.x > (center.x - boundExtent.x)) &&
-            (crosshair.transform.position.z < (center.z + boundExtent.z)) &&
-            (crosshair.transform.position.z > (center.z - boundExtent.z)))
-        {
-            pauseGame();
-        }
+
     }
 
     public void PauseTrackableLost()
@@ -140,5 +141,10 @@ public class GameManagerScript : MonoBehaviour {
     public void PlayerLost()
     {
         Debug.Log("PLAYER LOST");
+    }
+
+    public void ChangeScenes(int index)
+    {
+        Application.LoadLevel(index);
     }
 }

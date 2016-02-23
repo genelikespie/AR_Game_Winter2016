@@ -15,7 +15,6 @@ public class moveCrosshair : MonoBehaviour {
     private static moveCrosshair instance;
     private static Object instance_lock = new Object();
 
-
     public static moveCrosshair Instance()
     {
         if (instance != null)

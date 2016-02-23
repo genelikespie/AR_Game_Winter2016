@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Assertions;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -8,6 +9,7 @@ public class Headquarter : MonoBehaviour {
     public float Armor;
 
     private GameManagerScript gameManager;
+    private MenuManager menuManager;
 
     private static Headquarter instance;
     private static Object instance_lock = new Object();
@@ -32,7 +34,9 @@ public class Headquarter : MonoBehaviour {
     }
     void Awake()
     {
+        menuManager = MenuManager.Instance();
         gameManager = GameManagerScript.Instance();
+        Assert.IsTrue(menuManager && gameManager);
     }
 
     public void Hit(float damage)
@@ -62,9 +66,9 @@ public class Headquarter : MonoBehaviour {
     {
         Bounds b = this.GetComponent<Collider>().bounds;
         //Debug.Log("WAAAAAAAAAAAAGH" + b);
-        gameManager.hCollider = this.GetComponent<Collider>();
-        gameManager.boundSize = b.size;
-        gameManager.boundExtent = b.extents;
-        gameManager.center = b.center;
+        menuManager.hCollider = this.GetComponent<Collider>();
+        menuManager.boundSize = b.size;
+        menuManager.boundExtent = b.extents;
+        menuManager.center = b.center;
     }
 }
