@@ -15,7 +15,7 @@ public class GameManagerScript : MonoBehaviour {
     public GameObject pauseCylinder;
     public GameObject BTMCylinder;
 
-    public GameObject headquarters;
+    private GameObject headquarters;
     public GameObject crosshair;
     public Collider hCollider;
     public Vector3 boundSize;
@@ -49,6 +49,11 @@ public class GameManagerScript : MonoBehaviour {
         if (!pauseButton)
         {
             Debug.LogError("Cannot find pause button!");
+        }
+        headquarters = (Headquarter.Instance()).gameObject;
+        if (!headquarters)
+        {
+            Debug.LogError("Cannot find HQ!");
         }
     }
 	
@@ -115,11 +120,11 @@ public class GameManagerScript : MonoBehaviour {
             pauseCylinder.transform.Translate(Vector3.back * 5);
             BTMCylinder.transform.Translate(Vector3.back * 5);
         }
-        Debug.Log(crosshair.transform.position.x + " " + (center.x + boundExtent.x) + " " + (center.x - boundExtent.x));
+        //Debug.Log(crosshair.transform.position.x + " " + (center.x + boundExtent.x) + " " + (center.x - boundExtent.x));
         //Debug.Log(center.x + " " + boundExtent.x + " " + boundSize.x);
         if ((crosshair.transform.position.x < (center.x + boundExtent.x)) && 
             (crosshair.transform.position.x > (center.x - boundExtent.x)) &&
-            (crosshair.transform.position.z > (center.z - boundExtent.z)) &&
+            (crosshair.transform.position.z < (center.z + boundExtent.z)) &&
             (crosshair.transform.position.z > (center.z - boundExtent.z)))
         {
             pauseGame();

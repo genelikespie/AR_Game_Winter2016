@@ -21,7 +21,6 @@ public class AISpawnerLocation : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(boundSize);
     }
 
     public GameObject Spawn(GameObject AIShip)
