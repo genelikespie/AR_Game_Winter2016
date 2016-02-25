@@ -36,13 +36,16 @@ using System.Collections;
             BulletHolder = GameObject.Find("BulletHolder");
     }
 
-        void OnTriggerEnter(Collider c)
+         public virtual void OnTriggerEnter(Collider c)
         {
             Debug.Log("Hit " + c.name + " !!!");
             if (c.gameObject.tag == "Enemy")
             {
-                //  Destroy(gameObject);
-                c.gameObject.SendMessage("Hit", damage, SendMessageOptions.DontRequireReceiver);
+            //  Destroy(gameObject);
+            transform.position = BulletHolder.transform.position;
+            this.gameObject.SetActive(false);
+            amIFired = false;
+            c.gameObject.SendMessage("Hit", damage, SendMessageOptions.DontRequireReceiver);
             }
 
         }

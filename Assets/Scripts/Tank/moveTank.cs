@@ -20,14 +20,17 @@ public class moveTank : MonoBehaviour {
     Vector3 levelPosition;
 
     //tank variables
-    public float m_Speed;
+    public float Speed;
+    private float m_Speed;
     public float m_TurnSpeed;
-    public int moveDistance;
+    public float moveDistance;
     private Rigidbody m_Rigidbody;              // Reference used to move the tank.
     Vector3 difference;
     Quaternion neededRotation;
     Transform CrosshairTransform;
     bool moveGranted = false;
+    public Vector3 moveIt;
+
 
 
     void Awake()
@@ -48,6 +51,7 @@ public class moveTank : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
+        m_Speed = Speed;
         if (BT1 != null)
             if (defaultTurret == TurretChoice.Tur1)
                 activeTank = BT1;
@@ -90,11 +94,17 @@ public class moveTank : MonoBehaviour {
         if (difference.magnitude > moveDistance)
         {
             // Create a vector in the direction the tank is facing with a magnitude based on the input, speed and the time between frames.
+            
+            m_Speed = Mathf.Min(difference.magnitude, Speed);
             Vector3 movement = transform.forward * m_Speed * Time.deltaTime;
 
             // Apply this movement to the rigidbody's position.
-            m_Rigidbody.MovePosition(m_Rigidbody.position + movement);
+            m_Rigidbody.MovePosition(this.transform.position + movement);
+          //  m_Rigidbody.velocity = movement;
+
+
         }
+
     }
 
 
