@@ -42,9 +42,10 @@ public class SeekingWanderAI : SeekingAI {
         rightTurnNode = HelperMethods.FindChildWithName(gameObject, "RightTurnNode");
         if (!leftTurnNode || !rightTurnNode)
             Debug.LogError("Left or Right turn node not found!");
-        turnRadius = Mathf.Pow(BaseSpeed / 7.5f, 2) / TurnSpeed;
-        // 160 is the scale of our x axis for our spaceship
 
+        // Radius of our tightest turn
+        turnRadius = Mathf.Pow(BaseSpeed, 2) / TurnSpeed;
+        // 160 is the scale of our x axis for our spaceship
         leftTurnNode.transform.localPosition = new Vector3(-turnRadius, 0, 0);
         rightTurnNode.transform.localPosition = new Vector3(turnRadius, 0, 0);
         turnRadius *= transform.lossyScale.x;
