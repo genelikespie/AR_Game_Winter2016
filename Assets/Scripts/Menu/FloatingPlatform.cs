@@ -73,9 +73,10 @@ public class FloatingPlatform : MonoBehaviour {
     {
         if (descendFromBehindARCamera)
         {
-            transform.position = new Vector3(ARCameraTransform.position.x,
+            transform.position = new Vector3(13, 125, -1);
+            /*transform.position = new Vector3(ARCameraTransform.position.x,
                 ARCameraTransform.position.y + 10f,
-                ARCameraTransform.position.z);
+                ARCameraTransform.position.z);*/
         }
         isActive = true;
         ascend = false;
