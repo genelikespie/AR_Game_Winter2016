@@ -51,5 +51,4 @@ public class BulletProjectile : ProjectileBaseClass{
         this.transform.GetComponent<Rigidbody>().velocity = Stop;
     }
 
-
 }
