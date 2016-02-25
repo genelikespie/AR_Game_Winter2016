@@ -13,7 +13,14 @@ public class RotateReticule : MonoBehaviour {
     public float maxReticuleValue = 2;
     public float currReticuleValue;
     public bool updateWithTime;
+    float reducedValue;
     public bool isActive;
+
+    //Reticule Health
+    public float targetValue;
+    public bool updateWithValue;
+    public bool showStart;
+
 	// Use this for initialization
 	void Start () {
         reticule.type = Image.Type.Filled;
@@ -21,6 +28,8 @@ public class RotateReticule : MonoBehaviour {
         reticule.fillOrigin = 0;
         value = 0;
         currReticuleValue = maxReticuleValue;
+        if (showStart == true)
+        reticule.color = end;
     }
 	
 	// Update is called once per frame
@@ -38,6 +47,31 @@ public class RotateReticule : MonoBehaviour {
             reticule.color = Color.Lerp(start, end, value);
             current = Color.Lerp(start, end, value);
         }
+        else if(updateWithValue == true)
+        {
+            float ratio = Mathf.Min(currReticuleValue / targetValue, targetValue / currReticuleValue);
+                currReticuleValue = Mathf.Lerp(currReticuleValue, targetValue, ratio);
+                value = currReticuleValue / maxReticuleValue;
+                //Debug.Log(value);
+                if (value < 0)
+                {
+                    value = 0;
+                }
+                reticule.fillAmount = Mathf.Max(value, 0.001f);
+                reticule.color = Color.Lerp(start, end, value);
+                current = Color.Lerp(start, end, value);
+            if (ratio > .9)
+            {
+                updateWithValue = false;
+                currReticuleValue = targetValue;
+            }
+        }
+    }
+
+    public void ChangeValue (float value)
+    {
+        targetValue = value;
+        updateWithValue = true;
     }
 
     public void SetTimer(float maxTime)

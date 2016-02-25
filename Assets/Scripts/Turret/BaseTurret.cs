@@ -4,7 +4,10 @@ using System.Collections;
 public class BaseTurret : MonoBehaviour {
 
     //Creating projectile objects
-    public Transform myProjectile;
+    public GameObject myProjectile;
+    public float turnSpeed = 5f;
+    public float firePauseTime = 0.01f;  //turret .25f
+    public float errorAmount = 0.001f;
     public int arraySize = 100;
     public Transform[] projectileArray;
 
@@ -64,7 +67,6 @@ public class BaseTurret : MonoBehaviour {
     
     public virtual void Fire()
     {
-        print("Hello");
         // Generic fire function (can also be abstract to require derived classes to implement this)              
     }
 

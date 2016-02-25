@@ -4,9 +4,6 @@ using System.Collections;
 public class GunnerTurret : BaseTurret
 {
   public GameObject muzzleFire;
-  public float turnSpeed = 5f;
-  public float firePauseTime = 0.01f;
-  public float errorAmount = 0.001f;
   public Transform target;
   public Transform[] muzzlePositions;
   public Transform game_tilt;

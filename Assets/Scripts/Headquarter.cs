@@ -7,6 +7,9 @@ public class Headquarter : MonoBehaviour {
 
     public float HitPoints;
     public float Armor;
+    public RotateReticule healthReticule;
+    public RotateReticule armorReticule;
+
 
     private GameManagerScript gameManager;
     private MenuManager menuManager;
@@ -37,6 +40,8 @@ public class Headquarter : MonoBehaviour {
         menuManager = MenuManager.Instance();
         gameManager = GameManagerScript.Instance();
         Assert.IsTrue(menuManager && gameManager);
+        Assert.IsTrue(healthReticule && armorReticule);
+
     }
 
     public void Hit(float damage)
@@ -60,6 +65,9 @@ public class Headquarter : MonoBehaviour {
         {
             gameManager.PlayerLost();
         }
+
+        healthReticule.ChangeValue(HitPoints);
+        armorReticule.ChangeValue(Armor);
     }
 
     void OnEnable()
