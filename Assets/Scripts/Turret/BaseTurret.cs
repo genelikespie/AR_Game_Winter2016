@@ -14,20 +14,19 @@ public class BaseTurret : MonoBehaviour {
 
     //Tank Features
     public float reloadTime = .25f;
+    public float nextFireTime;
     public bool FireYes = true;
     public Vector3 dummyV;
     public Quaternion dummyQ;
-    private GameObject BulletH;
+    protected GameObject BulletH;
 
 
 
-    int currentProjectileIndex = 0; // number to keep track of the next projectile to fire in our array
+    protected int currentProjectileIndex = 0; // number to keep track of the next projectile to fire in our array
 
 
     // Use this for initialization
     protected void Start () {
-
-
         //TO DO~~!!!!!!!
         /* instantiate bulletholder */
         if (GameObject.Find("BulletHolder") == null)
@@ -46,12 +45,6 @@ public class BaseTurret : MonoBehaviour {
 
     }
 	
-	// Update is called once per frame
-	void Update () {
-	
-	}
-
-    
     public virtual void FireBullet(Vector3 direction, Quaternion rotation)
     {
 

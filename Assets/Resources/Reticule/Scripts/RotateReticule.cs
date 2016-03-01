@@ -18,6 +18,7 @@ public class RotateReticule : MonoBehaviour {
 
     //Reticule Health
     public float targetValue;
+    public float previousValue;
     public bool updateWithValue;
     public bool showStart;
 
@@ -49,17 +50,17 @@ public class RotateReticule : MonoBehaviour {
         }
         else if(updateWithValue == true)
         {
-            float ratio = Mathf.Min(currReticuleValue / targetValue, targetValue / currReticuleValue);
-                currReticuleValue = Mathf.Lerp(currReticuleValue, targetValue, ratio);
-                value = currReticuleValue / maxReticuleValue;
-                //Debug.Log(value);
-                if (value < 0)
-                {
-                    value = 0;
-                }
-                reticule.fillAmount = Mathf.Max(value, 0.001f);
-                reticule.color = Color.Lerp(start, end, value);
-                current = Color.Lerp(start, end, value);
+            float ratio = Mathf.Max(currReticuleValue / targetValue, targetValue / currReticuleValue);
+            currReticuleValue = Mathf.Lerp(previousValue, targetValue, ratio);
+            value = currReticuleValue / maxReticuleValue;
+            if (value < 0.1f)
+            {
+                value = 0;
+            }
+            //Debug.Log(value);
+            reticule.fillAmount = Mathf.Max(value, 0.001f);
+            reticule.color = Color.Lerp(start, end, value);
+            current = Color.Lerp(start, end, value);
             if (ratio > .9)
             {
                 updateWithValue = false;
@@ -70,6 +71,7 @@ public class RotateReticule : MonoBehaviour {
 
     public void ChangeValue (float value)
     {
+        previousValue = currReticuleValue;
         targetValue = value;
         updateWithValue = true;
     }

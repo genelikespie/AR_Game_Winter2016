@@ -39,7 +39,7 @@ public class FloatingPlatform : MonoBehaviour {
 	
 	void Update () {
 
-        if (isActive && canMove)
+        if (isActive)
         {
             Vector3 myPosition = transform.position;
             Vector3 targetPosition;
@@ -71,6 +71,8 @@ public class FloatingPlatform : MonoBehaviour {
 
     public void Drop()
     {
+        if (!canMove)
+            return;
         if (descendFromBehindARCamera)
         {
             transform.position = new Vector3(13, 125, -1);
@@ -84,6 +86,8 @@ public class FloatingPlatform : MonoBehaviour {
     }
     public void Lift()
     {
+        if (!canMove)
+            return;
         isActive = true;
         ascend = true;
         currentSpeed = 0f;

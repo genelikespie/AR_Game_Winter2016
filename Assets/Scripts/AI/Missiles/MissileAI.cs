@@ -4,9 +4,6 @@ using System.Collections;
 public class MissileAI : SeekingAI {
 
     public GameObject ExplosionAnimation;
-    public float explosionRadius = 4f;
-    public float maxTimeToLive = 30f;
-    public float damage = 0f;
     private Collider missileCollider;
 
     void Awake()
@@ -16,17 +13,6 @@ public class MissileAI : SeekingAI {
         missileCollider = GetComponent<Collider>();
         if (!missileCollider)
             Debug.LogError("Cannot find collider!");
-    }
-
-    public void Initialize(Transform targettransform, float basespeed, float turnspeed, bool includeY, float maxTTL, float expRadius, float dmg)
-    {
-        mainTargetTransform = targettransform;
-        BaseSpeed = basespeed;
-        TurnSpeed = turnspeed;
-        IncludeYAxis = includeY;
-        maxTimeToLive = maxTTL;
-        explosionRadius = expRadius;
-        damage = dmg;
     }
 
     void Explode()
@@ -42,14 +28,16 @@ public class MissileAI : SeekingAI {
         else
             Debug.LogError("There's no explosion prefab referenced!");
         // Kill object
-        Destroy(this.gameObject);
+        this.gameObject.SetActive(false);
     }
     void OnTriggerEnter(Collider c)
     {
-        Debug.Log("Missile hit " + c.name + " !!!");
+        //Debug.Log("Missile hit " + c.name + " !!!");
         if (c.transform == mainTargetTransform)
         {
-            c.gameObject.SendMessage("Hit", damage, SendMessageOptions.DontRequireReceiver);
+            if (!this.GetComponent<MissileProjectile>())
+                Debug.LogError("no projectile class for missile ai");
+            c.gameObject.SendMessage("Hit", this.GetComponent<MissileProjectile>().damage, SendMessageOptions.RequireReceiver);
             Explode();
         }
     }

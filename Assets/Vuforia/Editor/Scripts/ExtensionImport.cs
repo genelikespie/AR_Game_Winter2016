@@ -44,7 +44,7 @@ namespace Vuforia.EditorClasses
             {
                 if (PlayerSettings.Android.targetDevice != AndroidTargetDevice.ARMv7)
                 {
-                    Debug.Log("Setting Android target device to ARMv7");
+                    Debug.Log("Setting Android currTarget device to ARMv7");
                     PlayerSettings.Android.targetDevice = AndroidTargetDevice.ARMv7;
                 }
 

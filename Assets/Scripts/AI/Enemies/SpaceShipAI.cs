@@ -39,7 +39,7 @@ public class SpaceShipAI : MonoBehaviour {
         if (defaultTarget == EnumDefaultTarget.headquarter)
             targetTransform = Headquarter.Instance().transform;
         else if (defaultTarget == EnumDefaultTarget.player)
-            Debug.LogError("not implemented default target as player yet");
+            Debug.LogError("not implemented default currTarget as player yet");
 	}
 
     void FixedUpdate()

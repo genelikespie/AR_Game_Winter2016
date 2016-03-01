@@ -28,7 +28,7 @@ public class SeekingAI : MonoBehaviour {
         velocity = rigidbody.velocity;
     }
 
-    public void Initialize(Transform targettransform, float basespeed, float turnspeed, bool includeY)
+    public virtual void Initialize(Transform targettransform, float basespeed, float turnspeed, bool includeY)
     {
         mainTargetTransform = targettransform;
         BaseSpeed = basespeed;
@@ -40,14 +40,13 @@ public class SeekingAI : MonoBehaviour {
     {
         if (mainTargetTransform)
         {
-            //Debug.Log("main target");
             Debug.DrawLine(transform.position, mainTargetTransform.position, Color.blue);
             MoveTowardsTarget(mainTargetTransform);
         }
     }
 
     // The behavior to move straight at the intended target
-    protected void MoveTowardsTarget(Transform targetTransform)
+    protected virtual void MoveTowardsTarget(Transform targetTransform)
     {
         Vector3 seekVelocity = GetSeekVector(targetTransform.position);
         velocity = rigidbody.velocity;

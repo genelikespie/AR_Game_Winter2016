@@ -11,8 +11,6 @@ public class RocketTurret : BaseTurret
   public Transform aim_pivot;
   public string targetTag = "Enemy";
   
-  private float nextFireTime;
-
     // Update is called once per frame
     void Update ()
   {

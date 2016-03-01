@@ -51,7 +51,7 @@ public class SeekingWanderAI : SeekingAI {
         turnRadius *= transform.lossyScale.x;
         Debug.Log("wander range:" + maxRangeToWander + "  turndiameter: " + turnRadius * 2);
         if (maxRangeToWander < 2 * turnRadius)
-            Debug.LogWarning("Range to wander is smaller than turn turnDiameter! Object may not be able to reach target! " + turnRadius * 2);
+            Debug.LogWarning("Range to wander is smaller than turn turnDiameter! Object may not be able to reach currTarget! " + turnRadius * 2);
 
     }
 
@@ -62,7 +62,7 @@ public class SeekingWanderAI : SeekingAI {
             //Debug.Log("wander target");
             Debug.DrawLine(transform.position, wanderTargetTransform.position, Color.red);
             if (!IsTargetReachable(wanderTargetTransform))
-                Debug.LogWarning("Wander target is not reachable!");
+                Debug.LogWarning("Wander currTarget is not reachable!");
             Wander();
         }
         else if (mainTargetTransform)
@@ -71,7 +71,7 @@ public class SeekingWanderAI : SeekingAI {
             Debug.DrawLine(transform.position, mainTargetTransform.position, Color.blue);
             if (!IsTargetReachable(mainTargetTransform))
             {
-                Debug.LogWarning("Main target is not reachable!");
+                Debug.LogWarning("Main currTarget is not reachable!");
 
                 // Have our plane wander away
                 SetWanderTransform();

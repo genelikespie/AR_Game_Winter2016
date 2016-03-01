@@ -35,8 +35,9 @@ public class moveTank : MonoBehaviour {
 
     void Awake()
     {
-        Debug.Log("MOVECROSSHAIR NOT FOUND");
         CrosshairTransform = moveCrosshair.Instance().transform;
+        if (!CrosshairTransform) 
+            Debug.Log("MOVECROSSHAIR NOT FOUND");
         m_Rigidbody = GetComponent<Rigidbody>();
 
         if (BT1 == null)

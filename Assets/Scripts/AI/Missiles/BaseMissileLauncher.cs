@@ -27,7 +27,8 @@ public class BaseMissileLauncher : MonoBehaviour
     {
         MissileAI missile = (Instantiate(MissileGameObject, transform.position, transform.rotation)
             as GameObject).GetComponent<MissileAI>();
-        missile.Initialize(missileTarget, missileBaseSpeed, missileTurnSpeed, IncludeYAxis, missileMaxTimeToLive, missileExplosionRadius, missileDamage);
+        missile.Initialize(missileTarget, missileBaseSpeed, missileTurnSpeed, IncludeYAxis);
+        missile.GetComponent<MissileProjectile>().Initialize(missileTarget, TargetType.Headquarter, missileMaxTimeToLive, missileExplosionRadius, missileDamage);
         Debug.Log("Launched missile at: " + missileTarget.name);
     }
 }

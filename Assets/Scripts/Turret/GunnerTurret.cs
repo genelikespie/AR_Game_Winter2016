@@ -13,8 +13,6 @@ public class GunnerTurret : BaseTurret
   public bool fireOn = false;
   SpriteAnimator muzzleFireAnimation;
 
-
-  protected float nextFireTime;
   protected float nextMoveTime;
   // private bool aimAhead = false;
 

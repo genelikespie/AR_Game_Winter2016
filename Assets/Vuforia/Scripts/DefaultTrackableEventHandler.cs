@@ -106,9 +106,11 @@ namespace Vuforia
             {
                 component.enabled = false;
             }
-
-            Debug.Log("Trackable " + mTrackableBehaviour.TrackableName + " lost");
-            GameManagerScript.Instance().gameObject.SendMessage("PauseTrackableLost",SendMessageOptions.DontRequireReceiver);
+            if (tag == "MainImageTarget")
+            {
+                Debug.Log("Trackable " + mTrackableBehaviour.TrackableName + " lost");
+                GameManagerScript.Instance().gameObject.SendMessage("PauseTrackableLost", SendMessageOptions.DontRequireReceiver);
+            }
         }
 
         #endregion // PRIVATE_METHODS

@@ -141,6 +141,7 @@ public class GameManagerScript : MonoBehaviour {
     public void PlayerLost()
     {
         Debug.Log("PLAYER LOST");
+        ChangeScenes(0);
     }
 
     public void ChangeScenes(int index)

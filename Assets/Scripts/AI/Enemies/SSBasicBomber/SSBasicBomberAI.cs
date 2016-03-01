@@ -12,7 +12,7 @@ public class SSBasicBomberAI : SeekingWanderAI {
         if (defaultTarget == EnumDefaultTarget.headquarter)
             mainTargetTransform = Headquarter.Instance().transform;
         else if (defaultTarget == EnumDefaultTarget.player)
-            Debug.LogError("not implemented default target as player yet");
+            Debug.LogError("not implemented default currTarget as player yet");
 
         // set bomber to wander on spawn
         SetWanderTransform();
@@ -23,7 +23,7 @@ public class SSBasicBomberAI : SeekingWanderAI {
     new void FixedUpdate()
     {
         if (!mainTargetTransform)
-            Debug.LogError("cannot find main target transform!");
+            Debug.LogError("cannot find main currTarget transform!");
         Vector3 distanceToTarget = myTransform.position - mainTargetTransform.position;
         distanceToTarget = new Vector3 (distanceToTarget.x, 0, distanceToTarget.z);
         //Debug.Log("distance to target: " + distanceToTarget);
