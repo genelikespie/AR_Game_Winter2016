@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class moveCrosshair : MonoBehaviour {
@@ -14,6 +15,10 @@ public class moveCrosshair : MonoBehaviour {
     Transform CrosshairLocation;
     private static moveCrosshair instance;
     private static Object instance_lock = new Object();
+    private GameManagerScript gameManager;
+    float start = 0;
+    float expectedTime = 0;
+    float counter = 0;
 
     public static moveCrosshair Instance()
     {
@@ -39,24 +44,45 @@ public class moveCrosshair : MonoBehaviour {
         mainCamera = Camera.main;
         xScreen = Screen.width / 2;
         yScreen = Screen.height / 2;
+        gameManager = GameManagerScript.Instance();
+        start = Time.time;
+        expectedTime = Time.time + 1;
     }
 	
 	// Update is called once per frame
 	void Update () {
+
+        /*if (Time.time > expectedTime)
+        {
+
+        }*/
+        
         //Debug.Log(mainCamera.transform.position.y);
         ray = mainCamera.ScreenPointToRay(new Vector3(xScreen, yScreen, 0));
         RaycastHit Hit;
 
         if (Physics.Raycast(ray, out Hit))
         {
-
+            //Debug.Log(Hit.collider + " " + Hit.rigidbody);
             Debug.DrawRay(ray.origin, ray.direction * 10000, Color.yellow);
             levelPosition = new Vector3(Hit.point.x, 0, Hit.point.z);
             transform.position = Hit.point;
             moveGranted = true;
+            if (Input.GetMouseButtonDown(0))
+            {
+                Button button = Hit.collider.gameObject.transform.GetChild(0).GetComponent<Button>();
+                Debug.Log(Hit.collider.gameObject);
+                Debug.Log("!!!");
+                //Debug.Log(Hit.collider.gameObject.transform.GetChild(0));
+                if (button != null)
+                {
+                    button.onClick.Invoke();
+                }
+            }
         }
         else
             moveGranted = false;
+        //yield WaitForSeconds(1);
     }
 
 
