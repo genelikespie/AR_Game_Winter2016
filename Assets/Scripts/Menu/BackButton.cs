@@ -38,6 +38,6 @@ public class BackButton : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        Debug.Log(messageBoard.transform.position.y);
+        //Debug.Log(messageBoard.transform.position.y);
 	}
 }
