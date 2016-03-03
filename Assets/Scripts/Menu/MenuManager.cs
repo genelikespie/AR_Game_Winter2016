@@ -8,6 +8,9 @@ public class MenuManager : MonoBehaviour {
 
     private List<FloatingPlatform> platformsList;
 
+    // Message Board
+    public Transform messageBoard;
+
     // references to any pause buttons we might have
     private PauseButton pauseButton;
     private GameManagerScript gameManager;

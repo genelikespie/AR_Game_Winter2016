@@ -9,6 +9,7 @@ public class FloatingPlatform : MonoBehaviour {
     // Child target that represents to points we move to during ascent or descent
     Transform DescentTarget;
     Transform AscentTarget;
+    Transform platformRenderer;
     Transform ARCameraTransform;
 
     // The speed to ascend and descend
@@ -22,10 +23,10 @@ public class FloatingPlatform : MonoBehaviour {
     public bool isActive;
     public bool canMove = true;
     public bool ascend;
-
 	// Use this for initialization
 	void Awake () {
         // Initialize our references
+        platformRenderer = HelperMethods.FindChildWithName(gameObject, "PlatformMesh").transform;
         DescentTarget = HelperMethods.FindChildWithName(gameObject, "DescentTarget").transform;
         AscentTarget = HelperMethods.FindChildWithName(gameObject, "AscentTarget").transform;
         gameManager = GameManagerScript.Instance();
@@ -33,6 +34,8 @@ public class FloatingPlatform : MonoBehaviour {
         Assert.IsTrue(DescentTarget && AscentTarget && gameManager);
 
         // Detach the targets so they are in world space
+        AscentTarget.GetComponent<MeshRenderer>().enabled = false;
+        DescentTarget.GetComponent<MeshRenderer>().enabled = false;
         AscentTarget.SetParent(null);
         DescentTarget.SetParent(null);
 	}
@@ -55,12 +58,14 @@ public class FloatingPlatform : MonoBehaviour {
             // If we are very close to the target, just move there
             if (distance < minimumDistanceToTarget)
             {
+                // If ascending and we reached our target, turn our mesh off so we can't see it
+                if (ascend)
+                    DescentTarget.GetComponent<MeshRenderer>().enabled = true;
                 transform.position = targetPosition;
                 isActive = false;
             }
             // Calculate the effective speed to travel
             float effectiveSpeed = Mathf.Min(currentSpeed * gameManager.timeDeltaTime, distance);
-            //Debug.Log(towards + " distance: " + distance + " speed: " + effectiveSpeed);
             towards.Normalize();
             transform.position = (myPosition + towards * effectiveSpeed);
 
@@ -80,6 +85,7 @@ public class FloatingPlatform : MonoBehaviour {
                 ARCameraTransform.position.y + 10f,
                 ARCameraTransform.position.z);*/
         }
+        DescentTarget.GetComponent<MeshRenderer>().enabled = true;
         isActive = true;
         ascend = false;
         currentSpeed = 0f;

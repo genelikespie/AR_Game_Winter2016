@@ -86,6 +86,15 @@ namespace Vuforia
             }
 
             Debug.Log("Trackable " + mTrackableBehaviour.TrackableName + " found");
+            if (tag == "MainImageTarget")
+            {
+                GameManagerScript.Instance().unPauseGame();
+                MessageBoard messageBoard = MessageBoard.Instance();
+                messageBoard.setTitle("Tracking Refound");
+                messageBoard.setBody("The image target has been re-found. The game will now resume");
+                messageBoard.ToWorldSpace();
+                messageBoard.pressedBack();
+            }
         }
 
 
@@ -110,6 +119,12 @@ namespace Vuforia
             {
                 Debug.Log("Trackable " + mTrackableBehaviour.TrackableName + " lost");
                 GameManagerScript.Instance().gameObject.SendMessage("PauseTrackableLost", SendMessageOptions.DontRequireReceiver);
+                MessageBoard messageBoard = MessageBoard.Instance();
+                messageBoard.setTitle("Tracking Lost!");
+                messageBoard.setBody("The image target for the headquarters cannot be found! Make sure the headquarter's barcode is in view of the camera.");
+                messageBoard.ToScreenSpace();
+                messageBoard.activateBoard();
+                
             }
         }
 

@@ -30,7 +30,6 @@ public class CampaignStage : MonoBehaviour {
         if (numOfWaves <= 0)
             Debug.LogError("num of waves is empty! CampaignStage" + name);
         beginNextWave = false;
-        waveTimer = new Timer();
     }
 
     void Update()
