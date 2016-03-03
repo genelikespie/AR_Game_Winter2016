@@ -3,15 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class CampaignStage : MonoBehaviour {
-
+    public string stageDescription;
 
     // List that stores all child campaign stages
-    List<StageWave> childWaves;
-
+    private List<StageWave> childWaves;
     private int numOfWaves;
     private int currentWaveIndex;
-    //private StageWave currentWave;
+    // Private StageWave currentWave;
     private CampaignGroup parentGroup;
+
+    Timer waveTimer;
+    bool beginNextWave;
 
     void Awake()
     {
@@ -27,7 +29,15 @@ public class CampaignStage : MonoBehaviour {
 
         if (numOfWaves <= 0)
             Debug.LogError("num of waves is empty! CampaignStage" + name);
+        beginNextWave = false;
+    }
 
+    void Update()
+    {
+        if (beginNextWave && waveTimer.timerDone)
+        {
+            StartCoroutine(BeginChildWaves(childWaves[currentWaveIndex]));
+        }
     }
 
     /// <summary>
@@ -47,9 +57,8 @@ public class CampaignStage : MonoBehaviour {
         if (!parentGroup)
             Debug.LogError("No Parent Group!");
         currentWaveIndex = 0;
-        childWaves[currentWaveIndex].BeginCurrWave();
-        //BeginChildWaves(childWaves[currentWaveIndex]);
-
+        StartCoroutine(BeginChildWaves(childWaves[currentWaveIndex]));
+        //childWaves[currentWaveIndex].BeginCurrWave();
         Debug.Log("BEGINNING STAGE " + name);
     }
     /// <summary>
@@ -57,6 +66,9 @@ public class CampaignStage : MonoBehaviour {
     /// </summary>
     public void NotifyWaveCompleted(StageWave completedStage)
     {
+        waveTimer.Initialize(completedStage.delayBeforeNextStage);
+        beginNextWave = true;
+
         currentWaveIndex++;
         if (currentWaveIndex >= numOfWaves)
         {
@@ -64,15 +76,14 @@ public class CampaignStage : MonoBehaviour {
             Debug.Log("PLAYER BEAT STAGE " + name);
             return;
         }
-        childWaves[currentWaveIndex].BeginCurrWave();
+        //childWaves[currentWaveIndex].BeginCurrWave();
         //BeginChildWaves(childWaves[currentWaveIndex]);
     }
 
     IEnumerator BeginChildWaves(StageWave runWave)
     {
-        //yield return new WaitForSeconds(runWave.delayBeforeCurrStage);
+        yield return new WaitForSeconds(runWave.delayBeforeCurrStage);
         runWave.BeginCurrWave();
-        yield return new WaitForSeconds(runWave.delayBeforeNextStage);
     }
 
 }

@@ -6,7 +6,7 @@ using System.Collections;
 public class GameManagerScript : MonoBehaviour {
 
     //GameObject PauseButton;
-
+    //private moveCrosshair crosshair;
 
     //public Button pauseButton;
     public bool paused;
@@ -21,6 +21,8 @@ public class GameManagerScript : MonoBehaviour {
     public float timeDeltaTime;
 
     private MenuManager menuManager;
+
+    int counter = 0;
 
     private static GameManagerScript instance;
     private static Object instance_lock = new Object();
@@ -55,6 +57,8 @@ public class GameManagerScript : MonoBehaviour {
          * */
         menuManager = MenuManager.Instance();
         Assert.IsTrue(menuManager);
+        //crosshair = moveCrosshair.Instance();
+        //Assert.IsTrue(crosshair);
     }
 	
     void Start()
@@ -72,28 +76,33 @@ public class GameManagerScript : MonoBehaviour {
 
     public void togglePause()
     {
-        if (paused == true)
+        counter++;
+        if (counter > 1)
         {
-            unPauseGame();
+            if (paused == true)
+            {
+                unPauseGame();
+            }
+            else
+            {
+                pauseGame();
+            }
+            /*if (paused == true)
+            {
+                Time.timeScale = 1;
+                paused = false;
+                pauseButton.GetComponent<Text>().text = "Pause";
+                pauseCylinder.transform.position = new Vector3(13, 117, -1);
+                BTMCylinder.transform.position = new Vector3(-11, 117, -1);
+            }
+            else
+            {
+                Time.timeScale = 0;
+                paused = true;
+                pauseButton.GetComponent<Text>().text = "Unpause";
+            }*/
+            counter = 0;
         }
-        else
-        {
-            pauseGame();
-        }
-        /*if (paused == true)
-        {
-            Time.timeScale = 1;
-            paused = false;
-            pauseButton.GetComponent<Text>().text = "Pause";
-            pauseCylinder.transform.position = new Vector3(13, 117, -1);
-            BTMCylinder.transform.position = new Vector3(-11, 117, -1);
-        }
-        else
-        {
-            Time.timeScale = 0;
-            paused = true;
-            pauseButton.GetComponent<Text>().text = "Unpause";
-        }*/
     }
 
     public void unPauseGame()
@@ -146,6 +155,11 @@ public class GameManagerScript : MonoBehaviour {
 
     public void ChangeScenes(int index)
     {
-        Application.LoadLevel(index);
+        //counter++;
+        //if (counter > 1)
+        //{
+          //  counter = 0;
+            Application.LoadLevel(index);
+        //}
     }
 }
