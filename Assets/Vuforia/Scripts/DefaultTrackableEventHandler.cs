@@ -110,6 +110,7 @@ namespace Vuforia
                 component.enabled = false;
             }
 
+            Debug.Log("Tracking Lost: " + this.name);
             // Disable colliders:
             foreach (Collider component in colliderComponents)
             {

@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
+using Vuforia;
 using System.Collections;
+using System.Collections.Generic;
 
 public static class HelperMethods {
 
@@ -41,5 +43,4 @@ public static class HelperMethods {
         }
         return null;
     }
-
 }

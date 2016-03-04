@@ -4,6 +4,8 @@ using System.Collections;
 public class spawnTank : MonoBehaviour {
 
     GameObject tankSpawnPad;
+    GameObject Caller;
+    GameObject Here;
     public GameObject Tank;
     Transform locationtankSpawnPad;
     public bool spawnOnce;
@@ -18,6 +20,8 @@ public class spawnTank : MonoBehaviour {
 	void Awake () {
         tankSpawnPad = GameObject.Find("spawnTankZone");
         locationtankSpawnPad = tankSpawnPad.transform;
+        Caller = GameObject.Find("Spawner");
+        Here = GameObject.Find("spawnTankZone");
 
     }
 
@@ -38,8 +42,11 @@ public class spawnTank : MonoBehaviour {
             StartCoroutine(hold(3f));
         else
         {
+            
             Vector3 vectorTankPad = locationtankSpawnPad.position;
             Instantiate(Tank, vectorTankPad, Tank.transform.rotation);
+            
+            //Caller.GetComponent<SpawningUnits>().DropLocation(Here.transform.position);
         }
     }
 }

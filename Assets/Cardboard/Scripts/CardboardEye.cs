@@ -168,15 +168,15 @@ public class CardboardEye : MonoBehaviour {
       // So you can see the approximate frustum in the Scene view when the camera is selected.
       camera.fieldOfView = 2 * Mathf.Atan(1 / proj[1, 1]) * Mathf.Rad2Deg;
     }
-
-    // Draw to the mono camera's target, or the stereo screen.
-    camera.targetTexture = monoCamera.targetTexture ?? Cardboard.SDK.StereoScreen;
+        Vuforia.VuforiaBehaviour.Instance.ApplyCorrectedProjectionMatrix(proj, eye == Cardboard.Eye.Left);
+        // Draw to the mono camera's target, or the stereo screen.
+        camera.targetTexture = monoCamera.targetTexture ?? Cardboard.SDK.StereoScreen;
     if (camera.targetTexture == null) {
       // When drawing straight to screen, account for lens FOV limits.
       // Note: do this after all calls to FixProjection() which needs the unfixed rect.
       camera.rect = FixViewport(camera.rect);
     }
-        Vuforia.VuforiaBehaviour.Instance.ApplyCorrectedProjectionMatrix(proj, eye == Cardboard.Eye.Left);
+       
     }
 
   private void SetupStereo() {
