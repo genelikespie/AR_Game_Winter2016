@@ -44,7 +44,7 @@ public class CampaignGroup : MonoBehaviour {
         if (currentStageIndex >= numOfStages)
         {
             Debug.Log("PLAYER BEAT CAMPAIGN " + name);
-            Application.LoadLevel(2);
+            Application.LoadLevel(Application.loadedLevel+1);
             return;
         }
     }

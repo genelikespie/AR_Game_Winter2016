@@ -69,7 +69,7 @@ public class FloatingPlatform : MonoBehaviour {
             towards.Normalize();
             transform.position = (myPosition + towards * effectiveSpeed);
 
-            // apply the acceleration
+            // Apply the acceleration
             currentSpeed += acceleration;
         }
 	}

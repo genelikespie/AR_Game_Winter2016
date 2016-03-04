@@ -5,14 +5,28 @@ using System.Collections.Generic;
 
 public class Headquarter : MonoBehaviour {
 
-    public float HitPoints;
-    public float Armor;
-    public RotateReticule healthReticule;
-    public RotateReticule armorReticule;
+    public float maxHitPoints;
+    public float maxArmor;
 
+    private float HitPoints;
+    private float Armor;
+
+    private RotateReticule healthReticule;
+    private RotateReticule armorReticule;
+    private RotateReticule loadingMenuReticule;
 
     private GameManagerScript gameManager;
     private MenuManager menuManager;
+    private moveCrosshair crosshair;
+
+    // The time it takes for the crosshair to rest on the HQ
+    public float timeToLoadMenu;
+    private float currTime;
+    private bool crosshairOnHeadquarters = true; // initialize to true, and our update will set to false
+    private Collider hCollider;
+    private Vector3 boundSize;
+    private Vector3 boundExtent;
+    private Vector3 center;
 
     private static Headquarter instance;
     private static Object instance_lock = new Object();
@@ -39,11 +53,48 @@ public class Headquarter : MonoBehaviour {
     {
         menuManager = MenuManager.Instance();
         gameManager = GameManagerScript.Instance();
-        Assert.IsTrue(menuManager && gameManager);
-        Assert.IsTrue(healthReticule && armorReticule);
+        crosshair = moveCrosshair.Instance();
+        Canvas childCanvas = GetComponentInChildren<Canvas>();
+        loadingMenuReticule = HelperMethods.FindChildWithName(childCanvas.gameObject, "RotatingReticule").GetComponent<RotateReticule>();
+        healthReticule = HelperMethods.FindChildWithName(childCanvas.gameObject, "HealthReticule").GetComponent<RotateReticule>();
+        armorReticule = HelperMethods.FindChildWithName(childCanvas.gameObject, "ArmorReticule").GetComponent<RotateReticule>();
+
+        Assert.IsTrue(menuManager && gameManager && crosshair);
+        Assert.IsTrue(healthReticule && armorReticule && loadingMenuReticule);
+
+        loadingMenuReticule.SetTimer(timeToLoadMenu);
+        currTime = timeToLoadMenu;
+        Armor = maxArmor;
+        HitPoints = maxHitPoints;
 
     }
-
+    void Update()
+    {
+        if (gameObject.activeSelf &&
+        !gameManager.paused &&
+        (crosshair.transform.position.x < (center.x + boundExtent.x)) &&
+        (crosshair.transform.position.x > (center.x - boundExtent.x)) &&
+        (crosshair.transform.position.z < (center.z + boundExtent.z)) &&
+        (crosshair.transform.position.z > (center.z - boundExtent.z)))
+        {
+            if (!crosshairOnHeadquarters)
+            {
+                loadingMenuReticule.isActive = true;
+                loadingMenuReticule.ShowImage();
+            }
+            if (loadingMenuReticule.currReticuleValue <= 0)
+            {
+                gameManager.pauseGame();
+                loadingMenuReticule.ResetTimer();
+            }
+        }
+        else
+        {
+            crosshairOnHeadquarters = false;
+            loadingMenuReticule.ResetTimer();
+            loadingMenuReticule.HideImage();
+        }
+    }
     public void Hit(float damage)
     {
         // apply damage to armor
@@ -73,10 +124,9 @@ public class Headquarter : MonoBehaviour {
     void OnEnable()
     {
         Bounds b = this.GetComponent<Collider>().bounds;
-        //Debug.Log("WAAAAAAAAAAAAGH" + b);
-        menuManager.hCollider = this.GetComponent<Collider>();
-        menuManager.boundSize = b.size;
-        menuManager.boundExtent = b.extents;
-        menuManager.center = b.center;
+        hCollider = this.GetComponent<Collider>();
+        boundSize = b.size;
+        boundExtent = b.extents;
+        center = b.center;
     }
 }

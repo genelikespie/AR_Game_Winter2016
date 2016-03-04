@@ -76,7 +76,7 @@ public class MissileTurret : BaseTurret {
             return;
         if (currentProjectileIndex <= arraySize)
         {
-            if (currTarget)
+            if (currTarget && currTarget.gameObject.activeSelf)
             {
                 Debug.LogWarning("FIRED MISSILE AT: " + currTarget.name);
                 projectileArray[currentProjectileIndex].GetComponent<MissileProjectile>().Initialize(currTarget, targetType, maxTimeToLive, explosionRadius, damage);

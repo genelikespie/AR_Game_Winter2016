@@ -5,22 +5,12 @@ using System.Collections;
 
 public class GameManagerScript : MonoBehaviour {
 
-    //GameObject PauseButton;
-    //private moveCrosshair crosshair;
-
-    //public Button pauseButton;
     public bool paused;
     private bool scrollOver;
-    /*
-    public GameObject pauseCylinder;
-    public GameObject BTMCylinder;
 
-     * */
     // Use these deltaTime variables for when the game is paused
     private float timeOfLastFrame;
     public float timeDeltaTime;
-
-    private MenuManager menuManager;
 
     int counter = 0;
 
@@ -48,30 +38,11 @@ public class GameManagerScript : MonoBehaviour {
     // Use this for initialization
     void Awake()
     {
-        /*
-        pauseButton = GameObject.Find("Pause").GetComponent<Button>();
-        if (!pauseButton)
-        {
-            Debug.LogError("Cannot find pause button!");
-        }
-         * */
-        menuManager = MenuManager.Instance();
-        Assert.IsTrue(menuManager);
-        //crosshair = moveCrosshair.Instance();
-        //Assert.IsTrue(crosshair);
     }
 	
     void Start()
     {
-        //paused = false;
-        pauseGame();
-        //headquarters.SetActive(true);
         scrollOver = false;
-       /* hCollider = headquarters.GetComponent<BoxCollider>();
-        //Debug.Log("sdf ds" + headquarters.GetComponent<BoxCollider>().bounds.extents);
-        boundSize = hCollider.bounds.size;
-        boundExtent = hCollider.bounds.extents;
-        Debug.Log(hCollider.bounds.max + " " + hCollider.bounds.min);*/
     }
 
     public void togglePause()
@@ -87,20 +58,6 @@ public class GameManagerScript : MonoBehaviour {
             {
                 pauseGame();
             }
-            /*if (paused == true)
-            {
-                Time.timeScale = 1;
-                paused = false;
-                pauseButton.GetComponent<Text>().text = "Pause";
-                pauseCylinder.transform.position = new Vector3(13, 117, -1);
-                BTMCylinder.transform.position = new Vector3(-11, 117, -1);
-            }
-            else
-            {
-                Time.timeScale = 0;
-                paused = true;
-                pauseButton.GetComponent<Text>().text = "Unpause";
-            }*/
             counter = 0;
         }
     }
@@ -109,36 +66,18 @@ public class GameManagerScript : MonoBehaviour {
     {
         Time.timeScale = 1;
         paused = false;
-        menuManager.LiftPlatforms();
-        //pauseButton.GetComponent<Text>().text = "Pause";
-        //pauseCylinder.transform.position = new Vector3(13, 117, -1);
-        //BTMCylinder.transform.position = new Vector3(-11, 117, -1);
     }
 
     public void pauseGame()
     {
         Time.timeScale = 0;
         paused = true;
-        menuManager.DropPlatforms();
-        //pauseButton.GetComponent<Text>().text = "Unpause";
     }
 
 	// Update is called once per frame
 	void Update () {
         timeDeltaTime = Time.realtimeSinceStartup - timeOfLastFrame;
         timeOfLastFrame = Time.realtimeSinceStartup;
-        /*
-        //Debug.Log(pauseCylinder.transform.position.y);
-        
-        if (paused == true && pauseCylinder.transform.position.y > 3)
-        {
-            pauseCylinder.transform.Translate(Vector3.back * 5);
-            BTMCylinder.transform.Translate(Vector3.back * 5);
-        }
-         * */
-        //Debug.Log(crosshair.transform.position.x + " " + (center.x + boundExtent.x) + " " + (center.x - boundExtent.x));
-        //Debug.Log(center.x + " " + boundExtent.x + " " + boundSize.x);
-
     }
 
     public void PauseTrackableLost()
@@ -155,11 +94,6 @@ public class GameManagerScript : MonoBehaviour {
 
     public void ChangeScenes(int index)
     {
-        //counter++;
-        //if (counter > 1)
-        //{
-          //  counter = 0;
-            Application.LoadLevel(index);
-        //}
+        Application.LoadLevel(index);
     }
 }

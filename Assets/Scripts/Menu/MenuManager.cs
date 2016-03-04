@@ -16,20 +16,6 @@ public class MenuManager : MonoBehaviour {
     private GameManagerScript gameManager;
     public float acceleration = 5f;
 
-    // For finding if the crosshair is over the headquarters
-    private RotateReticule loadingMenuReticule;
-    private GameObject crosshair;
-    private GameObject headquarters;
-
-    // The time it takes for the crosshair to rest on the HQ
-    public float timeToLoadMenu;
-    private float currTime;
-    private bool crosshairOnHeadquarters = true; // initialize to true, and our update will set to false
-    public Collider hCollider;
-    public Vector3 boundSize;
-    public Vector3 boundExtent;
-    public Vector3 center;
-
     private static MenuManager instance;
     private static Object instance_lock = new Object();
 
@@ -61,42 +47,26 @@ public class MenuManager : MonoBehaviour {
             platformsList.Add(platform);
             platform.acceleration = acceleration;
         }
-
         pauseButton = GameObject.FindObjectOfType<PauseButton>();
-        gameManager = GameManagerScript.Instance();
-        crosshair = moveCrosshair.Instance().gameObject;
-        headquarters = Headquarter.Instance().gameObject;
-        loadingMenuReticule = GetComponentInChildren<RotateReticule>();
-        Assert.IsTrue(gameManager && crosshair && headquarters && loadingMenuReticule);
-
-        loadingMenuReticule.SetTimer(timeToLoadMenu);
-        currTime = timeToLoadMenu;
     }
 
     void Update()
     {
-        if (headquarters.activeSelf &&
-        !gameManager.paused &&
-        (crosshair.transform.position.x < (center.x + boundExtent.x)) &&
-        (crosshair.transform.position.x > (center.x - boundExtent.x)) &&
-        (crosshair.transform.position.z < (center.z + boundExtent.z)) &&
-        (crosshair.transform.position.z > (center.z - boundExtent.z)))
+        
+    }
+
+    public bool TogglePause()
+    {
+        gameManager.togglePause();
+        if (gameManager.paused)
         {
-            if (!crosshairOnHeadquarters) {
-                loadingMenuReticule.isActive = true;
-                loadingMenuReticule.ShowImage();
-            }
-            if (loadingMenuReticule.currReticuleValue <= 0)
-            {
-                gameManager.pauseGame();
-                loadingMenuReticule.ResetTimer();
-            }
+            DropPlatforms();
+            return true;
         }
         else
         {
-            crosshairOnHeadquarters = false;
-            loadingMenuReticule.ResetTimer();
-            loadingMenuReticule.HideImage();
+            LiftPlatforms();
+            return false;
         }
     }
 
@@ -107,8 +77,6 @@ public class MenuManager : MonoBehaviour {
             if (p.canMove)
                 p.Drop();
         }
-        if (pauseButton)
-            pauseButton.GetComponent<Text>().text = "Unpause";
     }
     public void LiftPlatforms()
     {

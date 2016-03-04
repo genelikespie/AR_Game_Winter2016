@@ -1,11 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+public enum GoToTarget
+{
+    AU_MissileTracker, AU_StasisTracker
+}
 public class GoToAI : SeekingAI {
     public float minDisToTarget;
-
+    public bool canMoveWithoutTarget;
     protected override void MoveTowardsTarget(Transform targetTransform)
     {
+        if (!targetTransform && !canMoveWithoutTarget)
+        {
+            rigidbody.velocity = Vector3.zero;
+            return;
+        }
         Vector3 seekVelocity = GetSeekVector(targetTransform.position);
         velocity = rigidbody.velocity;
         velocity += 1.5f * seekVelocity * Time.deltaTime;
