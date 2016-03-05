@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Assertions;
 using System.Collections;
 
 public enum SpaceShipState
@@ -22,8 +23,8 @@ public class SpaceShip : MonoBehaviour {
 	// Use this for initialization
 	protected void Awake () {
         myCollider = GetComponent<Collider>();
-        if (!myCollider)
-            Debug.LogError("No myCollider found!");
+
+        Assert.IsTrue(myCollider);
 
         hitPoints = maxHitPoints;
         shipState = SpaceShipState.Inactive;

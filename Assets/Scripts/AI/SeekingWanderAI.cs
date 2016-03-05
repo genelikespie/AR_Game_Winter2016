@@ -11,7 +11,7 @@ public class SeekingWanderAI : SeekingAI {
     // Wandering target
     public Transform wanderTargetTransform;
     GameObject wanderNode;
-    // Range of bomber to targe before bomber starts wandering
+    // Range of bomber to target before bomber starts wandering
     public float rangeBeforeWander;
     // Range that bomber wanders
     public float maxRangeToWander;
