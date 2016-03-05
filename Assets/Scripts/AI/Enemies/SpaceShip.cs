@@ -70,8 +70,11 @@ public class SpaceShip : MonoBehaviour {
 
     protected virtual void Explode()
     {
-        if (shipState == SpaceShipState.Dead)
+        if (shipState == SpaceShipState.Dead || shipState == SpaceShipState.Inactive)
+        {
             Debug.LogError("Spaceship was already dead!");
+            return;
+        }
         Debug.Log(this.name + " Blew up!");
         // Play animation
         if (explosionAnimation)

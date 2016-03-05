@@ -38,11 +38,12 @@ public class GameManagerScript : MonoBehaviour {
     // Use this for initialization
     void Awake()
     {
+        scrollOver = false;
+        pauseGame();
     }
 	
     void Start()
     {
-        scrollOver = false;
     }
 
     public void togglePause()

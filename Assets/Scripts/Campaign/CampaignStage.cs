@@ -12,7 +12,7 @@ public class CampaignStage : MonoBehaviour {
     // Private StageWave currentWave;
     private CampaignGroup parentGroup;
 
-    Timer waveTimer;
+    //Timer waveTimer;
     bool beginNextWave;
 
     void Awake()
@@ -34,10 +34,7 @@ public class CampaignStage : MonoBehaviour {
 
     void Update()
     {
-        if (beginNextWave && waveTimer.timerDone)
-        {
-            StartCoroutine(BeginChildWaves(childWaves[currentWaveIndex]));
-        }
+
     }
 
     /// <summary>
@@ -57,7 +54,7 @@ public class CampaignStage : MonoBehaviour {
         if (!parentGroup)
             Debug.LogError("No Parent Group!");
         currentWaveIndex = 0;
-        StartCoroutine(BeginChildWaves(childWaves[currentWaveIndex]));
+        StartCoroutine(childWaves[currentWaveIndex].BeginCurrWave());
         //childWaves[currentWaveIndex].BeginCurrWave();
         Debug.Log("BEGINNING STAGE " + name);
     }
@@ -66,7 +63,6 @@ public class CampaignStage : MonoBehaviour {
     /// </summary>
     public void NotifyWaveCompleted(StageWave completedStage)
     {
-        waveTimer.Initialize(completedStage.delayBeforeNextStage);
         beginNextWave = true;
 
         currentWaveIndex++;
@@ -77,13 +73,6 @@ public class CampaignStage : MonoBehaviour {
             return;
         }
         //childWaves[currentWaveIndex].BeginCurrWave();
-        //BeginChildWaves(childWaves[currentWaveIndex]);
+        StartCoroutine(childWaves[currentWaveIndex].BeginCurrWave());
     }
-
-    IEnumerator BeginChildWaves(StageWave runWave)
-    {
-        yield return new WaitForSeconds(runWave.delayBeforeCurrStage);
-        runWave.BeginCurrWave();
-    }
-
 }

@@ -15,7 +15,8 @@ public class StageWave : MonoBehaviour {
     private CampaignStage parentStage;
     public AISpawner aiSpawner;
 
-
+    // all enemies must be defeated before next wave spawns
+    public bool mustFinishWaveBeforeNext = true;
     void Start()
     {
         if (enemyObjects.Length < 0)
@@ -64,7 +65,7 @@ public class StageWave : MonoBehaviour {
         if (enemiesLeft == 0)
         {
             Debug.Log("PLAYER BEAT WAVE " + name);
-            parentStage.NotifyWaveCompleted(this);
+            StartCoroutine(FinishCurrWave());
             return;
         }
     }
@@ -73,13 +74,22 @@ public class StageWave : MonoBehaviour {
 	
 	}
 
-    public void BeginCurrWave()
+    public IEnumerator BeginCurrWave()
     {
         if (!aiSpawner)
             Debug.LogError("No AISpawner referenced: StageWave " + name);
+        yield return new WaitForSeconds(delayBeforeCurrStage);
         aiSpawner.RelocateSpawn(enemyTransforms);
         enemiesLeft = totalEnemies;
 
         Debug.Log("BEGINNING WAVE " + name + " Enemies: " + totalEnemies);
+        if (!mustFinishWaveBeforeNext)
+            StartCoroutine(FinishCurrWave());
+    }
+    public IEnumerator FinishCurrWave()
+    {
+        yield return new WaitForSeconds(delayBeforeNextStage);
+        parentStage.NotifyWaveCompleted(this);
+
     }
 }

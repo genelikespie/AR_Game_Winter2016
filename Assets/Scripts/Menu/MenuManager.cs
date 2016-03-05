@@ -53,22 +53,35 @@ public class MenuManager : MonoBehaviour {
         Assert.IsTrue(gameManager);
     }
 
+    void Start()
+    {
+        PauseGame();
+    }
+
     void Update()
     {
         
     }
-
+    public void PauseGame()
+    {
+        gameManager.pauseGame();
+        DropPlatforms();
+    }
+    public void UnpauseGame()
+    {
+        gameManager.unPauseGame();
+        LiftPlatforms();
+    }
     public bool TogglePause()
     {
-        gameManager.togglePause();
-        if (gameManager.paused)
+        if (!gameManager.paused)
         {
-            DropPlatforms();
+            PauseGame();
             return true;
         }
         else
         {
-            LiftPlatforms();
+            UnpauseGame();
             return false;
         }
     }

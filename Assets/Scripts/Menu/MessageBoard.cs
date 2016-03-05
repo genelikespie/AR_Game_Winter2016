@@ -80,7 +80,7 @@ public class MessageBoard : MonoBehaviour {
     }
     public void pressedBack()
     {
-        Time.timeScale = 1;
+        //gameManager.unPauseGame();
         animate = true;
         open = false;
         currAnimationTime = 0;
@@ -89,7 +89,7 @@ public class MessageBoard : MonoBehaviour {
 
     public void activateBoard()
     {
-        Time.timeScale = 0;
+        //gameManager.pauseGame();
         animate = true;
         open = true;
         currAnimationTime = 0;
