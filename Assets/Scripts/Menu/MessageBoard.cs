@@ -126,7 +126,7 @@ public class MessageBoard : MonoBehaviour {
             {
                 scaleValue = (Mathf.Pow(animateValue - 1, 2));
             }
-            Debug.Log(scaleValue);
+            //Debug.Log(scaleValue);
             if (!open && animateValue >= animationTime)
             {
                 scaleValue = 0;

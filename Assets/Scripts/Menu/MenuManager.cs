@@ -42,12 +42,15 @@ public class MenuManager : MonoBehaviour {
     {
         platformsList = new List<FloatingPlatform>();
         IEnumerable childPlatforms = GetComponentsInChildren<FloatingPlatform>();
+        gameManager = GameManagerScript.Instance();
 
         foreach (FloatingPlatform platform in childPlatforms) {
             platformsList.Add(platform);
             platform.acceleration = acceleration;
         }
         pauseButton = GameObject.FindObjectOfType<PauseButton>();
+
+        Assert.IsTrue(gameManager);
     }
 
     void Update()

@@ -14,7 +14,7 @@ public class MissileLauncher : BaseMissileLauncher {
 	void Start () {
         DetectionCollider = GetComponent<SphereCollider>();
         if (!DetectionCollider)
-            Debug.LogError("Cannot find sphere collider!");
+            Debug.LogError("Cannot find sphere myCollider!");
 	}
 	
     void OnTriggerEnter(Collider collider)

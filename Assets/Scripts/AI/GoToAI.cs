@@ -10,7 +10,7 @@ public class GoToAI : SeekingAI {
     public bool canMoveWithoutTarget;
     protected override void MoveTowardsTarget(Transform targetTransform)
     {
-        if (!targetTransform && !canMoveWithoutTarget)
+        if ((!targetTransform || !targetTransform.gameObject.activeSelf) && !canMoveWithoutTarget)
         {
             rigidbody.velocity = Vector3.zero;
             return;

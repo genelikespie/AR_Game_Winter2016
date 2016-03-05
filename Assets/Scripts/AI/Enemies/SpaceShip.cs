@@ -9,23 +9,25 @@ public class SpaceShip : MonoBehaviour {
     public float maxHitPoints;
     public float baseDamage;
     public GameObject explosionAnimation;
-    //public bool onDeathNotify = true;
-
+    public Vector3 startSpawnOffset;
 
     protected float hitPoints;
     protected SpaceShipState shipState;
     protected StageWave parentWave;
 
-    Collider collider;
-
+    Collider myCollider;
+    Vector3 spawnLocation;
+    Vector3 startSpawnLocation;
+    Vector3 startScale;
 	// Use this for initialization
 	protected void Awake () {
-        collider = GetComponent<Collider>();
-        if (!collider)
-            Debug.LogError("No collider found!");
+        myCollider = GetComponent<Collider>();
+        if (!myCollider)
+            Debug.LogError("No myCollider found!");
 
         hitPoints = maxHitPoints;
         shipState = SpaceShipState.Inactive;
+        startScale = transform.localScale;
 	}
 
     protected void Start()
@@ -45,9 +47,10 @@ public class SpaceShip : MonoBehaviour {
         }
     }
 
-    public void SetAlive()
+    public void Spawn(Vector3 spawnLoc)
     {
         shipState = SpaceShipState.Alive;
+        spawnLocation = spawnLoc;
         gameObject.SetActive(true);
     }
 
