@@ -14,11 +14,13 @@ public class SpawningUnits : MonoBehaviour {
     Vector3 DescentTarget;
     Vector3 DescentTargetGround;
     Vector3 AscentTarget;
+    float journeyLength;
     Transform ARCameraTransform;
     Transform TankStartLocation;
     Transform UnderPlatform;
     public GameObject createThisGameObject;
     Transform dropThis;
+    float startTime;
 
     // The speed to ascend and descend
     public float acceleration;
@@ -55,20 +57,25 @@ public class SpawningUnits : MonoBehaviour {
     {
         DescentTarget = new Vector3(bottomLocation.x, dropOffY ,bottomLocation.z);
         AscentTarget = new Vector3(bottomLocation.x, dropOffY+100F, bottomLocation.z);
-        DescentTargetGround = new Vector3(bottomLocation.x, 0.1F, bottomLocation.z);
+        DescentTargetGround = new Vector3(bottomLocation.x, 1F, bottomLocation.z);
+        journeyLength = Vector3.Distance(DescentTarget, DescentTargetGround);
+        startTime = Time.time;
         Drop();
     }
 
     void Update()
     {
-        if(droppingNow == true && dropThis != null)
+        print(droppingNow + "....." + createGo);
+        if(droppingNow == true)
         {
-            dropThis.position = Vector3.Lerp(dropThis.position, DescentTargetGround, dropOffSpeed);
+          //  print("phase 2 go!");
+            float distCovered = (Time.time - startTime) * dropOffSpeed;
+            float Journey = distCovered / journeyLength;
+            dropThis.gameObject.transform.position = Vector3.Lerp(DescentTarget, DescentTargetGround, Journey);
 
             if (dropThis.position.y < .2f)
             {
                 droppingNow = false;
-                print("phase 3 complete");
                 Lift();
             }
         }
@@ -88,9 +95,11 @@ public class SpawningUnits : MonoBehaviour {
             print(myPosition);
             print(targetPosition);
             float distance = towards.magnitude;
+            print(distance);
             // If we are very close to the target, just move there
             if (distance < minimumDistanceToTarget)
             {
+                print("BREAKTHRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR");
                 transform.position = targetPosition;
                 if (targetPosition == DescentTarget && isActive == true)
                 {
@@ -145,7 +154,7 @@ public class SpawningUnits : MonoBehaviour {
 
     void SpawnGameObject(GameObject spawnThis)
     {
-        if (createGo == true && spawnThis != null)
+        if (createGo == true)
         {
             dropThis = GameObject.Instantiate(spawnThis, UnderPlatform.transform.position, createThisGameObject.transform.rotation) as Transform;
             createGo = false;

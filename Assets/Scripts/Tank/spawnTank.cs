@@ -46,7 +46,7 @@ public class spawnTank : MonoBehaviour {
             Vector3 vectorTankPad = locationtankSpawnPad.position;
             Instantiate(Tank, vectorTankPad, Tank.transform.rotation);
             
-            //Caller.GetComponent<SpawningUnits>().DropLocation(Here.transform.position);
+         //   Caller.GetComponent<SpawningUnits>().DropLocation(Here.transform.position);
         }
     }
 }
