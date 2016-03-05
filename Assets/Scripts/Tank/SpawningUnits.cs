@@ -6,9 +6,9 @@ public class SpawningUnits : MonoBehaviour {
 
     // For getting deltaTime
     public bool createGo = false;
-    public bool droppingNow = true;
+    public bool droppingNow = false;
     public float dropOffY = 5F;
-    public float dropOffSpeed = .001F;
+    public int dropOffSpeed = 2;
     private GameManagerScript gameManager;
     // Child target that represents to points we move to during ascent or descent
     Vector3 DescentTarget;
@@ -19,7 +19,7 @@ public class SpawningUnits : MonoBehaviour {
     Transform TankStartLocation;
     Transform UnderPlatform;
     public GameObject createThisGameObject;
-    Transform dropThis;
+    public GameObject dropThis;
     float startTime;
 
     // The speed to ascend and descend
@@ -33,6 +33,8 @@ public class SpawningUnits : MonoBehaviour {
     public bool isActive;
     public bool canMove = true;
     public bool ascend;
+    private bool Busy = false;
+
 
     // Use this for initialization
     void Awake()
@@ -40,9 +42,9 @@ public class SpawningUnits : MonoBehaviour {
         // Initialize our references
         // DescentTarget = HelperMethods.FindChildWithName(gameObject, "DescentTarget").transform; //-5
         //AscentTarget = HelperMethods.FindChildWithName(gameObject, "AscentTarget").transform; //-100
+        UnderPlatform = GameObject.Find("CreateObjects").transform;
         ARCameraTransform = GameObject.Find("ARCamera").transform;
         TankStartLocation = GameObject.Find("spawnTankZone").transform;
-        UnderPlatform = GameObject.Find("CreateObjects").transform;
         // Detach the targets so they are in world space
     }
     
@@ -53,27 +55,30 @@ public class SpawningUnits : MonoBehaviour {
 
     }
 
-    public void DropLocation(Vector3 bottomLocation)
+    public void DropLocation(Vector3 bottomLocation, GameObject spawnMe)
     {
-        DescentTarget = new Vector3(bottomLocation.x, dropOffY ,bottomLocation.z);
-        AscentTarget = new Vector3(bottomLocation.x, dropOffY+100F, bottomLocation.z);
-        DescentTargetGround = new Vector3(bottomLocation.x, 1F, bottomLocation.z);
-        journeyLength = Vector3.Distance(DescentTarget, DescentTargetGround);
-        startTime = Time.time;
-        Drop();
+        if (Busy == false)
+        {
+            Busy = true;
+            dropThis = spawnMe;
+            DescentTarget = new Vector3(bottomLocation.x, dropOffY, bottomLocation.z);
+            AscentTarget = new Vector3(bottomLocation.x, dropOffY + 100F, bottomLocation.z);
+            DescentTargetGround = new Vector3(bottomLocation.x, 0.1F, bottomLocation.z);
+            journeyLength = Vector3.Distance(DescentTarget, DescentTargetGround);
+            startTime = Time.time;
+            Drop();
+        }
     }
 
     void Update()
     {
-        print(droppingNow + "....." + createGo);
         if(droppingNow == true)
         {
-          //  print("phase 2 go!");
-            float distCovered = (Time.time - startTime) * dropOffSpeed;
-            float Journey = distCovered / journeyLength;
-            dropThis.gameObject.transform.position = Vector3.Lerp(DescentTarget, DescentTargetGround, Journey);
-
-            if (dropThis.position.y < .2f)
+            float currentDuration = (Time.time - startTime) * dropOffSpeed;
+            float journeyFraction = currentDuration / journeyLength;
+            dropThis.transform.position = Vector3.Lerp(DescentTarget, DescentTargetGround,journeyFraction);
+           // Debug.Log(string.Format("Duration: {0} -- Duration: {1}", currentDuration, journeyLength));
+            if (dropThis.transform.position.y < .2f)
             {
                 droppingNow = false;
                 Lift();
@@ -92,20 +97,19 @@ public class SpawningUnits : MonoBehaviour {
 
             // Get a vector pointing to our target
             Vector3 towards = targetPosition - myPosition;
-            print(myPosition);
-            print(targetPosition);
             float distance = towards.magnitude;
-            print(distance);
             // If we are very close to the target, just move there
             if (distance < minimumDistanceToTarget)
             {
-                print("BREAKTHRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR");
                 transform.position = targetPosition;
                 if (targetPosition == DescentTarget && isActive == true)
                 {
                     createGo = true;
                     SpawnGameObject(createThisGameObject);
-
+                }
+                if (targetPosition == AscentTarget && isActive == true)
+                {
+                    Busy = false;
                 }
                 isActive = false;
             }
@@ -156,7 +160,7 @@ public class SpawningUnits : MonoBehaviour {
     {
         if (createGo == true)
         {
-            dropThis = GameObject.Instantiate(spawnThis, UnderPlatform.transform.position, createThisGameObject.transform.rotation) as Transform;
+            dropThis = GameObject.Instantiate(spawnThis, UnderPlatform.transform.position, createThisGameObject.transform.rotation) as GameObject;
             createGo = false;
             droppingNow = true;
         }
