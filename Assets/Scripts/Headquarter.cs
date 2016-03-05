@@ -84,7 +84,7 @@ public class Headquarter : MonoBehaviour {
             }
             if (loadingMenuReticule.currReticuleValue <= 0)
             {
-                gameManager.pauseGame();
+                menuManager.PauseGame();
                 loadingMenuReticule.ResetTimer();
             }
         }

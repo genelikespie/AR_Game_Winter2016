@@ -10,8 +10,6 @@ public class CampaignPlatform : MonoBehaviour {
         platform = GetComponent<FloatingPlatform>();
         if (!platform)
             Debug.LogError("cannot find platform for campaignplatform!");
-
-
     }
 
     public void StartCampaign()

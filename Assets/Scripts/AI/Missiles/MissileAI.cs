@@ -1,32 +1,28 @@
 ﻿using UnityEngine;
+using UnityEngine.Assertions;
 using System.Collections;
 
 public class MissileAI : SeekingAI {
 
     public GameObject ExplosionAnimation;
+    private ParticleSystem particles;
     private Collider missileCollider;
 
     void Awake()
     {
-        if (!ExplosionAnimation)
-            Debug.LogError("Cannot find explosion animation");
+        particles = GetComponentInChildren<ParticleSystem>();
         missileCollider = GetComponent<Collider>();
-        if (!missileCollider)
-            Debug.LogError("Cannot find collider!");
+        Assert.IsTrue(particles && missileCollider && ExplosionAnimation);
     }
 
     void Explode()
     {
         Debug.Log(this.name + " Blew up!");
         // Play animation
-        if (ExplosionAnimation)
-        {
+        Assert.IsNotNull<GameObject>(ExplosionAnimation);
             GameObject explosion = Instantiate(ExplosionAnimation, transform.position, transform.rotation) as GameObject;
             explosion.GetComponentInChildren<SpriteAnimator>().play = true;
             //explosion.GetComponentInChildren<Animator>().Play();
-        }
-        else
-            Debug.LogError("There's no explosion prefab referenced!");
         // Kill object
         this.gameObject.SetActive(false);
     }

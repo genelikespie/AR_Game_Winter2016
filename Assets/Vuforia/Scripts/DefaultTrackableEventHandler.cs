@@ -17,13 +17,18 @@ namespace Vuforia
         #region PRIVATE_MEMBER_VARIABLES
  
         private TrackableBehaviour mTrackableBehaviour;
-
+        private GameManagerScript gameManager;
+        private bool prevPauseState; // on tracking found or lost will revert to this state
         #endregion // PRIVATE_MEMBER_VARIABLES
 
 
 
         #region UNTIY_MONOBEHAVIOUR_METHODS
 
+        void Awake()
+        {
+            gameManager = GameManagerScript.Instance();
+        }
         
 
         void Start()
@@ -68,7 +73,7 @@ namespace Vuforia
         #region PRIVATE_METHODS
 
 
-        private void OnTrackingFound()
+        protected virtual void OnTrackingFound()
         {
             Renderer[] rendererComponents = GetComponentsInChildren<Renderer>(true);
             Collider[] colliderComponents = GetComponentsInChildren<Collider>(true);
@@ -88,7 +93,11 @@ namespace Vuforia
             Debug.Log("Trackable " + mTrackableBehaviour.TrackableName + " found");
             if (tag == "MainImageTarget")
             {
-                GameManagerScript.Instance().unPauseGame();
+                // restore our previous paused state
+                if (prevPauseState == true)
+                    gameManager.pauseGame();
+                else
+                    gameManager.unPauseGame();
                 MessageBoard messageBoard = MessageBoard.Instance();
                 messageBoard.setTitle("Tracking Refound");
                 messageBoard.setBody("The image target has been re-found. The game will now resume");
@@ -98,7 +107,7 @@ namespace Vuforia
         }
 
 
-        private void OnTrackingLost()
+        protected virtual void OnTrackingLost()
         {
             
             Renderer[] rendererComponents = GetComponentsInChildren<Renderer>(true);
@@ -118,6 +127,9 @@ namespace Vuforia
             }
             if (tag == "MainImageTarget")
             {
+                // save our previous pause state so we can return to it when we retrack target
+                prevPauseState = gameManager.paused;
+                gameManager.pauseGame();
                 Debug.Log("Trackable " + mTrackableBehaviour.TrackableName + " lost");
                 GameManagerScript.Instance().gameObject.SendMessage("PauseTrackableLost", SendMessageOptions.DontRequireReceiver);
                 MessageBoard messageBoard = MessageBoard.Instance();

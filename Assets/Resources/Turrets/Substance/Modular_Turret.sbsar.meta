@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 63cf6c8c5c3903648ace172a24b2fce4
-timeCreated: 1453802629
+timeCreated: 1457137129
 licenseType: Free
 SubstanceImporter:
   serializedVersion: 5
@@ -8,9 +8,9 @@ SubstanceImporter:
   - serializedVersion: 16
     name: Modular_Turret
     prototypeName: Modular_Turret
-    shader: {fileID: 4, guid: 0000000000000000f000000000000000, type: 0}
-    shaderKeywords: 
-    renderQueue: -1
+    shader: {fileID: 10705, guid: 0000000000000000f000000000000000, type: 0}
+    shaderKeywords: _NORMALMAP
+    renderQueue: 2000
     lightmapFlags: 5
     inputs:
     - name: $outputsize

@@ -34,8 +34,6 @@ public class FloatingPlatform : MonoBehaviour {
         Assert.IsTrue(DescentTarget && AscentTarget && gameManager);
 
         // Detach the targets so they are in world space
-        AscentTarget.GetComponent<MeshRenderer>().enabled = false;
-        DescentTarget.GetComponent<MeshRenderer>().enabled = false;
         AscentTarget.SetParent(null);
         DescentTarget.SetParent(null);
 	}
@@ -60,7 +58,7 @@ public class FloatingPlatform : MonoBehaviour {
             {
                 // If ascending and we reached our target, turn our mesh off so we can't see it
                 if (ascend)
-                    DescentTarget.GetComponent<MeshRenderer>().enabled = true;
+                    platformRenderer.GetComponent<MeshRenderer>().enabled = false;
                 transform.position = targetPosition;
                 isActive = false;
             }
@@ -85,7 +83,7 @@ public class FloatingPlatform : MonoBehaviour {
                 ARCameraTransform.position.y + 10f,
                 ARCameraTransform.position.z);*/
         }
-        DescentTarget.GetComponent<MeshRenderer>().enabled = true;
+        platformRenderer.GetComponent<MeshRenderer>().enabled = true;
         isActive = true;
         ascend = false;
         currentSpeed = 0f;
