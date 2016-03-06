@@ -7,6 +7,7 @@ public class moveCrosshair : MonoBehaviour {
 
     //moving the crosshair to tank
     public Vector3 levelPosition;
+    public float verticalOffset;
     Ray ray;
     float xScreen;
     float yScreen;
@@ -51,12 +52,7 @@ public class moveCrosshair : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
-        /*if (Time.time > expectedTime)
-        {
-
-        }*/
-        
+       
         //Debug.Log(mainCamera.transform.position.y);
         ray = mainCamera.ScreenPointToRay(new Vector3(xScreen, yScreen, 0));
         RaycastHit Hit;
@@ -65,14 +61,14 @@ public class moveCrosshair : MonoBehaviour {
         {
             //Debug.Log(Hit.collider + " " + Hit.rigidbody);
             Debug.DrawRay(ray.origin, ray.direction * 10000, Color.yellow);
-            levelPosition = new Vector3(Hit.point.x, 0, Hit.point.z);
-            transform.position = Hit.point;
+            levelPosition = new Vector3(Hit.point.x, Hit.point.y + verticalOffset, Hit.point.z);
+            transform.position = levelPosition;
             moveGranted = true;
             if (Input.GetMouseButtonDown(0))
             {
                 Button button = Hit.collider.gameObject.transform.GetChild(0).GetComponent<Button>();
-                Debug.Log(Hit.collider.gameObject);
-                Debug.Log("!!!");
+                //Debug.Log(Hit.collider.gameObject);
+                //Debug.Log("!!!");
                 //Debug.Log(Hit.collider.gameObject.transform.GetChild(0));
                 if (button != null)
                 {

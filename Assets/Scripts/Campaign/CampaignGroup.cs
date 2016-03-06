@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Assertions;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -11,15 +12,20 @@ public class CampaignGroup : MonoBehaviour {
 
     // List that stores all child campaign stages
     List<CampaignStage> childStages;
-
+    public Transform tankSpawnLocation;
+    public GameObject playerTankPrefab;
     private CampaignStage currentStage;
+    private SpawningUnits unitSpawner;
 
     private bool start = true;
     private int numOfStages;
     private int currentStageIndex;
+    private GameObject unitSpawnerPrefab;
     void Awake()
     {
         childStages = new List<CampaignStage>();
+        unitSpawnerPrefab = Resources.Load("Prefabs/UnitSpawner") as GameObject;
+        //playerTankPrefab = Resources.Load("Prefabs/Pla") as GameObject;
         IEnumerable stages = transform.GetComponentsInChildren<CampaignStage>();
         foreach (CampaignStage s in stages)
         {
@@ -28,14 +34,22 @@ public class CampaignGroup : MonoBehaviour {
         }
         numOfStages = childStages.Count;
         currentStageIndex = 0;
+        Assert.IsTrue(tankSpawnLocation && unitSpawnerPrefab && playerTankPrefab);
+    }
+    void Start()
+    {
+        // create campaign manager's unit spawner
+        unitSpawner = (Instantiate(unitSpawnerPrefab, new Vector3(0, -100, 0), Quaternion.identity) as GameObject).GetComponent<SpawningUnits>();
+        unitSpawner.gameObject.SetActive(false);
 
     }
-
     public void StartCampaign()
     {
         currentStageIndex = 0;
         childStages[currentStageIndex].BeginCurrStage();
         Debug.Log("BEGINNING CAMPAIGN " + name);
+        unitSpawner.gameObject.SetActive(true);
+        unitSpawner.DropLocation(tankSpawnLocation.position, playerTankPrefab);
     }
 
     public void NotifyStageCompleted(CampaignStage stage)
@@ -48,14 +62,4 @@ public class CampaignGroup : MonoBehaviour {
             return;
         }
     }
-
-
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	}
 }

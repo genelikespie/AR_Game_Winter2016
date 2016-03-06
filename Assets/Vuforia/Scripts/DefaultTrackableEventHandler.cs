@@ -77,6 +77,7 @@ namespace Vuforia
         {
             Renderer[] rendererComponents = GetComponentsInChildren<Renderer>(true);
             Collider[] colliderComponents = GetComponentsInChildren<Collider>(true);
+            //Canvas[] canvasComponents = GetComponentsInChildren<Canvas>(true);
 
             // Enable rendering:
             foreach (Renderer component in rendererComponents)
@@ -125,6 +126,7 @@ namespace Vuforia
             {
                 component.enabled = false;
             }
+
             if (tag == "MainImageTarget")
             {
                 // save our previous pause state so we can return to it when we retrack target

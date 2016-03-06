@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-
+using UnityEngine.Assertions;
 using System.Collections;
 
 public class SpawningUnits : MonoBehaviour {
@@ -7,6 +7,8 @@ public class SpawningUnits : MonoBehaviour {
     // For getting deltaTime
     public bool createGo = false;
     public bool droppingNow = false;
+
+    // height to stop dropping at
     public float dropOffY = 5F;
     public int dropOffSpeed = 2;
     private GameManagerScript gameManager;
@@ -16,7 +18,7 @@ public class SpawningUnits : MonoBehaviour {
     Vector3 AscentTarget;
     float journeyLength;
     Transform ARCameraTransform;
-    Transform TankStartLocation;
+    //Transform TankStartLocation;
     Transform UnderPlatform;
     public GameObject createThisGameObject;
     public GameObject dropThis;
@@ -35,23 +37,22 @@ public class SpawningUnits : MonoBehaviour {
     public bool ascend;
     private bool Busy = false;
 
-
+    private ScaleUnitWrapper scaleUnitWrapper;
     // Use this for initialization
     void Awake()
     {
         // Initialize our references
-        // DescentTarget = HelperMethods.FindChildWithName(gameObject, "DescentTarget").transform; //-5
-        //AscentTarget = HelperMethods.FindChildWithName(gameObject, "AscentTarget").transform; //-100
-        UnderPlatform = GameObject.Find("CreateObjects").transform;
+        UnderPlatform = transform.Find("CreateObjects");
         ARCameraTransform = GameObject.Find("ARCamera").transform;
-        TankStartLocation = GameObject.Find("spawnTankZone").transform;
-        // Detach the targets so they are in world space
+        scaleUnitWrapper = GetComponent<ScaleUnitWrapper>();
+        Assert.IsTrue(scaleUnitWrapper && UnderPlatform && ARCameraTransform);
+        //TankStartLocation = GameObject.Find("spawnTankZone").transform;
     }
     
     void Start()
     {
-        DescentTarget = new Vector3(TankStartLocation.position.x, dropOffY, TankStartLocation.position.z);
-        AscentTarget = new Vector3(TankStartLocation.position.x, dropOffY+100F, TankStartLocation.position.z);
+        //DescentTarget = new Vector3(TankStartLocation.position.x, dropOffY, TankStartLocation.position.z);
+        //AscentTarget = new Vector3(TankStartLocation.position.x, dropOffY+100F, TankStartLocation.position.z);
 
     }
 
@@ -65,11 +66,26 @@ public class SpawningUnits : MonoBehaviour {
             AscentTarget = new Vector3(bottomLocation.x, dropOffY + 100F, bottomLocation.z);
             DescentTargetGround = new Vector3(bottomLocation.x, 0.1F, bottomLocation.z);
             journeyLength = Vector3.Distance(DescentTarget, DescentTargetGround);
-            startTime = Time.time;
             Drop();
         }
     }
 
+    // start dropping after the unit finishes scaling back to 1
+    public void FinishedScalingUp()
+    {
+        if (descendFromBehindARCamera)
+        {
+            transform.position = new Vector3(13, 125, -1);
+        }
+        isActive = true;
+        ascend = false;
+        currentSpeed = 0f;
+        startTime = Time.time;
+    }
+    public void FinishedScalingDown()
+    {
+        gameObject.SetActive(false);
+    }
     void Update()
     {
         if(droppingNow == true)
@@ -112,6 +128,9 @@ public class SpawningUnits : MonoBehaviour {
                     Busy = false;
                 }
                 isActive = false;
+                if (ascend) // if we are ascending, scale the unit to 0 to hide it
+                    scaleUnitWrapper.Scale(true);
+                return;
             }
             // Calculate the effective speed to travel
             float effectiveSpeed = Mathf.Min(currentSpeed * Time.deltaTime, distance);
@@ -128,17 +147,9 @@ public class SpawningUnits : MonoBehaviour {
     {
         if (!canMove)
             return;
-        if (descendFromBehindARCamera)
-        {
-            transform.position = new Vector3(13, 125, -1);
-            /*transform.position = new Vector3(ARCameraTransform.position.x,
-                ARCameraTransform.position.y + 10f,
-                ARCameraTransform.position.z);*/
-        }
+        transform.localScale = Vector3.zero;
         transform.position = AscentTarget;
-        isActive = true;
-        ascend = false;
-        currentSpeed = 0f;
+        scaleUnitWrapper.Scale(false);
     }
 
 
