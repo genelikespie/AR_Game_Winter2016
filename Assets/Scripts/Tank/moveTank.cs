@@ -3,12 +3,11 @@ using System.Collections;
 
 public class moveTank : MonoBehaviour {
 
-
     //shooting functionality
-    public GameObject BT1;
-    public GameObject BT2;
-    public GameObject BT3;
-    private GameObject activeTank;
+    public BaseTurret BT1;
+    public BaseTurret BT2;
+    public BaseTurret BT3;
+    public BaseTurret activeTurret;
     private Vector3 dummyV;
     private Quaternion dummyQ;
     public enum TurretChoice { Tur1, Tur2, Tur3};
@@ -31,7 +30,26 @@ public class moveTank : MonoBehaviour {
     bool moveGranted = false;
     public Vector3 moveIt;
 
-
+    private static moveTank instance;
+    private static Object instance_lock = new Object();
+    public static moveTank Instance()
+    {
+        if (instance != null)
+            return instance;
+        lock (instance_lock)
+        {
+            instance = (moveTank)FindObjectOfType(typeof(moveTank));
+            if (FindObjectsOfType(typeof(moveTank)).Length > 1)
+            {
+                Debug.LogError("There can only be one instance!");
+                return instance;
+            }
+            if (instance != null)
+                return instance;
+            Debug.LogError("Could not find a instance!");
+            return null;
+        }
+    }
 
     void Awake()
     {
@@ -46,22 +64,16 @@ public class moveTank : MonoBehaviour {
             Debug.Log("Second Turret Missing");
         if (BT3 == null)
             Debug.Log("Third Turret Missing");
-
-    }
-
-    // Use this for initialization
-    void Start()
-    {
         m_Speed = Speed;
         if (BT1 != null)
             if (defaultTurret == TurretChoice.Tur1)
-                activeTank = BT1;
-        else if (BT2 != null)
-            if (defaultTurret == TurretChoice.Tur2)
-                activeTank = BT2;
-       else if (BT3 != null)
-            if (defaultTurret == TurretChoice.Tur3)
-                activeTank = BT3;
+                activeTurret = BT1;
+            else if (BT2 != null)
+                if (defaultTurret == TurretChoice.Tur2)
+                    activeTurret = BT2;
+                else if (BT3 != null)
+                    if (defaultTurret == TurretChoice.Tur3)
+                        activeTurret = BT3;
 
         if (GameObject.Find("BlueCross") == null)
             Debug.LogError("No Crosshair");
@@ -79,10 +91,9 @@ public class moveTank : MonoBehaviour {
         }
         
         //Fire the turret
-        if (Input.GetMouseButtonDown(0) && activeTank.GetComponent<BaseTurret>().FireYes == true)
+        if (Input.GetMouseButtonDown(0))
         {
-
-            activeTank.GetComponent<BaseTurret>().FireBullet(dummyV,dummyQ);
+            FireTurret();
         }
         
     }
@@ -101,13 +112,20 @@ public class moveTank : MonoBehaviour {
 
             // Apply this movement to the rigidbody's position.
             m_Rigidbody.MovePosition(this.transform.position + movement);
-          //  m_Rigidbody.velocity = movement;
+            //  m_Rigidbody.velocity = movement;
 
 
         }
 
     }
 
+    public void FireTurret()
+    {
+        if (activeTurret.FireYes == true)
+        {
+            activeTurret.FireBullet(dummyV, dummyQ);
+        }
+    }
 
     private void Turn(Vector3 turning)
     {

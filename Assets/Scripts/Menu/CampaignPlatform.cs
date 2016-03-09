@@ -4,6 +4,7 @@ using System.Collections;
 public class CampaignPlatform : MonoBehaviour {
 
     public CampaignGroup campaign;
+    public bool canStartCampaign;
     private FloatingPlatform platform;
     void Awake()
     {

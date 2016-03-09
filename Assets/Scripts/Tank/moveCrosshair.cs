@@ -9,18 +9,20 @@ public class moveCrosshair : MonoBehaviour {
     public Vector3 levelPosition;
     public float verticalOffset;
     Ray ray;
+    RaycastHit Hit;
     float xScreen;
     float yScreen;
     Camera mainCamera;
     bool moveGranted;
     Transform CrosshairLocation;
-    private static moveCrosshair instance;
-    private static Object instance_lock = new Object();
+
     private GameManagerScript gameManager;
     float start = 0;
     float expectedTime = 0;
     float counter = 0;
 
+    private static moveCrosshair instance;
+    private static Object instance_lock = new Object();
     public static moveCrosshair Instance()
     {
         if (instance != null)
@@ -55,8 +57,6 @@ public class moveCrosshair : MonoBehaviour {
        
         //Debug.Log(mainCamera.transform.position.y);
         ray = mainCamera.ScreenPointToRay(new Vector3(xScreen, yScreen, 0));
-        RaycastHit Hit;
-
         if (Physics.Raycast(ray, out Hit))
         {
             //Debug.Log(Hit.collider + " " + Hit.rigidbody);
@@ -66,19 +66,18 @@ public class moveCrosshair : MonoBehaviour {
             moveGranted = true;
             if (Input.GetMouseButtonDown(0))
             {
-                Button button = Hit.collider.gameObject.transform.GetChild(0).GetComponent<Button>();
-                //Debug.Log(Hit.collider.gameObject);
-                //Debug.Log("!!!");
-                //Debug.Log(Hit.collider.gameObject.transform.GetChild(0));
-                if (button != null)
-                {
-                    button.onClick.Invoke();
-                }
+                VirtualButtonPress();
             }
         }
         else
             moveGranted = false;
-        //yield WaitForSeconds(1);
+    }
+    public void VirtualButtonPress () {
+        Button button = Hit.collider.gameObject.transform.GetChild(0).GetComponent<Button>();
+        if (button != null)
+        {
+            button.onClick.Invoke();
+        }
     }
 
 

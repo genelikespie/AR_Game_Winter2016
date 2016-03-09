@@ -1,25 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<QCARConfig>
-    <Tracking>
-        <ImageTarget name="11" size="10.000000 10.000000"/>
-        <ImageTarget name="12" size="10.000000 10.000000"/>
-        <ImageTarget name="21" size="10.000000 10.000000"/>
-        <ImageTarget name="22" size="10.000000 10.000000"/>
-        <ImageTarget name="20" size="10.000000 10.000000"/>
-        <ImageTarget name="10" size="10.000000 10.000000"/>
-        <ImageTarget name="02" size="10.000000 10.000000"/>
-        <ImageTarget name="01" size="10.000000 10.000000"/>
-        <ImageTarget name="00" size="10.000000 10.000000"/>
-        <MultiTarget name="HQ_cube">
-            <Part name="11" translation="0 0 0" rotation="AD: 1 0 0 0"/>
-            <Part name="12" translation="0 10.0 0" rotation="AD: 1 0 0 0"/>
-            <Part name="21" translation="10.0 0 0" rotation="AD: 1 0 0 0"/>
-            <Part name="22" translation="10.0 10.0 0" rotation="AD: 1 0 0 0"/>
-            <Part name="20" translation="10.0 -10.0 0" rotation="AD: 1 0 0 0"/>
-            <Part name="10" translation="0 -10.0 0" rotation="AD: 1 0 0 0"/>
-            <Part name="02" translation="-10.0 10.0 0" rotation="AD: 1 0 0 0"/>
-            <Part name="01" translation="-10.0 0 0" rotation="AD: 1 0 0 0"/>
-            <Part name="00" translation="-10.0 -10.0 0" rotation="AD: 1 0 0 0"/>
-        </MultiTarget>
-    </Tracking>
+<QCARConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="qcar_config.xsd">
+  <Tracking>
+    <ImageTarget name="22" size="10.000000 10.000000" />
+    <ImageTarget name="20" size="10.000000 10.000000" />
+    <ImageTarget name="10" size="10.000000 10.000000" />
+    <ImageTarget name="02" size="10.000000 10.000000" />
+    <ImageTarget name="01" size="10.000000 10.000000" />
+    <ImageTarget name="00" size="10.000000 10.000000" />
+    <ImageTarget name="AU_missile" size="10.000000 10.000000" />
+    <ImageTarget name="AU_seismic" size="10.000000 10.000000" />
+    <ImageTarget name="AU_stasis" size="10.000000 10.000000" />
+    <ImageTarget name="Headquarter_qr_code" size="10.000000 10.000000" />
+  </Tracking>
 </QCARConfig>

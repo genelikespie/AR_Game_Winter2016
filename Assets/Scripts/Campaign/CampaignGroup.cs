@@ -16,6 +16,7 @@ public class CampaignGroup : MonoBehaviour {
     public GameObject playerTankPrefab;
     private CampaignStage currentStage;
     private SpawningUnits unitSpawner;
+    private bool canStartCampaign;
 
     private bool start = true;
     private int numOfStages;
@@ -34,6 +35,7 @@ public class CampaignGroup : MonoBehaviour {
         }
         numOfStages = childStages.Count;
         currentStageIndex = 0;
+        canStartCampaign = true;
         Assert.IsTrue(tankSpawnLocation && unitSpawnerPrefab && playerTankPrefab);
     }
     void Start()
@@ -45,11 +47,15 @@ public class CampaignGroup : MonoBehaviour {
     }
     public void StartCampaign()
     {
+        if (!canStartCampaign)
+            return;
         currentStageIndex = 0;
         childStages[currentStageIndex].BeginCurrStage();
         Debug.Log("BEGINNING CAMPAIGN " + name);
         unitSpawner.gameObject.SetActive(true);
         unitSpawner.DropLocation(tankSpawnLocation.position, playerTankPrefab);
+        canStartCampaign =  false;
+
     }
 
     public void NotifyStageCompleted(CampaignStage stage)
@@ -59,6 +65,7 @@ public class CampaignGroup : MonoBehaviour {
         {
             Debug.Log("PLAYER BEAT CAMPAIGN " + name);
             Application.LoadLevel(Application.loadedLevel+1);
+            canStartCampaign = true;
             return;
         }
     }
