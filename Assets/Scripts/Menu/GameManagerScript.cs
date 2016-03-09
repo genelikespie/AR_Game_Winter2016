@@ -12,6 +12,8 @@ public class GameManagerScript : MonoBehaviour {
     private float timeOfLastFrame;
     public float timeDeltaTime;
 
+    public AudioSource backgroundMusic;
+
     int counter = 0;
 
     private static GameManagerScript instance;
@@ -65,12 +67,16 @@ public class GameManagerScript : MonoBehaviour {
 
     public void unPauseGame()
     {
+        Debug.Log("unpaused music");
+        backgroundMusic.UnPause();
         Time.timeScale = 1;
         paused = false;
     }
 
     public void pauseGame()
     {
+        Debug.Log("paused music");
+        backgroundMusic.Pause();
         Time.timeScale = 0;
         paused = true;
     }
