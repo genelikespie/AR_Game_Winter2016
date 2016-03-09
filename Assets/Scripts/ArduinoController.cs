@@ -42,7 +42,6 @@ public class ArduinoController : MonoBehaviour {
         }
         else if (sp.IsOpen)
         {
-            //Debug.LogWarning("sp open");
             try
             {
                 ControllerInput(sp.ReadByte());
@@ -51,16 +50,24 @@ public class ArduinoController : MonoBehaviour {
             {
 
             }
+
         }
+        else
+            Debug.LogError("SP is not OPEN!!!");
 	}
 
     public void ControllerInput(int input)
     {
         if (input == 1)
         {
+            Debug.Log(input);
             debounceCount++;
             if (debounceCount == 2)
             {
+                debounceCount = 0;
+                canPress = false;
+                currTime = 0;
+                Debug.LogWarning("canPress:" + canPress);
                 Debug.LogWarning("red button " + debounceCount);
                 // check if a player tank is available
                 if (!playerTank)
@@ -74,10 +81,6 @@ public class ArduinoController : MonoBehaviour {
                 }
                 // press virtual buttons as well
                 crosshair.VirtualButtonPress();
-                debounceCount = 0;
-                canPress = false;
-                currTime = 0;
-                Debug.LogWarning("canPress:" + canPress);
             }
         }
         if (input == 2)

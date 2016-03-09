@@ -43,7 +43,7 @@ public enum TargetType
          
          public virtual void OnTriggerEnter(Collider c)
         {
-            Debug.Log("Hit " + c.name + " !!!");
+            //Debug.Log("Hit " + c.name + " !!!");
             switch (targetType)
             {
                 case TargetType.Enemy:

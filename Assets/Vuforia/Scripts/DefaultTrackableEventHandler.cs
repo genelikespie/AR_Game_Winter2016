@@ -18,6 +18,7 @@ namespace Vuforia
  
         private TrackableBehaviour mTrackableBehaviour;
         private GameManagerScript gameManager;
+        private MenuManager menuManager;
         private bool prevPauseState; // on tracking found or lost will revert to this state
         #endregion // PRIVATE_MEMBER_VARIABLES
 
@@ -28,6 +29,7 @@ namespace Vuforia
         void Awake()
         {
             gameManager = GameManagerScript.Instance();
+            menuManager = MenuManager.Instance();
         }
         
 
@@ -95,8 +97,10 @@ namespace Vuforia
             if (tag == "MainImageTarget")
             {
                 // restore our previous paused state
-                if (prevPauseState == true)
+                if (prevPauseState == true && menuManager.dropped == true)
+                {
                     gameManager.pauseGame();
+                }
                 else
                     gameManager.unPauseGame();
                 MessageBoard messageBoard = MessageBoard.Instance();

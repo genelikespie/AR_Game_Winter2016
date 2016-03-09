@@ -73,7 +73,7 @@ public class moveCrosshair : MonoBehaviour {
             moveGranted = false;
     }
     public void VirtualButtonPress () {
-        Button button = Hit.collider.gameObject.transform.GetChild(0).GetComponent<Button>();
+        Button button = Hit.collider.gameObject.transform.GetComponentInChildren<Button>();
         if (button != null)
         {
             button.onClick.Invoke();

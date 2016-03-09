@@ -15,6 +15,7 @@ public class MenuManager : MonoBehaviour {
     private PauseButton pauseButton;
     private GameManagerScript gameManager;
     public float acceleration = 5f;
+    public bool dropped; // if the menu manager is dropped or not
 
     private static MenuManager instance;
     private static Object instance_lock = new Object();
@@ -88,6 +89,7 @@ public class MenuManager : MonoBehaviour {
 
     public void DropPlatforms()
     {
+        dropped = true;
         foreach (FloatingPlatform p in platformsList)
         {
             if (p.canMove)
@@ -96,6 +98,7 @@ public class MenuManager : MonoBehaviour {
     }
     public void LiftPlatforms()
     {
+        dropped = false;
         foreach (FloatingPlatform p in platformsList)
         {
             if (p.canMove)

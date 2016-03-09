@@ -16,7 +16,7 @@ public class SpaceShip : MonoBehaviour {
     protected float hitPoints;
     protected SpaceShipState shipState;
     protected StageWave parentWave;
-    protected SeekingAI ai;
+    protected SeekingWanderAI ai;
     protected ScaleUnitWrapper scaleUnitWrapper;
 
     Collider myCollider;
@@ -28,7 +28,7 @@ public class SpaceShip : MonoBehaviour {
 	// Use this for initialization
 	protected void Awake () {
         myCollider = GetComponent<Collider>();
-        ai = GetComponent<SeekingAI>();
+        ai = GetComponent<SeekingWanderAI>();
         scaleUnitWrapper = GetComponent<ScaleUnitWrapper>();
         Assert.IsTrue(myCollider && myCrosshair && scaleUnitWrapper);
         myCrosshair.transform.localPosition = new Vector3(0, myCrosshair.transform.localPosition.y, 0);
@@ -48,6 +48,7 @@ public class SpaceShip : MonoBehaviour {
             if (ratio >= 1)
             {
                 transform.position = spawnLocation;
+                ai.SetWanderTransform(); // after finishing spawning, set the enemy to wander in this plane
                 drop = false;
                 return;
             }
@@ -57,7 +58,7 @@ public class SpaceShip : MonoBehaviour {
 
     public virtual void Hit(float damage)
     {
-        Debug.Log("Space ship " + this.name + " was hit for: " + damage + " dmg");
+        //Debug.Log("Space ship " + this.name + " was hit for: " + damage + " dmg");
         hitPoints -= damage;
         if (hitPoints <= 0)
         {

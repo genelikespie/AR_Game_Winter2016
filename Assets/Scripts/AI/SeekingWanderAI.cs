@@ -119,7 +119,7 @@ public class SeekingWanderAI : SeekingAI {
             return true;
     }
 
-    protected virtual void SetWanderTransform()
+    public virtual void SetWanderTransform()
     {
         float randomPositionAlongCircle = (Random.value * 360);
         float xPos = maxRangeToWander * Mathf.Cos(randomPositionAlongCircle);
