@@ -8,7 +8,7 @@ public enum SpaceShipState
 }
 public class SpaceShip : MonoBehaviour {
     public float maxHitPoints;
-    public float baseDamage;
+    //public float baseDamage;
     public GameObject explosionAnimation;
     public GameObject myCrosshair;
     public Vector3 startSpawnOffset;
@@ -18,7 +18,6 @@ public class SpaceShip : MonoBehaviour {
     protected StageWave parentWave;
     protected SeekingWanderAI ai;
     protected ScaleUnitWrapper scaleUnitWrapper;
-
     Collider myCollider;
     Vector3 spawnLocation; // location where we end up after spawning
     Vector3 startSpawnLocation; // location where we will start to spawn

@@ -142,7 +142,7 @@ namespace Vuforia
                 messageBoard.setTitle("Tracking Lost!");
                 messageBoard.setBody("The image target for the headquarters cannot be found! Make sure the headquarter's barcode is in view of the camera.");
                 messageBoard.ToScreenSpace();
-                messageBoard.activateBoard();
+                messageBoard.activateBoard(false);
                 
             }
         }

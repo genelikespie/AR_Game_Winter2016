@@ -7,9 +7,11 @@ public class Headquarter : MonoBehaviour {
 
     public float maxHitPoints;
     public float maxArmor;
+    public float maxArmorRegen;
 
-    private float HitPoints;
-    private float Armor;
+    private float hitPoints;
+    private float armor;
+    private float armorRegen = 2;
 
     private RotateReticule healthReticule;
     private RotateReticule armorReticule;
@@ -64,8 +66,9 @@ public class Headquarter : MonoBehaviour {
 
         loadingMenuReticule.SetTimer(timeToLoadMenu);
         currTime = timeToLoadMenu;
-        Armor = maxArmor;
-        HitPoints = maxHitPoints;
+        armor = maxArmor;
+        hitPoints = maxHitPoints;
+        armorRegen = maxArmorRegen;
 
     }
     void Update()
@@ -95,30 +98,37 @@ public class Headquarter : MonoBehaviour {
             loadingMenuReticule.HideImage();
         }
     }
+    void FixedUpdate()
+    {
+        armor += armorRegen * Time.deltaTime;
+        if (armor >= maxArmor)
+            armor = maxArmor;
+        armorReticule.ChangeValue(armor);
+    }
     public void Hit(float damage)
     {
         // apply damage to armor
-        if (Armor > 0)
+        if (armor > 0)
         {
-            float remainder = Armor - damage;
-            Armor -= damage;
+            float remainder = armor - damage;
+            armor -= damage;
             // if armor is depleted, apply remaining damage to HP
-            if (Armor <= 0) {
-                Armor = 0;
-                HitPoints += remainder;
+            if (armor <= 0) {
+                armor = 0;
+                hitPoints += remainder;
             }
         }
         else
-            HitPoints -= damage;
+            hitPoints -= damage;
 
         // if HP is gone, player loses
-        if (HitPoints <= 0)
+        if (hitPoints <= 0)
         {
             gameManager.PlayerLost();
         }
 
-        healthReticule.ChangeValue(HitPoints);
-        armorReticule.ChangeValue(Armor);
+        healthReticule.ChangeValue(hitPoints);
+        armorReticule.ChangeValue(armor);
     }
 
     void OnEnable()

@@ -17,7 +17,7 @@ public class MissileAI : SeekingAI {
 
     void Explode()
     {
-        Debug.Log(this.name + " Blew up!");
+        //Debug.Log(this.name + " Blew up!");
         // Play animation
         Assert.IsNotNull<GameObject>(ExplosionAnimation);
             GameObject explosion = Instantiate(ExplosionAnimation, transform.position, transform.rotation) as GameObject;

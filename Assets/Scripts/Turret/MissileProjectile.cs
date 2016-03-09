@@ -22,7 +22,7 @@ public class MissileProjectile : ProjectileBaseClass
     }
     public override void Fire(Vector3 direction, Quaternion rotation)
     {
-        Debug.Log("fired missile at: " + target.name);
+        //Debug.Log("fired missile at: " + target.name);
         GetComponent<MissileAI>().Initialize(target, speed, speed, true);
         timeToDie = Time.time + maxTimeToLive;
     }

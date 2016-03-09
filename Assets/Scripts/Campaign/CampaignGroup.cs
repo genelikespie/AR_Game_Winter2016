@@ -68,5 +68,6 @@ public class CampaignGroup : MonoBehaviour {
             canStartCampaign = true;
             return;
         }
+        childStages[currentStageIndex].BeginCurrStage();
     }
 }

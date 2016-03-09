@@ -61,8 +61,8 @@ public class SeekingWanderAI : SeekingAI {
         {
             //Debug.Log("wander target");
             Debug.DrawLine(transform.position, wanderTargetTransform.position, Color.red);
-            if (!IsTargetReachable(wanderTargetTransform))
-                Debug.LogWarning("Wander currTarget is not reachable!");
+            //if (!IsTargetReachable(wanderTargetTransform))
+                //Debug.LogWarning("Wander currTarget is not reachable!");
             Wander();
         }
         else if (mainTargetTransform)

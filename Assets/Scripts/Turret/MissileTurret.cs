@@ -11,6 +11,7 @@ public class MissileTurret : BaseTurret {
     public float currTime;
     public LinkedList<Transform> targets;
     public TargetType targetType;
+    public bool lookAtTarget = false;
     public float maxTimeToLive = 10.0f;
     public float explosionRadius = 4.0f;
     public float damage = 10.0f;
@@ -49,7 +50,7 @@ public class MissileTurret : BaseTurret {
                 FireBullet(currTarget.position - transform.position, Quaternion.LookRotation(currTarget.position - transform.position));
         }
 
-        if (currTarget)
+        if (currTarget && lookAtTarget)
         {
             aim_pivot.LookAt(currTarget);
             Vector3 newRot = aim_pivot.eulerAngles;
@@ -74,7 +75,7 @@ public class MissileTurret : BaseTurret {
             if (!targets.Contains(other.transform))
                 targets.AddLast(other.transform);
             currTarget = targets.Last.Value;
-            Debug.Log("Added: " + other.name + " to the linkedlist");
+            //Debug.Log("Added: " + other.name + " to the linkedlist");
             FireBullet(currTarget.position - transform.position, Quaternion.LookRotation(currTarget.position - transform.position));
         }
     }
@@ -98,7 +99,7 @@ public class MissileTurret : BaseTurret {
         {
             if (currTarget && currTarget.gameObject.activeSelf)
             {
-                Debug.LogWarning("FIRED MISSILE AT: " + currTarget.name);
+                //Debug.LogWarning("FIRED MISSILE AT: " + currTarget.name);
                 projectileArray[currentProjectileIndex].GetComponent<MissileProjectile>().Initialize(currTarget, targetType, maxTimeToLive, explosionRadius, damage);
                 projectileArray[currentProjectileIndex].gameObject.SetActive(true);
                 projectileArray[currentProjectileIndex].position = transform.position;

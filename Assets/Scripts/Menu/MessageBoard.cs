@@ -6,7 +6,7 @@ using System.Collections;
 // Modal panel that displays pop-up messages to the user
 public class MessageBoard : MonoBehaviour {
 
-    public Button back;
+    public Button backButton;
     public GameObject messageBoard;
     public Text title;
     public Text body;
@@ -48,12 +48,11 @@ public class MessageBoard : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake () {
-	    back = back.GetComponent<Button>();
         rectTransform = GetComponent<RectTransform>();
         gameManager = GameManagerScript.Instance();
         if (!ARCamera)
             Debug.LogError("Need to attach AR Camera!");
-        startParent = GetComponentInParent<Transform>();
+        startParent = transform.parent;
         startLocalPosition = transform.localPosition;
         open = false;
         animate = false;
@@ -65,6 +64,7 @@ public class MessageBoard : MonoBehaviour {
     {
         transform.SetParent(startParent);
         transform.localPosition = startLocalPosition;
+        transform.rotation = Quaternion.LookRotation(startParent.forward);
         rectTransform.localScale = Vector3.one;
         rectTransform.sizeDelta = startSizeDelta;
         rectTransform.localPosition = Vector3.zero;
@@ -74,6 +74,7 @@ public class MessageBoard : MonoBehaviour {
     {
         transform.SetParent(ARCamera.transform);
         transform.localPosition = cameraLocalPosition;
+        transform.rotation = Quaternion.LookRotation(ARCamera.forward);
        // transform.rotation = Quaternion.identity;
         //transform.rotation = Quaternion.LookRotation(ARCamera.forward);
 
@@ -81,15 +82,22 @@ public class MessageBoard : MonoBehaviour {
     public void pressedBack()
     {
         //gameManager.unPauseGame();
+        backButton.enabled = false;
         animate = true;
         open = false;
         currAnimationTime = 0;
+        transform.position = new Vector3(0, -1000, 0);
         //messageBoard.transform.position = new Vector3(messageBoard.transform.position.x, 5000, messageBoard.transform.position.z);
     }
 
-    public void activateBoard()
+    public void activateBoard(bool worldspace)
     {
+        if (worldspace)
+            ToWorldSpace();
+        else
+            ToScreenSpace();
         //gameManager.pauseGame();
+        backButton.enabled = true;
         animate = true;
         open = true;
         currAnimationTime = 0;

@@ -11,7 +11,12 @@ public class CampaignStage : MonoBehaviour {
     private int currentWaveIndex;
     // Private StageWave currentWave;
     private CampaignGroup parentGroup;
+    private MessageBoard messageBoard;
 
+    // time for the description of the state to display on the message board
+    public float displayTime = 1;
+    private float currTime;
+    private bool displayDescription = false;
     //Timer waveTimer;
     bool beginNextWave;
 
@@ -30,11 +35,20 @@ public class CampaignStage : MonoBehaviour {
         if (numOfWaves <= 0)
             Debug.LogError("num of waves is empty! CampaignStage" + name);
         beginNextWave = false;
+        messageBoard = MessageBoard.Instance();
     }
 
     void Update()
     {
-
+        if (displayDescription)
+        {
+            currTime += Time.deltaTime;
+            if (currTime > displayTime)
+            {
+                displayDescription = false;
+                messageBoard.pressedBack();
+            }
+        }
     }
 
     /// <summary>
@@ -51,6 +65,15 @@ public class CampaignStage : MonoBehaviour {
     /// </summary>
     public void BeginCurrStage()
     {
+        if (stageDescription != "")
+        {
+            Debug.Log("displaying stage description: " + stageDescription);
+            messageBoard.setTitle(gameObject.name);
+            messageBoard.setBody(stageDescription);
+            messageBoard.activateBoard(true);
+            displayDescription = true;
+            currTime = 0;
+        }
         if (!parentGroup)
             Debug.LogError("No Parent Group!");
         currentWaveIndex = 0;
