@@ -17,7 +17,7 @@ public class WayPointFlare : MonoBehaviour {
     }
     void OnEnable()
     {
-        Debug.Log("waypoint enabled");
+        //Debug.Log("waypoint enabled");
        //particles.Play();
         transform.localPosition = localSpawnPosition;
         currSpeed = startSpeed;

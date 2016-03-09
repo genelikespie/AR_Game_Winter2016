@@ -9,10 +9,10 @@ public class CampaignStage : MonoBehaviour {
     private List<StageWave> childWaves;
     private int numOfWaves;
     private int currentWaveIndex;
+    private int numOfWavesCompleted;
     // Private StageWave currentWave;
     private CampaignGroup parentGroup;
     private MessageBoard messageBoard;
-
     // time for the description of the state to display on the message board
     public float displayTime = 1;
     private float currTime;
@@ -36,6 +36,7 @@ public class CampaignStage : MonoBehaviour {
             Debug.LogError("num of waves is empty! CampaignStage" + name);
         beginNextWave = false;
         messageBoard = MessageBoard.Instance();
+        numOfWavesCompleted = 0;
     }
 
     void Update()
@@ -77,19 +78,43 @@ public class CampaignStage : MonoBehaviour {
         if (!parentGroup)
             Debug.LogError("No Parent Group!");
         currentWaveIndex = 0;
+        numOfWavesCompleted = 0;
         StartCoroutine(childWaves[currentWaveIndex].BeginCurrWave());
         //childWaves[currentWaveIndex].BeginCurrWave();
         Debug.Log("BEGINNING STAGE " + name);
     }
+    public void LoadNextWave(StageWave completedStage)
+    {
+        beginNextWave = true;
+        currentWaveIndex++;
+        if (currentWaveIndex >= numOfWaves)
+            return;
+        StartCoroutine(childWaves[currentWaveIndex].BeginCurrWave());
+    }
+
+    public void NotifyWaveCompleted(StageWave completedStage)
+    {
+        numOfWavesCompleted++;
+        Debug.Log("PLAYER BEAT WAVE: " + completedStage.name + " numOfWavesCompleted: " + numOfWavesCompleted + "/" + numOfWaves);
+        if (numOfWavesCompleted >= numOfWaves)
+        {
+            parentGroup.NotifyStageCompleted(this);
+            Debug.Log("PLAYER BEAT STAGE " + name);
+            return;
+        }
+    }
+    /*
     /// <summary>
     ///  Called by the parent CampaignGroup to Start the Stage
     /// </summary>
     public void NotifyWaveCompleted(StageWave completedStage)
     {
         beginNextWave = true;
-
+        numOfWavesCompleted++;
         currentWaveIndex++;
-        if (currentWaveIndex >= numOfWaves)
+
+        Debug.Log("PLAYER BEAT WAVE: " + completedStage.name + " numOfWavesCompleted: " + numOfWavesCompleted + "/" + numOfWaves);
+        if (numOfWavesCompleted >= numOfWaves)
         {
             parentGroup.NotifyStageCompleted(this);
             Debug.Log("PLAYER BEAT STAGE " + name);
@@ -98,4 +123,5 @@ public class CampaignStage : MonoBehaviour {
         //childWaves[currentWaveIndex].BeginCurrWave();
         StartCoroutine(childWaves[currentWaveIndex].BeginCurrWave());
     }
+     * */
 }

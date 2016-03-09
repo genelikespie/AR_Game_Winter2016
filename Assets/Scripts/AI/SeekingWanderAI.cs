@@ -49,9 +49,9 @@ public class SeekingWanderAI : SeekingAI {
         leftTurnNode.transform.localPosition = new Vector3(-turnRadius, 0, 0);
         rightTurnNode.transform.localPosition = new Vector3(turnRadius, 0, 0);
         turnRadius *= transform.lossyScale.x;
-        Debug.Log("wander range:" + maxRangeToWander + "  turndiameter: " + turnRadius * 2);
-        if (maxRangeToWander < 2 * turnRadius)
-            Debug.LogWarning("Range to wander is smaller than turn turnDiameter! Object may not be able to reach currTarget! " + turnRadius * 2);
+        //Debug.Log("wander range:" + maxRangeToWander + "  turndiameter: " + turnRadius * 2);
+        //if (maxRangeToWander < 2 * turnRadius)
+            //Debug.LogWarning("Range to wander is smaller than turn turnDiameter! Object may not be able to reach currTarget! " + turnRadius * 2);
 
     }
 

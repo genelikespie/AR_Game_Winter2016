@@ -93,7 +93,7 @@ namespace Vuforia
                 component.enabled = true;
             }
 
-            Debug.Log("Trackable " + mTrackableBehaviour.TrackableName + " found");
+            //Debug.Log("Trackable " + mTrackableBehaviour.TrackableName + " found");
             if (tag == "MainImageTarget")
             {
                 // restore our previous paused state
@@ -124,7 +124,7 @@ namespace Vuforia
                 component.enabled = false;
             }
 
-            Debug.Log("Tracking Lost: " + this.name);
+            //Debug.Log("Tracking Lost: " + this.name);
             // Disable colliders:
             foreach (Collider component in colliderComponents)
             {
@@ -136,7 +136,7 @@ namespace Vuforia
                 // save our previous pause state so we can return to it when we retrack target
                 prevPauseState = gameManager.paused;
                 gameManager.pauseGame();
-                Debug.Log("Trackable " + mTrackableBehaviour.TrackableName + " lost");
+                //Debug.Log("Trackable " + mTrackableBehaviour.TrackableName + " lost");
                 GameManagerScript.Instance().gameObject.SendMessage("PauseTrackableLost", SendMessageOptions.DontRequireReceiver);
                 MessageBoard messageBoard = MessageBoard.Instance();
                 messageBoard.setTitle("Tracking Lost!");

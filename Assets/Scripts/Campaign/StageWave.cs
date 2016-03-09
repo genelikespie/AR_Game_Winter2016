@@ -64,8 +64,10 @@ public class StageWave : MonoBehaviour {
             Debug.LogError("enemies left is negative!");
         if (enemiesLeft == 0)
         {
-            Debug.Log("PLAYER BEAT WAVE " + name);
-            StartCoroutine(FinishCurrWave());
+            if (!mustFinishWaveBeforeNext)
+                parentStage.NotifyWaveCompleted(this);
+            else
+                StartCoroutine(FinishCurrWave());
             return;
         }
     }
@@ -82,14 +84,20 @@ public class StageWave : MonoBehaviour {
         aiSpawner.RelocateSpawn(enemyTransforms);
         enemiesLeft = totalEnemies;
 
-        Debug.Log("BEGINNING WAVE " + name + " Enemies: " + totalEnemies);
+        Debug.Log("BEGINNING WAVE: " + name + " Enemies: " + totalEnemies);
         if (!mustFinishWaveBeforeNext)
             StartCoroutine(FinishCurrWave());
     }
     public IEnumerator FinishCurrWave()
     {
         yield return new WaitForSeconds(delayBeforeNextStage);
-        parentStage.NotifyWaveCompleted(this);
+        if (!mustFinishWaveBeforeNext)
+            parentStage.LoadNextWave(this);
+        else
+        {
+            parentStage.NotifyWaveCompleted(this);
+            parentStage.LoadNextWave(this);
+        }
 
     }
 }

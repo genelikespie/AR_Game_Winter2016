@@ -111,7 +111,7 @@ public class SpaceShip : MonoBehaviour {
             Debug.LogError("Spaceship was already dead!");
             return;
         }
-        Debug.Log(this.name + " Blew up!");
+        //Debug.Log(this.name + " Blew up!");
         // Play animation
         if (explosionAnimation)
         {
