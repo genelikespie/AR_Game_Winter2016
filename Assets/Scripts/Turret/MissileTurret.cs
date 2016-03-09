@@ -17,6 +17,10 @@ public class MissileTurret : BaseTurret {
     public bool continuousFire = true;
     protected Collider collider;
     public string otherTag = "";
+    public Transform game_tilt;
+    public Transform game_pivot;
+    public Transform aim_tilt;
+    public Transform aim_pivot;
 
     protected void Awake()
     {
@@ -43,6 +47,22 @@ public class MissileTurret : BaseTurret {
             FireYes = true;
             if (currTarget)
                 FireBullet(currTarget.position - transform.position, Quaternion.LookRotation(currTarget.position - transform.position));
+        }
+
+        if (currTarget)
+        {
+            aim_pivot.LookAt(currTarget);
+            Vector3 newRot = aim_pivot.eulerAngles;
+            newRot.x = newRot.z = 0;
+            aim_pivot.rotation = Quaternion.Euler(newRot);
+
+            aim_tilt.LookAt(currTarget);
+            Vector3 rot = aim_tilt.localEulerAngles;
+            rot.y = rot.z = 0;
+            aim_tilt.localRotation = Quaternion.Euler(rot);
+
+            game_pivot.rotation = Quaternion.Lerp(game_pivot.rotation, aim_pivot.rotation, Time.deltaTime * turnSpeed);
+            game_tilt.localRotation = Quaternion.Lerp(game_tilt.localRotation, aim_tilt.localRotation, Time.deltaTime * turnSpeed);
         }
     }
 
