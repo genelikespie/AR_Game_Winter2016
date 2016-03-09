@@ -7,6 +7,9 @@ public class MenuScript : MonoBehaviour {
     public Button startText;
     public Button exitText;
 
+    public Camera cam1;
+    public Camera cam2;
+
 	// Use this for initialization
 	void Start () {
         startText = startText.GetComponent<Button>();
@@ -20,7 +23,9 @@ public class MenuScript : MonoBehaviour {
 
     public void StartLevel()
     {
-        Application.LoadLevel(1);
+        cam2.enabled = true;
+        cam1.enabled = false;
+        //Application.LoadLevel(1);
     }
 	
 	// Update is called once per frame
