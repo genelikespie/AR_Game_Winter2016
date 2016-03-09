@@ -13,6 +13,7 @@ public class GameManagerScript : MonoBehaviour {
     public float timeDeltaTime;
 
     public AudioSource backgroundMusic;
+    public AudioSource buttonPress;
 
     int counter = 0;
 
@@ -101,6 +102,7 @@ public class GameManagerScript : MonoBehaviour {
 
     public void ChangeScenes(int index)
     {
+        buttonPress.Play();
         Application.LoadLevel(index);
     }
 }
