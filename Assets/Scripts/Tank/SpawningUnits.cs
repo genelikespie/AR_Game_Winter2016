@@ -61,7 +61,7 @@ public class SpawningUnits : MonoBehaviour {
         if (Busy == false)
         {
             Busy = true;
-            dropThis = spawnMe;
+            createThisGameObject = spawnMe;
             DescentTarget = new Vector3(bottomLocation.x, dropOffY, bottomLocation.z);
             AscentTarget = new Vector3(bottomLocation.x, dropOffY + 100F, bottomLocation.z);
             DescentTargetGround = new Vector3(bottomLocation.x, 0.1F, bottomLocation.z);
