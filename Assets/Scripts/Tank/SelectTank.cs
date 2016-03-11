@@ -4,7 +4,8 @@ using System.Collections;
 
 public class SelectTank : MonoBehaviour {
 
-    public Button Tank1; 
+    public Button Tank1;
+    //public Canvas StartMenu;
 
 	// Use this for initialization
 	void Start () {
@@ -18,6 +19,5 @@ public class SelectTank : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
 	}
 }
