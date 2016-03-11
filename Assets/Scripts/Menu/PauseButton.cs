@@ -11,6 +11,7 @@ public class PauseButton : MonoBehaviour {
     float xScreen;
     float yScreen;
      * */
+    public AudioSource buttonPress;
     void Awake()
     {
         menuManager = MenuManager.Instance();
@@ -31,6 +32,7 @@ public class PauseButton : MonoBehaviour {
         }
         else
         {
+            buttonPress.Play();
             //gameManager.togglePause();
             GetComponent<Text>().text = "Pause";
         }

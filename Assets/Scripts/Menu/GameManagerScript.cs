@@ -13,6 +13,7 @@ public class GameManagerScript : MonoBehaviour {
     public float timeDeltaTime;
 
     public AudioSource backgroundMusic;
+    public AudioSource buttonPress;
 
     int counter = 0;
 
@@ -67,7 +68,7 @@ public class GameManagerScript : MonoBehaviour {
 
     public void unPauseGame()
     {
-        Debug.Log("unpaused music");
+        //Debug.Log("unpaused music");
         backgroundMusic.UnPause();
         Time.timeScale = 1;
         paused = false;
@@ -75,7 +76,7 @@ public class GameManagerScript : MonoBehaviour {
 
     public void pauseGame()
     {
-        Debug.Log("paused music");
+        //Debug.Log("paused music");
         backgroundMusic.Pause();
         Time.timeScale = 0;
         paused = true;
@@ -101,6 +102,7 @@ public class GameManagerScript : MonoBehaviour {
 
     public void ChangeScenes(int index)
     {
+        buttonPress.Play();
         Application.LoadLevel(index);
     }
 }

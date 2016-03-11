@@ -15,6 +15,7 @@ public class moveCrosshair : MonoBehaviour {
     Camera mainCamera;
     bool moveGranted;
     Transform CrosshairLocation;
+    public AudioSource buttonPress;
 
     private GameManagerScript gameManager;
     float start = 0;
@@ -76,6 +77,7 @@ public class moveCrosshair : MonoBehaviour {
         Button button = Hit.collider.gameObject.transform.GetComponentInChildren<Button>();
         if (button != null)
         {
+            buttonPress.Play();
             button.onClick.Invoke();
         }
     }

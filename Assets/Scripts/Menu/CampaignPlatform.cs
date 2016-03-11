@@ -6,6 +6,7 @@ public class CampaignPlatform : MonoBehaviour {
     public CampaignGroup campaign;
     public bool canStartCampaign;
     private FloatingPlatform platform;
+    public AudioSource buttonPress;
     void Awake()
     {
         platform = GetComponent<FloatingPlatform>();
@@ -15,6 +16,7 @@ public class CampaignPlatform : MonoBehaviour {
 
     public void StartCampaign()
     {
+        buttonPress.Play();
         campaign.StartCampaign();
         platform.Lift();
         platform.canMove = false;
