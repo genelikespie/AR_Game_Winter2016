@@ -4,6 +4,8 @@ using System.Collections;
 public class SlowdownBall : MonoBehaviour {
 
     public float inputCharge;
+    float journeyLength;
+    bool journeyDir;
     public bool charging = false;
     public float currBallPower;
     public float goalValue;
@@ -13,6 +15,7 @@ public class SlowdownBall : MonoBehaviour {
     public bool needToCharge = false;
     float maxValue;
     public float prevValue;
+    public GameObject scaleMe;
 
 	// Use this for initialization
 	void Start () {
@@ -59,13 +62,32 @@ public class SlowdownBall : MonoBehaviour {
         }
         */
         if (needToCharge == false)
+        {
             prevValue = currBallPower;
+            journeyLength = Mathf.Abs(goalValue - currBallPower);
+            if (goalValue < currBallPower)
+                journeyDir = false; //go negative
+            else
+                journeyDir = true;
+            startTime = Time.time;
+        }
 
         if (needToCharge == true)
         {
-            float ratio = Mathf.Max(currBallPower / goalValue, goalValue / currBallPower);
-            currBallPower = Mathf.Lerp(prevValue, goalValue, ratio);
-            if (ratio > .9)
+
+            float currentDuration = (Time.time - startTime);
+            float journeyFraction = currentDuration / journeyLength;
+           // float ratio = Mathf.Max(currBallPower / goalValue, goalValue / currBallPower);
+            currBallPower = Mathf.Lerp(prevValue, goalValue, journeyFraction);
+            float maxsafely = goalValue * .95f;
+            float minsafely = goalValue + (goalValue * .04f)+ .001f;
+            if (currBallPower > maxsafely && journeyDir == true)
+            {
+                needToCharge = false;
+                currBallPower = goalValue;
+            }
+
+            if (currBallPower < minsafely && journeyDir == false)
             {
                 needToCharge = false;
                 currBallPower = goalValue;
@@ -73,6 +95,7 @@ public class SlowdownBall : MonoBehaviour {
         }
 
         this.GetComponent<SphereCollider>().radius = currBallPower;
+        scaleMe.GetComponent<Transform>().localScale = new Vector3(currBallPower *2f,currBallPower * 2f,currBallPower *2f);
     }
 
     void OnTriggerEnter(Collider other)
