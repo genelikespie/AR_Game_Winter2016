@@ -41,6 +41,7 @@ public class GameManagerScript : MonoBehaviour {
     // Use this for initialization
     void Awake()
     {
+        Debug.Log(PlayerPrefs.GetInt("Select") + " Selected!");
         scrollOver = false;
         pauseGame();
     }
