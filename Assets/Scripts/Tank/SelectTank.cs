@@ -5,7 +5,7 @@ using System.Collections;
 public class SelectTank : MonoBehaviour {
 
     public GameObject selector;
-    public int selectionIndex;
+    //public int selectionIndex;
 
     void Awake()
     {
@@ -20,14 +20,16 @@ public class SelectTank : MonoBehaviour {
     public void selectMissileTank()
     {
         Debug.Log("Missile!");
-        selectionIndex = 0;
+        PlayerPrefs.SetInt("Select", 0);
+        //selectionIndex = 0;
         Application.LoadLevel(1);
     }
 
     public void selectCannonTank()
     {
         Debug.Log("Cannon!");
-        selectionIndex = 1;
+        //selectionIndex = 1;
+        PlayerPrefs.SetInt("Select", 1);
         Application.LoadLevel(1);
     }
 	
