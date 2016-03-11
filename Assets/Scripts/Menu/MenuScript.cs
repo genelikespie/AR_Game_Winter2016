@@ -12,6 +12,9 @@ public class MenuScript : MonoBehaviour {
 
     public Canvas startMenu;
 
+    public AudioSource mainMenu;
+    public AudioSource selectionMenu;
+
 	// Use this for initialization
 	void Start () {
         startText = startText.GetComponent<Button>();
@@ -28,6 +31,8 @@ public class MenuScript : MonoBehaviour {
         startMenu.enabled = false;
         cam2.enabled = true;
         cam1.enabled = false;
+        mainMenu.Pause();
+        selectionMenu.Play();
         //Application.LoadLevel(1);
     }
 	
