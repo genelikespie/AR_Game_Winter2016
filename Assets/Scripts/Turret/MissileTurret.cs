@@ -69,9 +69,9 @@ public class MissileTurret : BaseTurret {
 
     protected virtual void OnTriggerEnter(Collider other)
     {
-        
         if (other.tag == otherTag)
         {
+            lookAtTarget = true;
             if (!targets.Contains(other.transform))
                 targets.AddLast(other.transform);
             currTarget = targets.Last.Value;
@@ -83,6 +83,7 @@ public class MissileTurret : BaseTurret {
     {
         if (targets.Contains(other.transform))
         {
+            lookAtTarget = false;
             targets.Remove(other.transform);
             if (targets.First != null)
                 currTarget = targets.First.Value;

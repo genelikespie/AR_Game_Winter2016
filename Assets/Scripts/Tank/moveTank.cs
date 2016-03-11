@@ -66,14 +66,22 @@ public class moveTank : MonoBehaviour {
             Debug.Log("Third Turret Missing");
         m_Speed = Speed;
         if (BT1 != null)
+        {
             if (defaultTurret == TurretChoice.Tur1)
                 activeTurret = BT1;
-            else if (BT2 != null)
-                if (defaultTurret == TurretChoice.Tur2)
-                    activeTurret = BT2;
-                else if (BT3 != null)
-                    if (defaultTurret == TurretChoice.Tur3)
-                        activeTurret = BT3;
+
+        }
+        if (BT2 != null)
+        {
+            if (defaultTurret == TurretChoice.Tur2)
+                activeTurret = BT2;
+
+        }
+        if (BT3 != null)
+        {
+            if (defaultTurret == TurretChoice.Tur3)
+                activeTurret = BT3;
+        }
 
         if (GameObject.Find("BlueCross") == null)
             Debug.LogError("No Crosshair");
@@ -83,6 +91,23 @@ public class moveTank : MonoBehaviour {
     //Frame Rate check for tank
     void FixedUpdate()
     {
+        if (BT1 != null)
+        {
+            if (defaultTurret == TurretChoice.Tur1)
+                activeTurret = BT1;
+
+        }
+        if (BT2 != null)
+        {
+            if (defaultTurret == TurretChoice.Tur2)
+                activeTurret = BT2;
+
+        }
+        if (BT3 != null)
+        {
+            if (defaultTurret == TurretChoice.Tur3)
+                activeTurret = BT3;
+        }
         //move tank to crosshair
         levelPosition = CrosshairTransform.GetComponent<moveCrosshair>().levelPosition;
         {
