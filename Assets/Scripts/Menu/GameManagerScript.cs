@@ -118,6 +118,24 @@ public class GameManagerScript : MonoBehaviour {
         paused = true;
     }
 
+    public void switchMusic(int scene)
+    {
+        if (scene == 1)
+        {
+            ;
+        }
+        else if (scene == 2)
+        {
+            scene1.Stop();
+            scene2.Play();
+        }
+        else if (scene == 3)
+        {
+            scene2.Stop();
+            scene3.Play();
+        }
+    }
+
 	// Update is called once per frame
 	void Update () {
         timeDeltaTime = Time.realtimeSinceStartup - timeOfLastFrame;
