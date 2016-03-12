@@ -12,6 +12,7 @@ public class MissileTurret : BaseTurret {
     public LinkedList<Transform> targets;
     public TargetType targetType;
     public bool lookAtTarget = false;
+    public bool AmIATank = false;
     public float maxTimeToLive = 10.0f;
     public float explosionRadius = 4.0f;
     public float damage = 10.0f;
@@ -50,7 +51,7 @@ public class MissileTurret : BaseTurret {
                 FireBullet(currTarget.position - transform.position, Quaternion.LookRotation(currTarget.position - transform.position));
         }
 
-        if (currTarget && lookAtTarget)
+        if (currTarget && lookAtTarget && AmIATank)
         {
             aim_pivot.LookAt(currTarget);
             Vector3 newRot = aim_pivot.eulerAngles;

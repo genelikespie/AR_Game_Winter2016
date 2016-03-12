@@ -1,75 +1,56 @@
 ﻿using UnityEngine;
+using UnityEngine.Assertions;
 using System.Collections;
 
 public class SlowdownBall : MonoBehaviour {
 
-    public float inputCharge;
     float journeyLength;
     bool journeyDir;
-    public bool charging = false;
-    public float currBallPower;
-    public float goalValue;
+
     float startTime;
-    public bool notBeingModified;
+    float gametime;
     public bool needToCharge = false;
-    float maxValue;
     public float prevValue;
     public GameObject scaleMe;
+    public bool notDoneChanging = false;
+    public bool sensorExists = false;
 
-	// Use this for initialization
-	void Start () {
-	
+
+    public float currBallPower;
+    public float goalValue;
+    public float minRadius = 3f;
+    float defaultRadius = 5.5f;
+    public float maxRadius = 9f;
+    public bool doOnce = false;
+
+    IEnumerator CoolDown(float wait)
+    {
+        yield return new WaitForSeconds(wait);
+        notDoneChanging = false;
+        FireCharge();
+    }
+
+
+
+    // Use this for initialization
+    void Start () {
+        goalValue = defaultRadius;
+        currBallPower = minRadius;
 	}
 	
 	// Update is called once per frame
-	void Update () {
-        /*
-        //if accepting input
-         if   (charging)
-        {
-            if (inputCharge < 4)
-            {
-                currBallPower = 4f;
-                maxValue = 4;
+	void FixedUpdate () {
+        gametime += Time.deltaTime;
 
-            }
-            else if (inputCharge > 9)
-            {
-                currBallPower = 9f;
-                maxValue = 9f;
-            }
-            else
-            {
-                currBallPower = inputCharge;
-                maxValue = 9f;
-            }
+        if (sensorExists == true)
+        {
+            if (Input.GetMouseButtonDown(0) == true)
+                PowerUp(100f);
+            if (Input.GetMouseButtonDown(1) == true)
+                FireCharge();
+        }
 
-            this.GetComponent<SphereCollider>().radius = currBallPower;
-            
-        }
-        else if (!charging)
-        {
-            if (currBallPower < 5.5f)
-            {
-                needToCharge = true;
-                goalValue = 5.5f;
-                maxValue = 5.5f;
-            }
-            else
-                needToCharge = false;
-            this.GetComponent<SphereCollider>().radius = 5.5f;
-        }
-        */
-        if (needToCharge == false)
-        {
-            prevValue = currBallPower;
-            journeyLength = Mathf.Abs(goalValue - currBallPower);
-            if (goalValue < currBallPower)
-                journeyDir = false; //go negative
-            else
-                journeyDir = true;
-            startTime = Time.time;
-        }
+
 
         if (needToCharge == true)
         {
@@ -83,17 +64,63 @@ public class SlowdownBall : MonoBehaviour {
             {
                 needToCharge = false;
                 currBallPower = goalValue;
+              //  notDoneChanging = false;
+                goalValue = minRadius;
+                StartCoroutine(CoolDown(2f));      
+
             }
 
             if (currBallPower < minsafely && journeyDir == false)
             {
                 needToCharge = false;
                 currBallPower = goalValue;
+                
+                if (sensorExists == false)
+                {
+                    goalValue = defaultRadius;
+                    StartCoroutine(CoolDown(3f));
+                }
+                else
+                    notDoneChanging = false;
+
             }
         }
 
         this.GetComponent<SphereCollider>().radius = currBallPower;
         scaleMe.GetComponent<Transform>().localScale = new Vector3(currBallPower *2f,currBallPower * 2f,currBallPower *2f);
+
+        if (sensorExists == false && doOnce == false && gametime > .5)
+        {
+            doOnce = true;
+            FireCharge();
+        }
+    }
+
+    public void FireCharge()
+    {
+        if (notDoneChanging == false)
+        {
+            notDoneChanging = true;
+            prevValue = currBallPower;
+            journeyLength = Mathf.Abs(goalValue - currBallPower);
+            if (goalValue < currBallPower)
+                journeyDir = false; //go negative
+            else
+                journeyDir = true;
+            startTime = Time.time;
+            needToCharge = true;
+        }
+
+    }
+
+    public void PowerUp(float value)
+    {
+        if (notDoneChanging == false && goalValue < maxRadius)
+        {
+            goalValue += (50*Time.deltaTime) / value;
+
+        }
+
     }
 
     void OnTriggerEnter(Collider other)
