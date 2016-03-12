@@ -6,6 +6,8 @@ public class SelectTank : MonoBehaviour {
 
     public GameObject selector;
     //public int selectionIndex;
+    public Camera cam1;
+    public Camera cam2;
 
     void Awake()
     {
@@ -21,8 +23,11 @@ public class SelectTank : MonoBehaviour {
     {
         Debug.Log("Missile!");
         PlayerPrefs.SetInt("Select", 0);
+        cam1.enabled = false;
+        cam2.enabled = true;
+        cam2.GetComponent<Animator>().enabled = true;
         //selectionIndex = 0;
-        Application.LoadLevel(1);
+        //Application.LoadLevel(1);
     }
 
     public void selectCannonTank()
@@ -30,7 +35,10 @@ public class SelectTank : MonoBehaviour {
         Debug.Log("Cannon!");
         //selectionIndex = 1;
         PlayerPrefs.SetInt("Select", 1);
-        Application.LoadLevel(1);
+        cam1.enabled = false;
+        cam2.enabled = true;
+        cam2.GetComponent<Animator>().enabled = true;
+        //Application.LoadLevel(1);
     }
 	
 	// Update is called once per frame

@@ -8,7 +8,6 @@ public class MenuScript : MonoBehaviour {
     public Button exitText;
 
     public Camera cam1;
-    public Camera cam2;
 
     public Canvas startMenu;
 
@@ -28,12 +27,23 @@ public class MenuScript : MonoBehaviour {
 
     public void StartLevel()
     {
-        startMenu.enabled = false;
-        cam2.enabled = true;
-        cam1.enabled = false;
+        //startMenu.enabled = false;
+        cam1.GetComponent<Animator>().enabled = true;
+        //cam2.enabled = true;
+        //cam1.enabled = false;
         mainMenu.Pause();
         selectionMenu.Play();
         //Application.LoadLevel(1);
+    }
+
+    public void selectAR()
+    {
+        Application.LoadLevel(1);
+    }
+
+    public void selectVR()
+    {
+        Application.LoadLevel(2);
     }
 	
 	// Update is called once per frame
