@@ -20,6 +20,7 @@ public class CampaignStage : MonoBehaviour {
     //Timer waveTimer;
     bool beginNextWave;
     public int scene;
+    private GameManagerScript gameManager;
 
     void Awake()
     {
@@ -38,6 +39,11 @@ public class CampaignStage : MonoBehaviour {
         beginNextWave = false;
         messageBoard = MessageBoard.Instance();
         numOfWavesCompleted = 0;
+    }
+
+    void Start()
+    {
+        gameManager = GameManagerScript.Instance();
     }
 
     void Update()
@@ -67,6 +73,7 @@ public class CampaignStage : MonoBehaviour {
     /// </summary>
     public void BeginCurrStage()
     {
+        gameManager.switchMusic(scene);
         PlayerPrefs.SetInt("scene", scene);
         if (stageDescription != "")
         {
