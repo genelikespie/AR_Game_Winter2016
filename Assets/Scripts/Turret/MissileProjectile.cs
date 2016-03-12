@@ -11,7 +11,10 @@ public class MissileProjectile : ProjectileBaseClass
     void Update()
     {
         if (Time.time > timeToDie)
+        {
+            GetComponent<MissileAI>().Explode();
             gameObject.SetActive(false);
+        }
     }
     public void Initialize (Transform targ, TargetType targType, float maxTTL, float expRadius, float dmg ) {
         target = targ;

@@ -98,13 +98,21 @@ public class MissileTurret : BaseTurret {
         int amountShot = maxBarrageAmount;
         while (amountShot > 0)
         {
+            Debug.Log(amountShot + "while ammo left");
+            if (targets.Count <= 0)
+            {
+                Debug.Log("Not enough targets for barrage");
+                break;
+            }
             foreach (Transform t in targets)
             {
                 // if we still have ammo, shoot at our next target
                 if (amountShot > 0)
                 {
+                    Debug.Log(amountShot + "foreach ammo left");
                     if (t && t.gameObject.activeSelf)
                     {
+                        Debug.Log("fired barrage at: " + t.name + " " + amountShot + " left");
                         projectileArray[currentProjectileIndex].GetComponent<MissileProjectile>().Initialize(t, targetType, maxTimeToLive, explosionRadius, damage);
                         projectileArray[currentProjectileIndex].gameObject.SetActive(true);
                         projectileArray[currentProjectileIndex].position = transform.position;
@@ -114,15 +122,24 @@ public class MissileTurret : BaseTurret {
                         if (currentProjectileIndex >= arraySize)
                             currentProjectileIndex = 0;
                     }
-                    else if (!t.gameObject.activeSelf)
+                    else if (t && !t.gameObject.activeSelf)
                     {
+                        Debug.Log("target was inactive: " + t.name);
                         targets.Remove(t);
+                    }
+                    else
+                    {
+                        Debug.Log("target was null: " + t.name);
                     }
                 }
                 else
+                {
+                    Debug.Log("amount of ammo done (foreach)");
                     break; // we used all our ammo
+                }
             }
         }
+        Debug.Log("amount of ammo done (while)");
     }
     public override void FireBullet(Vector3 direction, Quaternion rotation)
     {
@@ -143,10 +160,13 @@ public class MissileTurret : BaseTurret {
                     nextFireTime = Time.time + reloadTime;
                 }
             }
-            else if (!currTarget.gameObject.activeSelf) {
+            else if (currTarget && !currTarget.gameObject.activeSelf) {
                 // remove it from our linked list and set currTarget to next tail
                 targets.Remove(currTarget);
-                currTarget = targets.Last.Value;
+                if (targets.Last != null)
+                    currTarget = targets.Last.Value;
+                else
+                    currTarget = null;
             }
         }
         currentProjectileIndex++;

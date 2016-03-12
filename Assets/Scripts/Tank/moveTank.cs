@@ -12,6 +12,7 @@ public class moveTank : MonoBehaviour {
     private Quaternion dummyQ;
     public enum TurretChoice { Tur1, Tur2, Tur3};
     public TurretChoice defaultTurret;
+    public bool canBarrage = true;
 
     AudioSource cannon;
     AudioSource missile;
@@ -174,19 +175,17 @@ public class moveTank : MonoBehaviour {
 
     public void FireTurret()
     {
-        if (activeTurret.FireYes == true)
+        if (audioChoice == 0)   //cannon
         {
-            if (audioChoice == 0)   //cannon
-            {
-                cannon.Play();
-                activeTurret.FireBullet(dummyV, dummyQ);
-            }
-            else if (audioChoice == 1)  //missile
-            {
-                missile.Play();
-                activeTurret.GetComponent<MissileTurret>().Barrage();
-            }
+            cannon.Play();
         }
+        else if (audioChoice == 1)  //missile
+        {
+            missile.Play();
+            if (canBarrage)
+                activeTurret.GetComponent<MissileTurret>().Barrage();
+        }
+        activeTurret.FireBullet(dummyV, dummyQ);
     }
 
     private void Turn(Vector3 turning)

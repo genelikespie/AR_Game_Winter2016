@@ -7,16 +7,21 @@ public class MissileAI : SeekingAI {
     public GameObject ExplosionAnimation;
     private ParticleSystem particles;
     private Collider missileCollider;
+    AudioSource explodeAudio;
+
 
     void Awake()
     {
         particles = GetComponentInChildren<ParticleSystem>();
         missileCollider = GetComponent<Collider>();
         Assert.IsTrue(particles && missileCollider && ExplosionAnimation);
+        explodeAudio = GameObject.Find("missile_explosion").GetComponent<AudioSource>();
+
     }
 
-    void Explode()
+    public void Explode()
     {
+        explodeAudio.Play();
         //Debug.Log(this.name + " Blew up!");
         // Play animation
         Assert.IsNotNull<GameObject>(ExplosionAnimation);

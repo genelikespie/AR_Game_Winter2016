@@ -15,7 +15,6 @@ public class SpaceShip : MonoBehaviour {
     public float maxBaseSpeed;
     public float maxTurnSpeed;
 
-    AudioSource hit;
     AudioSource dead;
 
     protected float hitPoints;
@@ -38,7 +37,6 @@ public class SpaceShip : MonoBehaviour {
         myCrosshair.transform.localPosition = new Vector3(0, myCrosshair.transform.localPosition.y, 0);
         hitPoints = maxHitPoints;
         shipState = SpaceShipState.Inactive;
-        hit = GameObject.Find("missile_explosion").GetComponent<AudioSource>();
         dead = GameObject.Find("enemy_explosion").GetComponent<AudioSource>();
         ai.BaseSpeed = maxBaseSpeed;
         ai.TurnSpeed = maxTurnSpeed;
@@ -84,10 +82,6 @@ public class SpaceShip : MonoBehaviour {
         {
             dead.Play();
             Explode();
-        }
-        else
-        {
-            hit.Play();
         }
     }
 
