@@ -123,6 +123,11 @@ public class AUStasis : MonoBehaviour {
 
     }
 
+    public void ActivateSensor(bool value)
+    {
+        sensorExists = value;
+    }
+
     void OnTriggerEnter(Collider other)
     {
 

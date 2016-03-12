@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Assertions;
 using System.Collections;
 
 public class ArduinoBluetooth : MonoBehaviour {
@@ -7,7 +8,7 @@ public class ArduinoBluetooth : MonoBehaviour {
     public Text statusText;
     public Text activateText;
     public Text powerupText;
-
+    public AUStasis objectReceiver;
     private Text bluetoothText;
     private bool waitResponse;
 
@@ -25,6 +26,8 @@ public class ArduinoBluetooth : MonoBehaviour {
         {
             BtConnector.connect();
         }
+
+        Assert.IsTrue(objectReceiver);
 	}
 
 	void Update () {
@@ -34,6 +37,7 @@ public class ArduinoBluetooth : MonoBehaviour {
         // If already connected
         if (BtConnector.isConnected())
         {
+            objectReceiver.ActivateSensor(true);
             // Send PING
             if (!waitResponse)
             {
@@ -51,8 +55,12 @@ public class ArduinoBluetooth : MonoBehaviour {
                     if (response[0] == ' ')
                     {
                         // string to tell us whether or not to activate the stasis
-                        activateText.text = response.Substring(1, 1);
+                        string activateStasis = response.Substring(1, 1);
+                        activateText.text = activateStasis;
                         powerupText.text = response.Substring(3);
+                        if (activateStasis[0] == '1')
+                            objectReceiver.FireCharge();
+                        objectReceiver.PowerUp(float.Parse(powerupText.text));
                     }
                     else if (response == "PONG BUTTON ON")
                     {
