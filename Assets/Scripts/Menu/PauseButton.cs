@@ -14,6 +14,7 @@ public class PauseButton : MonoBehaviour {
     public AudioSource buttonPress;
     void Awake()
     {
+        buttonPress = GameObject.Find("ButtonPress").GetComponent<AudioSource>();
         menuManager = MenuManager.Instance();
         /*
         mainCamera = Camera.main;

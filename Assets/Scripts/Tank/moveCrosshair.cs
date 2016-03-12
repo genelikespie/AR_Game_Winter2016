@@ -44,7 +44,8 @@ public class moveCrosshair : MonoBehaviour {
     }
 
     // Use this for initialization
-    void Start () {
+    void Awake () {
+        buttonPress = GameObject.Find("ButtonPress").GetComponent<AudioSource>();
         mainCamera = Camera.main;
         xScreen = Screen.width / 2;
         yScreen = Screen.height / 2;

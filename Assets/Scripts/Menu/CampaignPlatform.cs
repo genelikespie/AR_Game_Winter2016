@@ -9,6 +9,7 @@ public class CampaignPlatform : MonoBehaviour {
     public AudioSource buttonPress;
     void Awake()
     {
+        buttonPress = GameObject.Find("ButtonPress").GetComponent<AudioSource>();
         platform = GetComponent<FloatingPlatform>();
         if (!platform)
             Debug.LogError("cannot find platform for campaignplatform!");
