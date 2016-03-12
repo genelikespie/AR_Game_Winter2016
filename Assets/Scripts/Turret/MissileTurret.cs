@@ -16,6 +16,7 @@ public class MissileTurret : BaseTurret {
     public float maxTimeToLive = 10.0f;
     public float explosionRadius = 4.0f;
     public float damage = 10.0f;
+    public int maxBarrageAmount = 10;
     public bool continuousFire = true;
     protected Collider collider;
     public string otherTag = "";
@@ -92,7 +93,37 @@ public class MissileTurret : BaseTurret {
                 currTarget = null;
         }
     }
-
+    public virtual void Barrage()
+    {
+        int amountShot = maxBarrageAmount;
+        while (amountShot > 0)
+        {
+            foreach (Transform t in targets)
+            {
+                // if we still have ammo, shoot at our next target
+                if (amountShot > 0)
+                {
+                    if (t && t.gameObject.activeSelf)
+                    {
+                        projectileArray[currentProjectileIndex].GetComponent<MissileProjectile>().Initialize(t, targetType, maxTimeToLive, explosionRadius, damage);
+                        projectileArray[currentProjectileIndex].gameObject.SetActive(true);
+                        projectileArray[currentProjectileIndex].position = transform.position;
+                        projectileArray[currentProjectileIndex].gameObject.GetComponent<ProjectileBaseClass>().Fire(Vector3.zero, Quaternion.identity);
+                        currentProjectileIndex++;
+                        amountShot--;
+                        if (currentProjectileIndex >= arraySize)
+                            currentProjectileIndex = 0;
+                    }
+                    else if (!t.gameObject.activeSelf)
+                    {
+                        targets.Remove(t);
+                    }
+                }
+                else
+                    break; // we used all our ammo
+            }
+        }
+    }
     public override void FireBullet(Vector3 direction, Quaternion rotation)
     {
         if (!FireYes)
@@ -111,6 +142,11 @@ public class MissileTurret : BaseTurret {
                     FireYes = false;
                     nextFireTime = Time.time + reloadTime;
                 }
+            }
+            else if (!currTarget.gameObject.activeSelf) {
+                // remove it from our linked list and set currTarget to next tail
+                targets.Remove(currTarget);
+                currTarget = targets.Last.Value;
             }
         }
         currentProjectileIndex++;

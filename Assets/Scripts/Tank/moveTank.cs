@@ -179,12 +179,13 @@ public class moveTank : MonoBehaviour {
             if (audioChoice == 0)   //cannon
             {
                 cannon.Play();
+                activeTurret.FireBullet(dummyV, dummyQ);
             }
             else if (audioChoice == 1)  //missile
             {
                 missile.Play();
+                activeTurret.GetComponent<MissileTurret>().Barrage();
             }
-            activeTurret.FireBullet(dummyV, dummyQ);
         }
     }
 
