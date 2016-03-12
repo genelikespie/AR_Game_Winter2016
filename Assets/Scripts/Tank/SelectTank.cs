@@ -21,11 +21,13 @@ public class SelectTank : MonoBehaviour {
 
     public void selectMissileTank()
     {
+       
         Debug.Log("Missile!");
         PlayerPrefs.SetInt("Select", 0);
         cam1.enabled = false;
         cam2.enabled = true;
         cam2.GetComponent<Animator>().enabled = true;
+      //  this.GetComponentInParent<Canvas>().GetComponent<Camera>().
         //selectionIndex = 0;
         //Application.LoadLevel(1);
     }

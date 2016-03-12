@@ -29,6 +29,7 @@ public class moveTank : MonoBehaviour {
     Transform CrosshairTransform;
     bool moveGranted = false;
     public Vector3 moveIt;
+    int choice = 0;
 
     private static moveTank instance;
     private static Object instance_lock = new Object();
@@ -53,6 +54,15 @@ public class moveTank : MonoBehaviour {
 
     void Awake()
     {
+        choice = PlayerPrefs.GetInt("Select");
+        if (choice == 1)
+        {
+            defaultTurret = TurretChoice.Tur1;
+        }
+        if (choice == 0)
+        {
+            defaultTurret = TurretChoice.Tur2;
+        }
         CrosshairTransform = moveCrosshair.Instance().transform;
         if (!CrosshairTransform) 
             Debug.Log("MOVECROSSHAIR NOT FOUND");
@@ -94,13 +104,19 @@ public class moveTank : MonoBehaviour {
         if (BT1 != null)
         {
             if (defaultTurret == TurretChoice.Tur1)
+            {
+                this.GetComponentInChildren<Transform>().GetChild(0).gameObject.SetActive(false);
                 activeTurret = BT1;
+            }
 
         }
         if (BT2 != null)
         {
             if (defaultTurret == TurretChoice.Tur2)
+            {
+                this.GetComponentInChildren<Transform>().GetChild(2).gameObject.SetActive(false);
                 activeTurret = BT2;
+            }
 
         }
         if (BT3 != null)
