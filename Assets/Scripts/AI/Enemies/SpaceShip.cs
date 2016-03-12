@@ -12,6 +12,8 @@ public class SpaceShip : MonoBehaviour {
     public GameObject explosionAnimation;
     public GameObject myCrosshair;
     public Vector3 startSpawnOffset;
+    public float maxBaseSpeed;
+    public float maxTurnSpeed;
 
     AudioSource hit;
     AudioSource dead;
@@ -38,10 +40,24 @@ public class SpaceShip : MonoBehaviour {
         shipState = SpaceShipState.Inactive;
         hit = GameObject.Find("missile_explosion").GetComponent<AudioSource>();
         dead = GameObject.Find("enemy_explosion").GetComponent<AudioSource>();
+        ai.BaseSpeed = maxBaseSpeed;
+        ai.TurnSpeed = maxTurnSpeed;
+
 	}
 
     protected void Start()
     {
+    }
+
+    public void SlowDownSpeed(float slowValue)
+    {
+        ai.BaseSpeed = maxBaseSpeed * 1.0f/slowValue;
+        ai.TurnSpeed = maxTurnSpeed * 1.0f/slowValue;
+    }
+    public void NormalSpeed()
+    {
+        ai.BaseSpeed = maxBaseSpeed;
+        ai.TurnSpeed = maxTurnSpeed;
     }
 	// Update is called once per frame
 	protected void Update () {

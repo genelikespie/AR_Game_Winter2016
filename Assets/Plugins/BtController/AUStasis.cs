@@ -21,6 +21,7 @@ public class AUStasis : MonoBehaviour {
     public float minRadius = 3f;
     float defaultRadius = 5.5f;
     public float maxRadius = 9f;
+    public float slowValue = 4f; // slows enemies by 4 times
     public bool doOnce = false;
 
     IEnumerator CoolDown(float wait)
@@ -133,8 +134,9 @@ public class AUStasis : MonoBehaviour {
 
         if (other.tag == "Enemy")
         {
-         //   other.GetComponent<SLOWDOWNSHTUFF>().value = input;
-            print("SLOW DOWN NOW!!!!!!");
+            //   other.GetComponent<SLOWDOWNSHTUFF>().value = input;
+            //print("SLOW DOWN NOW!!!!!!");
+            other.gameObject.SendMessage("SlowDownSpeed", slowValue, SendMessageOptions.RequireReceiver);
         }
     }
 
@@ -144,7 +146,8 @@ public class AUStasis : MonoBehaviour {
         if (other.tag == "Enemy")
         {
             //   other.GetComponent<SLOWDOWNSHTUFF>().value = 0;
-            print("REMOVE SLOW FIELD!!!!!!");
+           // print("REMOVE SLOW FIELD!!!!!!");
+            other.gameObject.SendMessage("NormalSpeed", SendMessageOptions.RequireReceiver);
         }
     }
 }
