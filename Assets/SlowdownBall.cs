@@ -11,7 +11,6 @@ public class SlowdownBall : MonoBehaviour {
     public float goalValue;
     float startTime;
     public bool notBeingModified;
-    public bool regularState = true;
     public bool needToCharge = false;
     float maxValue;
     public float prevValue;
@@ -75,9 +74,8 @@ public class SlowdownBall : MonoBehaviour {
         if (needToCharge == true)
         {
 
-            float currentDuration = (Time.time - startTime);
+            float currentDuration = (Time.time - startTime); //* speed;
             float journeyFraction = currentDuration / journeyLength;
-           // float ratio = Mathf.Max(currBallPower / goalValue, goalValue / currBallPower);
             currBallPower = Mathf.Lerp(prevValue, goalValue, journeyFraction);
             float maxsafely = goalValue * .95f;
             float minsafely = goalValue + (goalValue * .04f)+ .001f;
