@@ -2,7 +2,8 @@
 using UnityEngine.Assertions;
 using System.Collections;
 
-public class SlowdownBall : MonoBehaviour {
+
+public class AUStasis : MonoBehaviour {
 
     float journeyLength;
     bool journeyDir;
@@ -14,7 +15,6 @@ public class SlowdownBall : MonoBehaviour {
     public GameObject scaleMe;
     public bool notDoneChanging = false;
     public bool sensorExists = false;
-
 
     public float currBallPower;
     public float goalValue;
