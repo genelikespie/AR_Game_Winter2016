@@ -19,6 +19,7 @@ public class CampaignStage : MonoBehaviour {
     private bool displayDescription = false;
     //Timer waveTimer;
     bool beginNextWave;
+    public int scene;
 
     void Awake()
     {
@@ -66,6 +67,7 @@ public class CampaignStage : MonoBehaviour {
     /// </summary>
     public void BeginCurrStage()
     {
+        PlayerPrefs.SetInt("scene", scene);
         if (stageDescription != "")
         {
             Debug.Log("displaying stage description: " + stageDescription);

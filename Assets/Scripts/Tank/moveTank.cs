@@ -13,6 +13,9 @@ public class moveTank : MonoBehaviour {
     public enum TurretChoice { Tur1, Tur2, Tur3};
     public TurretChoice defaultTurret;
 
+    AudioSource cannon;
+    AudioSource missile;
+
     Transform startTankLocation;    
 
     //moving the crosshair to tank
@@ -30,6 +33,7 @@ public class moveTank : MonoBehaviour {
     bool moveGranted = false;
     public Vector3 moveIt;
     int choice = 0;
+    int audioChoice = -1;
 
     private static moveTank instance;
     private static Object instance_lock = new Object();
@@ -54,6 +58,8 @@ public class moveTank : MonoBehaviour {
 
     void Awake()
     {
+        cannon = GameObject.Find("cannon").GetComponent<AudioSource>();
+        missile = GameObject.Find("rocket").GetComponent<AudioSource>();
         choice = PlayerPrefs.GetInt("Select");
         if (choice == 1)
         {
@@ -78,13 +84,19 @@ public class moveTank : MonoBehaviour {
         if (BT1 != null)
         {
             if (defaultTurret == TurretChoice.Tur1)
+            {
+                audioChoice = 0;
                 activeTurret = BT1;
+            }
 
         }
         if (BT2 != null)
         {
             if (defaultTurret == TurretChoice.Tur2)
+            {
+                audioChoice = 1;
                 activeTurret = BT2;
+            }
 
         }
         if (BT3 != null)
@@ -164,6 +176,14 @@ public class moveTank : MonoBehaviour {
     {
         if (activeTurret.FireYes == true)
         {
+            if (audioChoice == 0)   //cannon
+            {
+                cannon.Play();
+            }
+            else if (audioChoice == 1)  //missile
+            {
+                missile.Play();
+            }
             activeTurret.FireBullet(dummyV, dummyQ);
         }
     }
