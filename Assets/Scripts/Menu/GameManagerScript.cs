@@ -12,7 +12,10 @@ public class GameManagerScript : MonoBehaviour {
     private float timeOfLastFrame;
     public float timeDeltaTime;
 
-    public AudioSource backgroundMusic;
+    public AudioSource scene1;
+    public AudioSource scene2;
+    public AudioSource scene3;
+
     public AudioSource buttonPress;
 
     int counter = 0;
@@ -70,7 +73,23 @@ public class GameManagerScript : MonoBehaviour {
     public void unPauseGame()
     {
         //Debug.Log("unpaused music");
-        backgroundMusic.UnPause();
+        int scene = PlayerPrefs.GetInt("Scene");
+        if (scene == 1)
+        {
+            scene1.UnPause();
+        }
+        else if (scene == 2)
+        {
+            scene2.UnPause();
+        }
+        else if (scene == 3)
+        {
+            scene3.UnPause();
+        }
+        else
+        {
+            scene1.UnPause();
+        }
         Time.timeScale = 1;
         paused = false;
     }
@@ -78,7 +97,23 @@ public class GameManagerScript : MonoBehaviour {
     public void pauseGame()
     {
         //Debug.Log("paused music");
-        backgroundMusic.Pause();
+        int scene = PlayerPrefs.GetInt("Scene");
+        if (scene == 1)
+        {
+            scene1.Pause();
+        }
+        else if (scene == 2)
+        {
+            scene2.Pause();
+        }
+        else if (scene == 3)
+        {
+            scene3.Pause();
+        }
+        else
+        {
+            scene1.Pause();
+        }
         Time.timeScale = 0;
         paused = true;
     }
