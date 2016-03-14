@@ -8,14 +8,31 @@ public class MenuScript : MonoBehaviour {
     public Button exitText;
 
     public Camera cam1;
+    public Camera cam1Launch;
+    public Camera cam2Launch;
+    public GameObject SpaceShipLaunch;
+    public bool spaceScene = false;
 
     public Canvas startMenu;
 
     public AudioSource mainMenu;
     public AudioSource selectionMenu;
 
-	// Use this for initialization
-	void Start () {
+
+    IEnumerator WaitAR(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        Application.LoadLevel(1);
+    }
+
+    IEnumerator WaitVR(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        Application.LoadLevel(2);
+    }
+
+    // Use this for initialization
+    void Start () {
         startText = startText.GetComponent<Button>();
         exitText = exitText.GetComponent<Button>();
 	}
@@ -38,12 +55,30 @@ public class MenuScript : MonoBehaviour {
 
     public void selectAR()
     {
-        Application.LoadLevel(1);
+        if (spaceScene == true)
+        {
+            cam1Launch.enabled = false;
+            cam2Launch.enabled = true;
+            cam2Launch.GetComponent<Animator>().enabled = true;
+            SpaceShipLaunch.GetComponent<Animator>().enabled = true;
+            StartCoroutine(WaitAR(6f));
+        }
+        else
+            Application.LoadLevel(1);
     }
 
     public void selectVR()
     {
-        Application.LoadLevel(2);
+        if (spaceScene == true)
+        {
+            cam1Launch.enabled = false;
+            cam2Launch.enabled = true;
+            cam2Launch.GetComponent<Animator>().enabled = true;
+            SpaceShipLaunch.GetComponent<Animator>().enabled = true;
+            StartCoroutine(WaitVR(6f));
+        }
+        else
+            Application.LoadLevel(2);
     }
 	
 	// Update is called once per frame
