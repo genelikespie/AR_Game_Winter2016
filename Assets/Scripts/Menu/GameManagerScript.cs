@@ -19,11 +19,15 @@ public class GameManagerScript : MonoBehaviour {
     public AudioSource buttonPress;
 
     int counter = 0;
+    MessageBoard messageBoard;
 
+    public static bool applicationIsQuiting = false;
     private static GameManagerScript instance;
     private static Object instance_lock = new Object();
     public static GameManagerScript Instance()
     {
+        if (applicationIsQuiting)
+            return null;
         if (instance != null)
             return instance;
         lock (instance_lock)
@@ -40,11 +44,16 @@ public class GameManagerScript : MonoBehaviour {
             return null;
         }
     }
-
+    void OnApplicationQuit()
+    {
+        applicationIsQuiting = true;
+    }
     // Use this for initialization
     void Awake()
     {
         Debug.Log(PlayerPrefs.GetInt("Select") + " Selected!");
+        messageBoard = MessageBoard.Instance();
+        Assert.IsTrue(messageBoard);
         scrollOver = false;
         pauseGame();
     }
@@ -98,21 +107,24 @@ public class GameManagerScript : MonoBehaviour {
     {
         //Debug.Log("paused music");
         int scene = PlayerPrefs.GetInt("Scene");
-        if (scene == 1)
+        if ((scene1 && scene2 && scene3))
         {
-            scene1.Pause();
-        }
-        else if (scene == 2)
-        {
-            scene2.Pause();
-        }
-        else if (scene == 3)
-        {
-            scene3.Pause();
-        }
-        else
-        {
-            scene1.Pause();
+            if (scene == 1)
+            {
+                scene1.Pause();
+            }
+            else if (scene == 2)
+            {
+                scene2.Pause();
+            }
+            else if (scene == 3)
+            {
+                scene3.Pause();
+            }
+            else
+            {
+                scene1.Pause();
+            }
         }
         Time.timeScale = 0;
         paused = true;
@@ -151,12 +163,30 @@ public class GameManagerScript : MonoBehaviour {
     public void PlayerLost()
     {
         Debug.Log("PLAYER LOST");
-        ChangeScenes(0);
+        pauseGame();
+        messageBoard.setTitle("You Lost!");
+        messageBoard.setBody("Try again next time!");
+        messageBoard.setBack("Main Menu", LoadMainMenu);
+        messageBoard.ToWorldSpace();
+        messageBoard.activateBoard(true);
     }
-
+    public void PlayerWon()
+    {
+        Debug.Log("PLAYER WON");
+        pauseGame();
+        messageBoard.setTitle("You Won!");
+        messageBoard.setBody("You defeated the Martians! Matt Damon would be proud!");
+        messageBoard.setBack("Main Menu", LoadMainMenu);
+        messageBoard.ToWorldSpace();
+        messageBoard.activateBoard(true);
+    }
     public void ChangeScenes(int index)
     {
         buttonPress.Play();
         Application.LoadLevel(index);
+    }
+    public void LoadMainMenu()
+    {
+        Application.LoadLevel(0);
     }
 }

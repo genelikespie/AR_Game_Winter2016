@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 using System.Collections;
 
 
@@ -113,7 +114,14 @@ public class MessageBoard : MonoBehaviour {
     {
         body.text = t;
     }
-	
+    // Sets the back button
+    public void setBack(string text, UnityAction action)
+    {
+        backButton.GetComponentInChildren<Text>().text = text;
+        backButton.onClick.RemoveAllListeners();
+        backButton.onClick.AddListener(action);
+        return;
+    }
 	// Update is called once per frame
 	void Update () {
         if (animate)

@@ -64,7 +64,7 @@ public class CampaignGroup : MonoBehaviour {
         if (currentStageIndex >= numOfStages)
         {
             Debug.Log("PLAYER BEAT CAMPAIGN " + name);
-            Application.LoadLevel(Application.loadedLevel+1);
+            GameManagerScript.Instance().PlayerWon();
             canStartCampaign = true;
             return;
         }

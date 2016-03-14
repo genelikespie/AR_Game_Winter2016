@@ -125,7 +125,7 @@ public class MissileTurret : BaseTurret {
                     else if (t && !t.gameObject.activeSelf)
                     {
                         Debug.Log("target was inactive: " + t.name);
-                        targets.Remove(t);
+                        //targets.Remove(t);
                     }
                     else
                     {

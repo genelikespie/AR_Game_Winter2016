@@ -67,9 +67,9 @@ public class moveCrosshair : MonoBehaviour {
             transform.position = levelPosition;
             moveGranted = true;
             if (Input.GetMouseButtonDown(0))
-            {
-                VirtualButtonPress();
-            }
+                    {
+                        VirtualButtonPress();
+                    }
         }
         else
             moveGranted = false;

@@ -33,6 +33,7 @@ public class MenuScript : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        Time.timeScale = 1.0f;
         startText = startText.GetComponent<Button>();
         exitText = exitText.GetComponent<Button>();
 	}
