@@ -98,10 +98,10 @@ public class MissileTurret : BaseTurret {
         int amountShot = maxBarrageAmount;
         while (amountShot > 0)
         {
-            Debug.Log(amountShot + "while ammo left");
+            //Debug.Log(amountShot + "while ammo left");
             if (targets.Count <= 0)
             {
-                Debug.Log("Not enough targets for barrage");
+                //Debug.Log("Not enough targets for barrage");
                 break;
             }
             foreach (Transform t in targets)
@@ -109,10 +109,10 @@ public class MissileTurret : BaseTurret {
                 // if we still have ammo, shoot at our next target
                 if (amountShot > 0)
                 {
-                    Debug.Log(amountShot + "foreach ammo left");
+                    //Debug.Log(amountShot + "foreach ammo left");
                     if (t && t.gameObject.activeSelf)
                     {
-                        Debug.Log("fired barrage at: " + t.name + " " + amountShot + " left");
+                        //Debug.Log("fired barrage at: " + t.name + " " + amountShot + " left");
                         projectileArray[currentProjectileIndex].GetComponent<MissileProjectile>().Initialize(t, targetType, maxTimeToLive, explosionRadius, damage);
                         projectileArray[currentProjectileIndex].gameObject.SetActive(true);
                         projectileArray[currentProjectileIndex].position = transform.position;
@@ -122,24 +122,15 @@ public class MissileTurret : BaseTurret {
                         if (currentProjectileIndex >= arraySize)
                             currentProjectileIndex = 0;
                     }
-                    else if (t && !t.gameObject.activeSelf)
-                    {
-                        Debug.Log("target was inactive: " + t.name);
-                        //targets.Remove(t);
-                    }
-                    else
-                    {
-                        Debug.Log("target was null: " + t.name);
-                    }
                 }
                 else
                 {
-                    Debug.Log("amount of ammo done (foreach)");
+                    //Debug.Log("amount of ammo done (foreach)");
                     break; // we used all our ammo
                 }
             }
         }
-        Debug.Log("amount of ammo done (while)");
+        //Debug.Log("amount of ammo done (while)");
     }
     public override void FireBullet(Vector3 direction, Quaternion rotation)
     {
