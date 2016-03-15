@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QCARConfig>
+    <Tracking>
+        <ImageTarget name="headquarters" size="10.000000 10.000000"/>
+        <ImageTarget name="MissileTracker" size="10.000000 10.000000"/>
+        <ImageTarget name="StasisTracker" size="10.000000 10.000000"/>
+        <ImageTarget name="11" size="10.000000 10.000000"/>
+        <ImageTarget name="12" size="10.000000 10.000000"/>
+        <ImageTarget name="21" size="10.000000 10.000000"/>
+        <ImageTarget name="22" size="10.000000 10.000000"/>
+        <ImageTarget name="20" size="10.000000 10.000000"/>
+        <ImageTarget name="10" size="10.000000 10.000000"/>
+        <ImageTarget name="02" size="10.000000 10.000000"/>
+        <ImageTarget name="01" size="10.000000 10.000000"/>
+        <ImageTarget name="00" size="10.000000 10.000000"/>
+        <ImageTarget name="AU_missile" size="10.000000 10.000000"/>
+        <ImageTarget name="AU_seismic" size="10.000000 10.000000"/>
+        <ImageTarget name="AU_stasis" size="10.000000 10.000000"/>
+        <ImageTarget name="Headquarter_qr_code" size="10.000000 10.000000"/>
+        <ImageTarget name="9hearts" size="100.000000 142.117111"/>
+        <ImageTarget name="speed" size="10.000000 10.000000"/>
+        <ImageTarget name="Herro" size="10.000000 7.500000"/>
+        <ImageTarget name="HQ_cube.Bottom" size="10.000000 10.000000"/>
+        <ImageTarget name="HQ_cube.Right" size="10.000000 10.000000"/>
+        <ImageTarget name="HQ_cube.Back" size="10.000000 10.000000"/>
+        <ImageTarget name="HQ_cube.Top" size="10.000000 10.000000"/>
+        <ImageTarget name="HQ_cube.Left" size="10.000000 10.000000"/>
+        <ImageTarget name="HQ_cube.Front" size="10.000000 10.000000"/>
+        <MultiTarget name="HQ_cube">
+            <Part name="HQ_cube.Left" translation="-5.0 0 0" rotation="AD: 0 1 0 -90"/>
+            <Part name="HQ_cube.Right" translation="5.0 0 0" rotation="AD: 0 1 0 90"/>
+            <Part name="HQ_cube.Front" translation="0 0 5.0" rotation="AD: 1 0 0 0"/>
+            <Part name="HQ_cube.Back" translation="0 0 -5.0" rotation="AD: 0 1 0 180"/>
+            <Part name="HQ_cube.Top" translation="0 5.0 0" rotation="AD: 1 0 0 -90"/>
+            <Part name="HQ_cube.Bottom" translation="0 -5.0 0" rotation="AD: 1 0 0 90"/>
+        </MultiTarget>
+    </Tracking>
+</QCARConfig>
