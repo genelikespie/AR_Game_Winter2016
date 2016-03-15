@@ -116,7 +116,7 @@ public class MissileTurret : BaseTurret {
                         projectileArray[currentProjectileIndex].GetComponent<MissileProjectile>().Initialize(t, targetType, maxTimeToLive, explosionRadius, damage);
                         projectileArray[currentProjectileIndex].gameObject.SetActive(true);
                         projectileArray[currentProjectileIndex].position = transform.position;
-                        projectileArray[currentProjectileIndex].gameObject.GetComponent<ProjectileBaseClass>().Fire(Vector3.zero, Quaternion.identity);
+                        projectileArray[currentProjectileIndex].gameObject.GetComponent<ProjectileBaseClass>().Fire(currTarget.position - transform.position, Quaternion.LookRotation(currTarget.position - transform.position));
                         currentProjectileIndex++;
                         amountShot--;
                         if (currentProjectileIndex >= arraySize)

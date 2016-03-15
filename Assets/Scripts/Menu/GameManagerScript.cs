@@ -15,6 +15,8 @@ public class GameManagerScript : MonoBehaviour {
     public AudioSource scene1;
     public AudioSource scene2;
     public AudioSource scene3;
+    public AudioSource winmusic;
+    public AudioSource lossmusic;
 
     public AudioSource buttonPress;
 
@@ -160,8 +162,12 @@ public class GameManagerScript : MonoBehaviour {
         pauseGame();
     }
 
-    public void PlayerLost()
-    {
+    public void PlayerLost() {
+        scene1.Pause();
+        scene2.Pause();
+        scene3.Pause();
+        lossmusic.Play();
+
         Debug.Log("PLAYER LOST");
         pauseGame();
         messageBoard.setTitle("You Lost!");
@@ -172,6 +178,10 @@ public class GameManagerScript : MonoBehaviour {
     }
     public void PlayerWon()
     {
+        scene1.Pause();
+        scene2.Pause();
+        scene3.Pause();
+        winmusic.Play();
         Debug.Log("PLAYER WON");
         pauseGame();
         messageBoard.setTitle("You Won!");
